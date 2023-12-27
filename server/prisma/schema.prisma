@@ -6,6 +6,83 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+enum USERTYPE {
+  VOYAGEUR
+  CHAUFFEUR
+  ADMIN
+}
+
+model User {
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  firstName String
+  lastName String
+  email String
+  n_tlph String
+  password String
+  type USERTYPE
+  matricule String
+
+  reservations Reservation[] @relation("user reserver for trajet")  
+  trajets Trajet[] @relation("chauffeur")
+  cars  Car[] @relation("owner of car")
+}
+
+model Position {
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  longitude Float
+  latitude  Float
+
+  start_trajets  Trajet[] @relation("position start of travel")
+  end_trajets  Trajet[] @relation("position end of travel")
+}
+
+model Trajet {
+  id   String  @id @default(auto()) @map("_id") @db.ObjectId
+  start_date  DateTime
+  hour_start  DateTime
+  hour_end    Float
+  nb_place  Int
+
+  reservations Reservation[] @relation("reservation for trajet")
+
+  chaufeur User @relation("chauffeur",fields: [chauffeur_id],references: [id])
+  chauffeur_id  String @db.ObjectId
+
+  car Car @relation("car of trajet",fields: [car_id],references: [id])
+  car_id String @db.ObjectId
+
+  position_start Position @relation("position start of travel",fields: [position_startId],references: [id])
+  position_startId String @db.ObjectId
+
+  position_end Position @relation("position end of travel",fields: [position_endId],references: [id])
+  position_endId String @db.ObjectId
+
+}
+
+model Car {
+    id   String  @id @default(auto()) @map("_id") @db.ObjectId
+    year  DateTime
+    matricule String
+    marque  String
+    model String
+
+    trajets Trajet[] @relation("car of trajet")
+
+    owner_id String @db.ObjectId
+    owner User @relation("owner of car",fields: [owner_id],references: [id])
+}
+
+model Reservation {
+    id   String  @id @default(auto()) @map("_id") @db.ObjectId
+    nb_place  Float
+
+    user    User @relation("user reserver for trajet",fields: [user_id],references: [id])
+    user_id String @db.ObjectId
+
+    trajet    Trajet @relation("reservation for trajet",fields: [trajet_id],references: [id])
+    trajet_id String @db.ObjectId
 }
