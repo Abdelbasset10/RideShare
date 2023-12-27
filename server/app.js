@@ -2,12 +2,15 @@ require("dotenv").config()
 const express = require('express')
 
 const prisma = require('./utils/prisma')
-const authRoute = require('./routes/auth'
-)
+const authRoute = require('./routes/auth')
+const trajetRoute = require('./routes/trajet')
+
 const app = express()
 
 app.use(express.json())
 app.use('/auth',authRoute)
+app.use('/trajet',trajetRoute)
+
 
 const PORT = process.env.PORT || 5000
 
