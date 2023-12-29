@@ -76,6 +76,7 @@ const signIn = async (req, res) => {
         first_name: isExistsUser.first_name,
         last_name:isExistsUser.last_name,
         email: isExistsUser.email,
+        type:isExistsUser.type
       } },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
@@ -84,6 +85,8 @@ const signIn = async (req, res) => {
 
     isExistsUser.password = undefined
 
+    req.user = isExistsUser.id
+    console.log(isExistsUser.id)
     res.status(201).json({user:isExistsUser,token});
   } catch (error) {
     console.log(error);
