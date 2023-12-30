@@ -1,5 +1,5 @@
 const express = require("express");
-const { createTrajet, getCloseTrajets, getAllTrajets, getTrajet, updateTrajet, deleteTrajet} = require("../controllers/trajet");
+const { createTrajet, reserverTrajet, getCloseTrajets, getAllTrajets, getTrajet, updateTrajet, deleteTrajet} = require("../controllers/trajet");
 
 const router = express.Router();
 
@@ -8,6 +8,7 @@ router.get("/",getAllTrajets)
 router.get("/:id",getTrajet)
 router.get("/close",getCloseTrajets)
 router.patch('/update/:id',updateTrajet)
+router.patch('/reserver/:id',reserverTrajet)
 router.delete('/delete/:id',deleteTrajet)
 
 

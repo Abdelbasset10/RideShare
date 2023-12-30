@@ -16,6 +16,11 @@ enum USERTYPE {
   ADMIN
 }
 
+enum GENDER {
+  MALE
+  FEMALE
+}
+
 model User {
   id   String  @id @default(auto()) @map("_id") @db.ObjectId
   first_name String
@@ -26,6 +31,7 @@ model User {
   type USERTYPE
   matricule String
   picture   String? 
+  gender  GENDER
 
   reservations Reservation[] @relation("user reserver for trajet")  
   trajets Trajet[] @relation("chauffeur")
