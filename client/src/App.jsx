@@ -1,7 +1,7 @@
 
 const App = () => {
   return (
-    <div>App ADMIN</div>
+    <div className="text-center">App Client 123</div>
   )
 }
 

@@ -15,50 +15,32 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
     networks:
-      - rideshare-network    
+      - rideshare-network  
 
-  rideshare-front-client:
-    container_name: ${APP_NAME}-front-client
+
+  rideshare-client:
+    container_name: ${APP_NAME}-client
     image: client
     build:
-      context: ./front/client
+      context: ./client
       dockerfile: Dockerfile
     restart: unless-stopped
-    command: npm start
+    command: npm run start
     depends_on:
-      - rideshare-back
+      - rideshare-server
     ports:
       - "3000:3000"
     volumes:
-      - ./front/client:/usr/src/app
+      - ./client:/usr/src/app
     networks:
       - rideshare-network
 
-  rideshare-front-admin:
-    container_name: ${APP_NAME}-front-admin
-    image: admin
-    build:
-      context: ./front/admin
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    command: npm start
-    ports:
-      - "3001:3001"
-    depends_on:
-      - rideshare-back
-    volumes:
-      - ./front/admin:/usr/src/app
-    networks:
-      - rideshare-network
-  
-
-
-  rideshare-back:
+  rideshare-server:
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: ${APP_NAME}-back
-    image: back
+    container_name: ${APP_NAME}-server
+    image: server
     volumes:
       - ./server/:/usr/src/app
     ports:
@@ -84,9 +66,8 @@ services:
       - "80:80"
     depends_on:
       - rideshare-mongo-db
-      - rideshare-front-admin
-      - rideshare-front-client
-      - rideshare-back
+      - rideshare-client
+      - rideshare-server
     networks:
       - rideshare-network
 

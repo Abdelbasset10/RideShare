@@ -9,8 +9,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY ./site.conf /etc/nginx/conf.d/default.conf
 
 # Copy static files from the client and admin services
-COPY --from=client /usr/src/app/build /var/www/front-client
-COPY --from=admin /usr/src/app/build /var/www/front-admin
+COPY --from=client /usr/src/app/build /var/www/client
 #COPY --from=back /usr/src/app/build /var/www/back-api
 
 # Expose port 80
