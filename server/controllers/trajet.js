@@ -59,22 +59,86 @@ const createTrajet = async (req,res) => {
        return res.status(201).json({message:"Trajet created successfully!"})
 
     } catch (error) {
-        return res.status(500).json({message:error.messaeg})
+        return res.status(500).json({message:error.message})
     }
 }
 
+const reserverTrajet = async (req,res) => {
+    try {
+        const {id} = req.params
+        if(!id){
+            return res.status(400).json({message:'Trajet is required!'})
+        }
+
+        const {userId,nb_places} = req.body
+
+        if(!userId){
+            return res.status(400).json({message:"User is required!"})
+        }
+
+        if(nb_places === 0){
+            return res.status(400).json({message:"You have to select number of places"})
+        }
+
+        const trajet = await prisma.trajet.findUnique({
+            where:{
+                id
+            }
+        })
+
+        if(!trajet){
+            return res.status(404).json({message:"Trajet does not exists!"})
+        }
+
+        if(nb_places > trajet.nb_place){
+            return res.status(400).json({message:"Your number of places is grater then rest of trajets left!"})
+        }
+
+        await prisma.reservation.create({
+            data:{
+                nb_place:nb_places,
+                user_id:userId,
+                trajet_id:id
+            }
+        })
+
+        await prisma.trajet.update({
+            where:{
+                id
+            },
+            data:{
+                nb_place:trajet.nb_place - nb_places
+            }
+        })
+
+        return res.status(200).json({message:"Reservation has been created successfully!"})
+
+
+    } catch (error) {
+        return res.status(500).json({message:error.message})
+    }
+}
+
+
 const getCloseTrajets = async (req,res) => {
     try {
-        const {lat} = req.body
-    const min_shape = lat -1
-    const max_shape = lat +1
+        const {lat,long} = req.body
+        const min_shape_lat = lat -1
+        const max_shape_lat = lat +1
+
+        const min_shape_long = long -1
+        const max_shape_long = long +1
     
     const close_trajets = await prisma.trajet.findMany({
         where:{
             position_start:{
                 latitude:{
-                    lte:max_shape,
-                    gte:min_shape
+                    lte:max_shape_lat,
+                    gte:min_shape_lat
+                },
+                longitude:{
+                    lte:max_shape_long,
+                    gte:min_shape_long
                 }
             }
         }
@@ -229,11 +293,14 @@ const deleteTrajet = async (req,res) => {
     }
 }
 
+
+
 module.exports = {
     createTrajet,
     getCloseTrajets,
     getAllTrajets,
     getTrajet,
     updateTrajet,
-    deleteTrajet
+    deleteTrajet,
+    reserverTrajet
 }
