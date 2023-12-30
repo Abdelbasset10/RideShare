@@ -1,0 +1,99 @@
+version: "3"
+
+services:
+  
+
+  rideshare-mongo-db:
+    restart: unless-stopped
+    image: mongo:latest
+    container_name: ${APP_NAME}-mongo-db
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./docker/mongo-db/data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
+    networks:
+      - rideshare-network    
+
+  rideshare-front-client:
+    container_name: ${APP_NAME}-front-client
+    image: client
+    build:
+      context: ./front/client
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    command: npm start
+    depends_on:
+      - rideshare-back
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front/client:/usr/src/app
+    networks:
+      - rideshare-network
+
+  rideshare-front-admin:
+    container_name: ${APP_NAME}-front-admin
+    image: admin
+    build:
+      context: ./front/admin
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    command: npm start
+    ports:
+      - "3001:3001"
+    depends_on:
+      - rideshare-back
+    volumes:
+      - ./front/admin:/usr/src/app
+    networks:
+      - rideshare-network
+  
+
+
+  rideshare-back:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: ${APP_NAME}-back
+    image: back
+    volumes:
+      - ./server/:/usr/src/app
+    ports:
+      - "3002:3002"
+    depends_on:
+      - rideshare-mongo-db
+    env_file: ./server/.env
+    environment:
+      - NODE_ENV=development
+    networks:
+      - rideshare-network
+
+
+
+  rideshare-nginx:
+    build:
+      context: ./docker/nginx
+      dockerfile: Dockerfile
+    container_name: ${APP_NAME}-nginx
+    volumes:
+      - ./docker/nginx/site.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - rideshare-mongo-db
+      - rideshare-front-admin
+      - rideshare-front-client
+      - rideshare-back
+    networks:
+      - rideshare-network
+
+volumes:
+    node_modules:
+    web-root:
+      driver: local
+networks:
+  rideshare-network:
+    external: true

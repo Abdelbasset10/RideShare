@@ -1,0 +1,6 @@
+.editorconfig
+vendor
+build
+dist
+docker/mongo-db/
+docker/logs/
