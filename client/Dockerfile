@@ -1,4 +1,4 @@
-FROM node AS admin
+FROM node AS client
 
 # Working directory be app
 WORKDIR /usr/src/app
@@ -17,3 +17,5 @@ RUN npm run build
 EXPOSE 3001
 
 RUN npm run start&
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]
