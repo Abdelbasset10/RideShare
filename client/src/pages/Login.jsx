@@ -1,15 +1,12 @@
-import { hash } from "bcryptjs";
 import { useAuth } from "../hooks/auth/useAuth";
 
 const Login = () => {
   const { login } = useAuth();
 
   const handleLogin = async () => {
-     hash("password123",2).then((hash) => {
       login({
-        email: "ramzi.issiakhem@gmail.com",
-        password: hash,
-      });  
+        username: 'kminchelle',
+        password: '0lelplR',
     });
 
     
@@ -18,7 +15,7 @@ const Login = () => {
   return (
     <div>
       <h1>Login</h1>
-      <button onClick={handleLogin}>Login</button>
+      <button className="px-3 py-1.5 bg-red-400 rounded-xl text-white" onClick={handleLogin}>Login</button>
     </div>
   );
 };

@@ -4,11 +4,11 @@ import Navbar from "../components/Navbar";
 
 export default function RootLayout() {
   return (
-    <div className="root-layout w-9/12 m-auto flex flex-col">
-      <Navbar />
-      <main>
-        <Outlet />
-      </main>
-    </div>
-  )
+      <div className="root-layout w-full">
+        <Navbar />
+        <main>
+          <Outlet />
+        </main>
+      </div>
+  );
 }
