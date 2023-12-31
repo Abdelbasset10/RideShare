@@ -1,0 +1,92 @@
+.available-routes {
+    @apply w-full
+    bg-beige
+}
+
+.cards-list {
+    @apply w-full overflow-hidden
+}
+
+.slick-track {
+    @apply flex
+}
+
+/***************************************/
+
+.trajet-card {
+    @apply border-2 border-bg-green-dark
+    rounded-3xl mx-2
+    w-11/12
+    ;
+}
+
+.trajet-upper {
+    @apply flex flex-row justify-between
+     items-stretch px-4 pt-2 
+     mb-10
+}
+
+.trajet-upper-left {
+    @apply flex flex-col justify-center items-center
+}
+
+.trajet-upper-left .trajet-date {
+    @apply text-bg-green-dark  font-bold mb-1
+}
+
+.trajet-upper-left .trajet-prix {
+    @apply  text-lg  text-orange font-bold
+}
+
+.trajet-upper-right  {
+    @apply  text-center
+}
+
+.trajet-upper-right img {
+    @apply  w-16
+}
+
+/*****************************************/
+
+.trajet-middle {
+    @apply flex flex-row justify-around
+    text-base
+    items-end  
+    mb-10
+    px-10
+}
+
+.trajet-middle .position-separator {
+    @apply w-32
+}
+
+
+
+.trajet-middle .position-destination img , .trajet-middle .position-depart img {
+    @apply w-8
+}
+
+.trajet-middle .position-destination, .trajet-middle .position-depart {
+    @apply flex flex-col items-center
+}
+
+/*******************************************/
+
+.trajet-lower {
+    @apply flex w-full
+    text-xs
+     justify-between 
+     bg-bg-green-dark
+     rounded-b-2xl
+     py-2
+     px-5
+}
+
+.trajet-lower .informations {
+    @apply  text-white flex justify-center items-center 
+}
+
+ .informations img {
+    @apply w-5 mr-1.5 
+}
+

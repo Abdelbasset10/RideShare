@@ -1,0 +1,66 @@
+.navbar {
+    @apply bg-bg-green-dark flex flex-row
+         ;
+}
+.navbar-wrapper {
+    @apply 
+        w-8/12 m-auto py-5
+        flex flex-row justify-between 
+        text-white
+        ;
+}
+
+.navbar-logo-wrapper {
+    @apply flex flex-row
+}
+
+.navbar-logo-wrapper > img {
+    @apply w-8 mr-3
+}
+
+.navbar-logo-wrapper > p {
+    @apply 
+    text-xl font-bold
+}
+
+
+.navbar-right {
+    @apply flex flex-row justify-end items-center
+}
+
+.navbar-right a {
+    @apply ml-5
+    font-bold 
+    text-sm
+    hover:animate-btn_hover
+}
+
+.btn-register {
+    @apply 
+        text-yellow
+        rounded-full
+        border-2
+        text-center
+         border-white
+        hover:bg-yellow
+        hover:text-bg-green-dark
+        hover:border-yellow
+        px-3 py-0.5
+        ;
+}
+
+.btn-login {
+    @apply 
+        rounded-full
+        border-2
+        text-center
+        hover:text-yellow
+          hover:bg-transparent  
+         hover:border-white
+        bg-yellow
+        text-bg-green-dark
+        border-yellow
+        px-3 py-0.5
+        ml-0
+        ;
+}

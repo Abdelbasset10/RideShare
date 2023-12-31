@@ -1,0 +1,38 @@
+.main-section {
+    @apply w-full
+    bg-bg-green-dark
+    
+}
+
+.presentation-wrapper {
+    @apply m-auto w-8/12 
+    py-10
+    text-white
+}
+
+.presentation-part-upper {
+    @apply grid grid-cols-8 ;
+}
+
+.presentation-left {
+    @apply col-span-4
+    pr-10
+}
+
+.presentation-left > h1 {
+    @apply text-4xl
+    font-bold 
+    pr-10
+    mb-4
+}
+
+.presentation-left > p {
+    @apply text-[0.9rem]
+    
+}
+
+
+.presentation-right {
+    @apply col-span-4 justify-center items-center
+}
+

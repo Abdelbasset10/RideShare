@@ -12,7 +12,7 @@ import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import AddRoute from "./pages/AddRoute";
 import { CookiesProvider } from "react-cookie";
-import { AuthContext, AuthContextProvider} from "./contexts/AuthContext";
+import {  AuthContextProvider} from "./contexts/AuthContext";
 import { useAuth } from "./hooks/auth/useAuth";
 
 const router = createBrowserRouter(
@@ -34,7 +34,6 @@ const router = createBrowserRouter(
 const App = () => {
   const { user, login, logout, setUser } = useAuth();
   
-  console.log("app",setUser);
   return (
     <CookiesProvider>
       <AuthContextProvider value={{ user, setUser }}>

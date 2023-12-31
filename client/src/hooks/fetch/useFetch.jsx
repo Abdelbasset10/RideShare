@@ -5,10 +5,20 @@ const DEFAULT_OPTIONS = {
     headers: { "Content-Type": "application/json" },
   };
 
+  /**
+   * Send HTTPS Request and manage the error,and loading phase (url: login)
+   * @param {string} url 
+   * @param {{}} getQueryOptions 
+   * @param {{}} options 
+   * @param {[]} dependencies 
+   * @returns 
+   */
 export const useFetch = ( url, getQueryOptions = {}, options = {} , dependencies = [] ) => {
   
+  url = `${BASE_URL}/${url}`
+
   // API KEY INTEGRATION IN THE HTTP REQUEST 
-  getQueryOptions.apiKey = user.apiKey; 
+  //getQueryOptions.apiKey = user.apiKey; 
 
   // Formatting query options into string
   let queryString = formatGetQueryOptions(getQueryOptions);
