@@ -35,7 +35,7 @@ model User {
 
   reservations Reservation[] @relation("user reserver for trajet")  
   trajets Trajet[] @relation("chauffeur")
-  cars  Car[] @relation("owner of car")
+  car Car? @relation("owner of car")
 }
 
 model Position {
@@ -59,8 +59,8 @@ model Trajet {
   chaufeur User? @relation("chauffeur",fields: [chauffeur_id],references: [id])
   chauffeur_id  String? @db.ObjectId
 
-  car Car? @relation("car of trajet",fields: [car_id],references: [id])
-  car_id String? @db.ObjectId
+  car Car @relation("car of trajet",fields: [car_id],references: [id])
+  car_id String @db.ObjectId
 
   position_start Position @relation("position start of travel",fields: [position_startId],references: [id])
   position_startId String @db.ObjectId
@@ -78,8 +78,8 @@ model Car {
     model String
 
     trajets Trajet[] @relation("car of trajet")
-
-    owner_id String @db.ObjectId
+    max_places Int
+    owner_id String @unique @db.ObjectId
     owner User @relation("owner of car",fields: [owner_id],references: [id])
 }
 
