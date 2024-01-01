@@ -2,20 +2,27 @@ const prisma = require('../utils/prisma')
 
 const createTrajet = async (req,res) => {
     try {
-        const { start_date,hour_start,hour_end,nb_place,chauffeur_id,start_lat,start_long,end_lat,end_long } = req.body;
+        const { start_date,hour_start,nb_place,chauffeur_id,start_lat,start_long,end_lat,end_long } = req.body;
 
-        if (!start_date || !hour_end || !hour_start || !nb_place || !chauffeur_id ||!start_lat || !start_long || !end_lat || !end_long) {
+        if (!start_date  || !hour_start || !nb_place || !chauffeur_id ||!start_lat || !start_long || !end_lat || !end_long) {
           return res.status(400).json({ message: "Make sure to fill all trajets informations!" });
         }
 
         const user = await prisma.user.findUnique({
             where:{
                 id:chauffeur_id
+            },
+            include:{
+                car:true
             }
         })
 
         if(!user){
             return res.status(404).json({message:"Chauffeur does not exists!"})
+        }
+
+        if(user.type !=="CHAUFFEUR"){
+            return res.status(400).json({message:"You have to be chauffeur to create trajet!"})
         }
             const currentDate = new Date();
             const year = currentDate.getFullYear();
@@ -27,8 +34,8 @@ const createTrajet = async (req,res) => {
             return res.status(400).json({message:"You can't pick day that is gone!"})
         }
 
-        if(hour_start>hour_end){
-            return res.status(400).json({message:"Confirm your hours trajet!"})
+        if(nb_place >user.car.max_places){
+            return res.status(400).json({message:`nb places must be ${user.car.max_places}`})
         }
 
         const start_position = await prisma.position.create({
@@ -47,12 +54,13 @@ const createTrajet = async (req,res) => {
        await prisma.trajet.create({
         data:{
             start_date,
-            hour_end,
+            hour_end:"18:00",
             hour_start,
             nb_place,
             chauffeur_id,
             position_startId:start_position.id,
-            position_endId:end_position.id
+            position_endId:end_position.id,
+            car_id:user.car.id
         }
        })
 
