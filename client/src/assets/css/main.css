@@ -2,35 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-    
-}
-
-body,html {
-    box-sizing: border-box;
-}
-
 
 @layer components {
-    .row {
-        @apply flex flex-row items-center justify-start     
-    }
 
-    .row-center {
-        @apply flex flex-row items-center justify-center     
-    }
-
-    .col {
-        @apply flex flex-col items-center justify-start     
-    }
-
-    .col-center {
-        @apply flex flex-col items-center justify-center     
-    }
 
     @import url('navbar.css');
     @import url('presentation.css');
     @import url('card.css');
+    @import url('how-to.css');
+    @import url('research-bar.css');
     
 
 }

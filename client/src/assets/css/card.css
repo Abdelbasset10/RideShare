@@ -1,15 +1,27 @@
 .available-routes {
     @apply w-full
     bg-beige
+    pb-10
+}
+
+.available-routes .header {
+    @apply w-full text-center my-16
+}
+
+.available-routes .header p {
+    @apply text-orange text-base
+}
+
+
+.available-routes .header h1 {
+    @apply text-bg-green-dark font-bold text-4xl
 }
 
 .cards-list {
-    @apply w-full overflow-hidden
+    @apply w-full overflow-hidden mb-10
 }
 
-.slick-track {
-    @apply flex
-}
+
 
 /***************************************/
 
@@ -17,29 +29,37 @@
     @apply border-2 border-bg-green-dark
     rounded-3xl mx-2
     w-11/12
+    overflow-hidden
     ;
 }
 
 .trajet-upper {
-    @apply flex flex-row justify-between
-     items-stretch px-4 pt-2 
-     mb-10
+    @apply 
+     grid grid-cols-7   
+     px-4 pt-2 mb-10
 }
 
 .trajet-upper-left {
-    @apply flex flex-col justify-center items-center
+    @apply 
+    col-span-3
+    grid grid-rows-2
+    text-xs
+    md:text-base
 }
 
 .trajet-upper-left .trajet-date {
-    @apply text-bg-green-dark  font-bold mb-1
+
+    @apply text-bg-green-dark  font-bold mb-1 self-end
 }
 
 .trajet-upper-left .trajet-prix {
-    @apply  text-lg  text-orange font-bold
+    @apply   text-orange font-bold
 }
 
 .trajet-upper-right  {
-    @apply  text-center
+    @apply  
+    col-start-6 col-span-2
+    flex flex-col items-center
 }
 
 .trajet-upper-right img {
@@ -49,41 +69,46 @@
 /*****************************************/
 
 .trajet-middle {
-    @apply flex flex-row justify-around
-    text-base
-    items-end  
+    @apply grid grid-cols-8
     mb-10
-    px-10
+    w-full
+    px-5
+    
 }
 
 .trajet-middle .position-separator {
-    @apply w-32
+    @apply  col-span-2 place-self-center
 }
 
 
 
-.trajet-middle .position-destination img , .trajet-middle .position-depart img {
-    @apply w-8
+.trajet-middle .position-destination img,.trajet-middle .position-depart img  {
+    @apply w-8 justify-self-center
 }
 
 .trajet-middle .position-destination, .trajet-middle .position-depart {
-    @apply flex flex-col items-center
+    @apply  flex flex-col justify-center items-center  col-span-3 text-xs text-center 
 }
 
 /*******************************************/
 
 .trajet-lower {
-    @apply flex w-full
-    text-xs
-     justify-between 
+    @apply grid grid-cols-7 
+     
+    text-[0.6rem]
      bg-bg-green-dark
      rounded-b-2xl
+     font-bold
      py-2
-     px-5
+     px-2
 }
 
 .trajet-lower .informations {
-    @apply  text-white flex justify-center items-center 
+    @apply col-span-2 text-white flex justify-center items-center 
+}
+
+.trajet-lower .informations-vehicle {
+    @apply col-span-3
 }
 
  .informations img {

@@ -5,7 +5,8 @@ import destionationIcon from '../assets/img/icons/icon_destination.png';
 import timeIcon from '../assets/img/icons/icon_clock.png';
 import dateIcon from '../assets/img/icons/icon_calendar.png';
 import researchIcon from '../assets/img/icons/icon_research.png';
-import { DatePicker, TimeField } from '@mui/x-date-pickers';
+import { DatePicker, DesktopDatePicker, PickersLayout, StaticDatePicker, TimeField } from '@mui/x-date-pickers';
+import { styled } from '@mui/material/styles'
 
 
 const HomeResearchBar = ({onSearch}) => {
@@ -39,7 +40,6 @@ const HomeResearchBar = ({onSearch}) => {
     }
 
     const onDateChange = (options) => {
-        console.log("🚀 ~ file: HomeResearchBar.jsx:37 ~ onDateChange ~ options:", options)
         userData.date = {
             day: options["$D"],
             month: options["$M"],
@@ -67,13 +67,29 @@ const HomeResearchBar = ({onSearch}) => {
         onSearch(formValues);
     }
 
-    
+    const StyledPickersLayout = styled(PickersLayout)({
+        '.MuiDateCalendar-root': {
+          color: '#bbdefb',
+          borderRadius: 2,
+          borderWidth: 1,
+          borderColor: '#2196f3',
+          border: '1px solid',
+          backgroundColor: '#0d47a1',
+        }
+      })
+
     return (
+        
+
+
+
         <form onSubmit={handleSubmit(handleSearch)} className="home-research-bar">
            <div className="research-departure">
                 <img src={destionationIcon} alt="Destination" />
                 <input {...register('departure')} placeholder='Destination Départ' />
             </div>
+            <hr className="w-1 h-10 inline-block bg-bg-green-dark" ></hr>
+            
 
             <div className="research-destination">
                 <img src={destionationIcon} alt="Destination" />
@@ -82,7 +98,9 @@ const HomeResearchBar = ({onSearch}) => {
 
             <div className="research-date">
                 <img src={dateIcon} alt="Date Depart" />
-                <DatePicker format="DD:MM:YYYY" onChange={onDateChange} label='Date Départ' />
+                <DesktopDatePicker slots={{
+        layout: StyledPickersLayout,
+      }}  format="DD:MM:YYYY" onChange={onDateChange} label='Date Départ' />
             </div>     
 
 
