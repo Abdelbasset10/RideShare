@@ -43,7 +43,7 @@ const TrajetCard = ({trajet}) => {
                     <p>09:00</p>
                 </div>
 
-                <div className="informations informations-vehicle">
+                <div className="informations col-span-3 informations-vehicle">
                     <img src={VehicleIcon} alt="Time" />
                     <p>Type Auto</p>
                 </div>

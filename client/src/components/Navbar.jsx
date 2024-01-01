@@ -8,7 +8,7 @@ const Navbar = () =>  {
     const {user} = useContext(AuthContext)
 
     return (
-        <nav className="navbar">
+        <nav className="navbar pb-10">
             <div className="navbar-wrapper">
 
             <Link to='/' className="navbar-logo-wrapper">

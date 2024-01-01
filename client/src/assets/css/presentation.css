@@ -1,12 +1,12 @@
 .main-section {
     @apply w-full
-    bg-bg-green-dark
-    
+    bg-red-600
+    flex flex-col justify-start
 }
 
 .presentation-wrapper {
     @apply m-auto w-8/12 
-    py-10
+    
     text-white
 }
 

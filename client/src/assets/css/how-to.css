@@ -1,0 +1,41 @@
+.explanations {
+    @apply bg-white w-full pb-10
+}
+
+.explanations-wrapper {
+    @apply w-8/12 m-auto
+}
+
+.how-to-header {
+    @apply text-center my-12
+}
+
+.how-to-header p {
+    @apply text-orange text-xs
+}
+
+.how-to-header h3 {
+    @apply text-center text-4xl text-bg-green-dark
+}
+
+.explanations-steps-wrapper {
+    @apply flex flex-col justify-start items-stretch
+}
+
+.step {
+    @apply grid grid-cols-9 gap-x-5 items-center mb-10
+}
+
+
+.step > img {
+    @apply col-span-3 justify-self-center w-9/12
+}
+
+.step > div {
+    @apply col-span-6
+}
+
+.step > div > h3 {
+    @apply font-bold text-lg mb-2.5;
+    line-height: 1.3rem;
+}

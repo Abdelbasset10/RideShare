@@ -1,0 +1,16 @@
+.home-research-bar {
+    @apply my-10 w-full px-3 py-1 rounded-xl flex items-center justify-start bg-white
+}
+
+.home-research-bar div {
+    @apply flex 
+}
+
+.home-research-bar div img {
+    @apply w-6 h-auto mr-1
+}
+
+.home-research-bar input {
+    @apply placeholder:text-bg-green-dark w-fit text-bg-green-dark
+}
+
