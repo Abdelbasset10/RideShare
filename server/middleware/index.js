@@ -30,7 +30,20 @@ const isAdmin = async (req,res,next) => {
     }
 }
 
+const isChauffeur = async (req,res,next) => {
+    try {
+        isSignIn(req,res,()=>{
+            if(req.role!=="CHAUFFEUR"){
+                return res.status(400).json({message:"You have to be chauffeur to do this process!"})
+            }
+        })
+    } catch (error) {
+        return res.status(500).json({message:error.message})
+    }
+}
+
 module.exports = {
     isSignIn,
-    isAdmin
+    isAdmin,
+    isChauffeur
 }
