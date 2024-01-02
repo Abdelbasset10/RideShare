@@ -5,11 +5,11 @@ import destionationIcon from '../assets/img/icons/icon_destination.png';
 import timeIcon from '../assets/img/icons/icon_clock.png';
 import dateIcon from '../assets/img/icons/icon_calendar.png';
 import researchIcon from '../assets/img/icons/icon_research.png';
-import { DatePicker, DesktopDatePicker, PickersLayout, StaticDatePicker, TimeField } from '@mui/x-date-pickers';
+import {  DesktopDatePicker, PickersLayout, TimeField } from '@mui/x-date-pickers';
 import { styled } from '@mui/material/styles'
 
 
-const HomeResearchBar = ({onSearch}) => {
+const ResearchBar = ({onSearch}) => {
 
     const [userData,setUserData] = useState({})
     const [errors,setErrors] = useState({})
@@ -23,15 +23,15 @@ const HomeResearchBar = ({onSearch}) => {
 
 
     const {departure,destination,date,time} = userData;
-    console.log("🚀 ~ file: HomeResearchBar.jsx:25 ~ HomeResearchBar ~ date:", date)
-    console.log("🚀 ~ file: HomeResearchBar.jsx:25 ~ HomeResearchBar ~ time:", time)
+    console.log("🚀 ~ file: ResearchBar.jsx:25 ~ ResearchBar ~ date:", date)
+    console.log("🚀 ~ file: ResearchBar.jsx:25 ~ ResearchBar ~ time:", time)
 
 
     /////////////////////////////////////////////////
     //              onChange Functions
     /////////////////////////////////////////////////
     const onTimeChange = (options) => {
-        console.log("🚀 ~ file: HomeResearchBar.jsx:29 ~ onTimeChange ~ options:", options)
+        console.log("🚀 ~ file: ResearchBar.jsx:29 ~ onTimeChange ~ options:", options)
         userData.time = {
             hour: options["$H"],
             minutes: options["$m"]
@@ -122,4 +122,4 @@ const HomeResearchBar = ({onSearch}) => {
     );
 }
  
-export default HomeResearchBar;
+export default ResearchBar;

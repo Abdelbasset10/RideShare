@@ -1,0 +1,43 @@
+.login-section {
+  @apply w-full bg-beige
+    flex justify-center items-center
+    overflow-hidden;
+
+  height: calc(100vh - 80px);
+}
+
+.login-wrapper {
+  @apply w-9/12 m-auto bg-bg-green-dark  rounded-2xl grid grid-cols-7;
+}
+
+.login-section .form-illustration {
+  @apply col-span-3  justify-self-center place-self-center;
+}
+
+.login-form-structure {
+  @apply w-9/12 m-auto col-span-4 flex flex-col items-center;
+}
+.login-header {
+  @apply text-center flex flex-col items-center my-8 text-white;
+}
+.login-header img {
+  @apply w-32 mb-1;
+}
+
+.login-header h4 {
+  @apply text-sm;
+}
+
+.login-header h2 {
+  @apply text-3xl uppercase;
+}
+
+/***************************************/
+
+.login-form {
+  @apply w-full m-auto mt-4 pb-16;
+}
+
+.login-form button {
+  @apply mt-4 cursor-pointer w-full m-auto justify-center items-center py-1 px-4 text-center bg-yellow rounded-md text-bg-green-dark;
+}

@@ -32,7 +32,7 @@ const router = createBrowserRouter(
 );
 
 const App = () => {
-  const { user, login, logout, setUser } = useAuth();
+  const { user,setUser } = useAuth();
   
   return (
     <CookiesProvider>

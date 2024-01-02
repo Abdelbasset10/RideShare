@@ -1,0 +1,18 @@
+GetAllTrajets :
+    URL: trajets/search?
+            departLong={float}&
+            departLat={float}&
+            destinationLat={float}&
+            destinationLong={float}&
+            date={'05-01-2024'}&
+            heure={'18:00'}&
+            
+            byPrice=true&
+            bySeat=true&
+            
+            byDistance=true&
+            long={float}
+            lat={float}
+
+            byTime=true&
+

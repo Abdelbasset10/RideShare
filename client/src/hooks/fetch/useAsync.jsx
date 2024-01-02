@@ -5,10 +5,11 @@ export default function useAsync(callback, dependencies = []) {
     const [error, setError] = useState()
     const [value, setValue] = useState()
 
-    const callbackMemoized = useCallback(() => {
+    const callbackMemoized = useCallback((callback) => {
         setLoading(true)
         setError(undefined)
         setValue(undefined)
+        
         callback()
             .then(setValue)
             .catch(setError)

@@ -1,0 +1,78 @@
+.register-section {
+  @apply w-full bg-beige flex justify-center items-center;
+
+  height: calc(100vh - 80px);
+}
+
+.register-wrapper {
+  @apply w-9/12 m-auto bg-bg-green-dark rounded-2xl grid grid-cols-7;
+}
+
+.form-structure {
+  @apply w-full col-span-5 flex flex-col items-center;
+}
+
+.register-header {
+  @apply text-center flex flex-col items-center my-6 text-white;
+}
+
+.register-header img {
+  @apply w-32;
+}
+
+.register-header h2 {
+  @apply text-2xl;
+}
+
+.form-illustration {
+  @apply col-span-2 sm:p-4 sm:pb-0 md:p-7 md:pb-0 lg:p-10 lg:pb-0 xl:p-14 xl:pb-0 mb-5 justify-self-center place-self-center;
+}
+
+/***************************************/
+
+.register-form {
+  @apply px-7 w-full m-auto;
+}
+
+.form-row {
+  @apply w-full grid gap-x-5 justify-stretch items-end;
+}
+
+.form-group {
+  @apply flex flex-col justify-start items-start text-white;
+}
+
+.form-group .error-msg {
+  @apply text-[#ff3636b8] text-[.7rem];
+}
+
+.form-group label {
+  @apply text-[.75rem];
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+  @apply border-0 border-b-2 bg-transparent border-white outline-none w-full mb-4 focus:ring-0 focus:outline-0 focus:border-yellow;
+}
+
+.form-group input[type="number"] {
+  @apply border-0 border-b-2 bg-transparent border-white outline-none w-full mb-4 focus:ring-0 focus:outline-0 focus:border-yellow;
+}
+
+.form-group select {
+  @apply w-full px-2.5 py-1.5 mt-1 rounded-md bg-transparent ring-1 ring-white cursor-pointer grid mb-7;
+}
+
+.form-group select::-ms-expand {
+  display: none;
+}
+
+.register-form .button-list {
+  @apply grid grid-cols-2 gap-x-3 mb-5;
+}
+
+.register-form .button-list button,
+.register-form .button-list div {
+  @apply cursor-pointer w-full m-auto justify-center items-center py-1 px-4 text-center bg-yellow rounded-md text-bg-green-dark;
+}

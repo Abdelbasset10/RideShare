@@ -1,43 +1,38 @@
 .navbar {
-    @apply bg-bg-green-dark flex flex-row
-         ;
+  @apply bg-bg-green-dark flex flex-row
+        h-[80px];
 }
 .navbar-wrapper {
-    @apply 
-        w-8/12 m-auto py-5
-        flex flex-row justify-between 
-        text-white
-        ;
+  @apply w-8/12 m-auto py-5
+        flex flex-row items-center justify-between 
+        text-white;
 }
 
 .navbar-logo-wrapper {
-    @apply flex flex-row
+  @apply flex flex-row items-center hover:animate-btn_hover;
 }
 
 .navbar-logo-wrapper > img {
-    @apply w-8 mr-3
+  @apply w-6 h-auto lg:w-8 mr-3;
 }
 
 .navbar-logo-wrapper > p {
-    @apply 
-    text-xl font-bold
+  @apply text-base lg:text-xl font-bold;
 }
 
-
 .navbar-right {
-    @apply flex flex-row justify-end items-center
+  @apply flex flex-row justify-end items-center;
 }
 
 .navbar-right a {
-    @apply ml-5
-    font-bold 
-    text-sm
-    hover:animate-btn_hover
+  @apply font-bold 
+    text-[0.7rem] lg:text-sm
+    lg:ml-5 ml-3
+    hover:animate-btn_hover;
 }
 
 .btn-register {
-    @apply 
-        text-yellow
+  @apply text-yellow
         rounded-full
         border-2
         text-center
@@ -46,12 +41,11 @@
         hover:text-bg-green-dark
         hover:border-yellow
         px-3 py-0.5
-        ;
+        !ml-4;
 }
 
 .btn-login {
-    @apply 
-        rounded-full
+  @apply rounded-full
         border-2
         text-center
         hover:text-yellow
@@ -61,6 +55,5 @@
         text-bg-green-dark
         border-yellow
         px-3 py-0.5
-        ml-0
-        ;
+        !ml-2;
 }

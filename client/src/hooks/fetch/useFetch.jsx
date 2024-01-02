@@ -1,3 +1,4 @@
+import { BASE_URL } from "../../utils/globals";
 import { formatGetQueryOptions } from "../../utils/helpers";
 import useAsync from "./useAsync";
 
