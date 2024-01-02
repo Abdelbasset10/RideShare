@@ -22,9 +22,21 @@ const signUp = async (req,res) => {
         email,
       },
     });
+    
 
     if (isExistsEmail) {
       return res.status(400).json({ message: "Email already exists!" });
+    }
+
+    const isExistsNumber = await prisma.user.findFirst({
+      where: {
+        n_tlph:phoneNumber,
+      },
+    });
+    
+
+    if (isExistsNumber) {
+      return res.status(400).json({ message: "phone already exists!" });
     }
 
     if (passwordConfirm !== password) {
