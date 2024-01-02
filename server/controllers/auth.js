@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken')
 
 const signUp = async (req,res) => {
   try {
-    const { email, first_name, last_name, n_tlph, type, matricule, password, confirmPassword,gender,car_year,car_matricule,car_model,car_marque,car_places } = req.body;
-    if (!email || !first_name || !last_name || !n_tlph || !type || !matricule || !password || !confirmPassword ||!gender) {
+    const { email, firstName, lastName, phoneNumber, type, matricule, password, confirmPassword,gender,vehicleBrand,vehicleYear,vehicleMatricule,vehicleModel,vehicleMaxPlace } = req.body;
+    if (!email || !firstName || !lastName || !phoneNumber || !type || !matricule || !password || !confirmPassword ||!gender) {
       return res.status(400).json({ message: "Make sure to fill all your informations!" });
     }
 
@@ -13,7 +13,7 @@ const signUp = async (req,res) => {
       return res.status(400).json({message:"User must be chauffeur or voyageur!"})
     }
 
-    if(type === "CHAUFFEUR" && (!car_marque || !car_matricule || !car_model || !car_year || !car_places) ){
+    if(type === "CHAUFFEUR" && (!vehicleBrand || !vehicleMatricule || !vehicleModel || !vehicleYear || !vehicleMaxPlace) ){
       return res.status(400).json({message:"You have to enter your car informations!"})
     }
 
@@ -38,9 +38,9 @@ const signUp = async (req,res) => {
     const newUser = await prisma.user.create({
       data: {
         email,
-        first_name,
-        last_name,
-        n_tlph,
+        first_name:firstName,
+        last_name:lastName,
+        n_tlph:phoneNumber,
         type,
         matricule,
         password: hashPassword,
@@ -52,11 +52,11 @@ const signUp = async (req,res) => {
       await prisma.car.create({
         data:{
           owner_id:newUser.id,
-          marque:car_marque,
-          year:car_year,
-          matricule:car_matricule,
-          model:car_model,
-          max_places:car_places
+          marque:vehicleBrand,
+          year:vehicleYear,
+          matricule:vehicleMatricule,
+          model:vehicleModel,
+          max_places:vehicleMaxPlace
         }
       })
     }
