@@ -4,8 +4,8 @@ const jwt = require('jsonwebtoken')
 
 const signUp = async (req,res) => {
   try {
-    const { email, firstName, lastName, phoneNumber, type, matricule, password, confirmPassword,gender,vehicleBrand,vehicleYear,vehicleMatricule,vehicleModel,vehicleMaxPlace } = req.body;
-    if (!email || !firstName || !lastName || !phoneNumber || !type || !matricule || !password || !confirmPassword ||!gender) {
+    const { email, firstName, lastName, phoneNumber, type, matricule, password, passwordConfirm,gender,vehicleBrand,vehicleYear,vehicleMatricule,vehicleModel,vehicleMaxPlace } = req.body;
+    if (!email || !firstName || !lastName || !phoneNumber || !type || !matricule || !password || !passwordConfirm ||!gender) {
       return res.status(400).json({ message: "Make sure to fill all your informations!" });
     }
 
@@ -27,7 +27,7 @@ const signUp = async (req,res) => {
       return res.status(400).json({ message: "Email already exists!" });
     }
 
-    if (confirmPassword !== password) {
+    if (passwordConfirm !== password) {
       return res.status(400).json({ message: "Passwords incorrects!" });
     }
 
