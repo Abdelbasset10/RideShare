@@ -1,6 +1,9 @@
 require("dotenv").config()
 const express = require('express')
 const cors = require('cors')
+const bodyParser = require('body-parser');
+var multer = require('multer');
+
 
 const corsOptions = require("./config/cors");
 
@@ -10,9 +13,16 @@ const userRoute = require('./routes/user')
 const trajetRoute = require('./routes/trajet')
 
 const app = express()
+var upload = multer();
 
 app.use(cors(corsOptions));
 app.use(express.json())
+app.use(upload.array()); 
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/auth',authRoute)
 app.use('/trajet',trajetRoute)
 app.use('/user',userRoute)
