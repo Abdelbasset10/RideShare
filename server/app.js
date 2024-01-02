@@ -1,5 +1,8 @@
 require("dotenv").config()
 const express = require('express')
+const cors = require('cors')
+
+const corsOptions = require("./config/cors");
 
 const prisma = require('./utils/prisma')
 const authRoute = require('./routes/auth')
@@ -8,6 +11,7 @@ const trajetRoute = require('./routes/trajet')
 
 const app = express()
 
+app.use(cors(corsOptions));
 app.use(express.json())
 app.use('/auth',authRoute)
 app.use('/trajet',trajetRoute)
