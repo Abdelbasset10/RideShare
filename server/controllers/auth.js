@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken')
 
 const signUp = async (req,res) => {
   try {
+    console.log(req.body)
     const { email, firstName, lastName, phoneNumber, type, matricule, password, passwordConfirm,gender,vehicleBrand,vehicleYear,vehicleMatricule,vehicleModel,vehicleMaxPlace } = req.body;
     if (!email || !firstName || !lastName || !phoneNumber || !type || !matricule || !password || !passwordConfirm ||!gender) {
       return res.status(400).json({ message: "Make sure to fill all your informations!" });
@@ -61,16 +62,25 @@ const signUp = async (req,res) => {
     });
 
     if(type === "CHAUFFEUR"){
-      await prisma.car.create({
-        data:{
-          owner_id:newUser.id,
-          marque:vehicleBrand,
-          year:vehicleYear,
-          matricule:vehicleMatricule,
-          model:vehicleModel,
-          max_places:vehicleMaxPlace
-        }
-      })
+      try {
+        await prisma.car.create({
+          data:{
+            owner_id:newUser.id,
+            marque:vehicleBrand,
+            year:vehicleYear,
+            matricule:vehicleMatricule,
+            model:vehicleModel,
+            max_places:Number(vehicleMaxPlace)
+          }
+        })
+      } catch (error) {
+        await prisma.user.delete({
+          where:{
+            id:newUser.id
+          }
+        })
+        return res.status(500).json({message:error.message})
+      }
     }
 
     return res.status(201).json({message:"User created successfully!"});
