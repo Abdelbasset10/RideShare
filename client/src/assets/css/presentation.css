@@ -6,6 +6,7 @@
 
 .presentation-wrapper {
     @apply m-auto w-8/12 
+    pt-10
     
     text-white
 }

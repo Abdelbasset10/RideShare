@@ -1,8 +1,24 @@
-import { BASE_URL } from "./globals"
+import axios from "axios";
+import { BASE_URL } from "./globals";
 
-export const fetchFnc = (url,callbackFnc,errorFnc) => {
+export const fetchFnc = async ({
+  url,
+  method = "GET",
+  headers = {},
+  data = {},
+}) => {
+  url = `${BASE_URL}/${url}`;
+  headers["Access-Control-Allow-Origin"] = "*";
 
-    url = `${BASE_URL}/${url}`;
-    fetch(url).then(callbackFnc).catch(errorFnc);
-
-}
+  try {
+    const res = await axios({
+      method: method,
+      url: url,
+      data: data,
+      headers: headers,
+    });
+    return res;
+  } catch (e) {
+    throw e?.response?.data?.message || "Erreur lors de la connexion";
+  }
+};

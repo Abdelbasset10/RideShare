@@ -1,16 +1,29 @@
 .home-research-bar {
-    @apply my-10 w-full px-3 py-1 rounded-xl flex items-center justify-start bg-white
+    @apply text-bg-green-dark my-10 w-full pl-3 grid grid-cols-12 items-center rounded-full bg-white
 }
 
-.home-research-bar div {
-    @apply flex 
+.home-research-bar .category {
+    @apply flex items-center mr-2
 }
 
-.home-research-bar div img {
-    @apply w-6 h-auto mr-1
+.home-research-bar .separator {
+    @apply w-1 h-10 inline-block bg-bg-green-dark ml-2
+}
+
+.home-research-bar img {
+    @apply w-5 h-5 mr-1.5
+}
+
+/***************************************/
+
+.home-research-bar .research-input {
+    @apply py-1.5 placeholder:text-bg-green-dark w-full
 }
 
 .home-research-bar input {
-    @apply placeholder:text-bg-green-dark w-fit text-bg-green-dark
+    @apply w-full
 }
 
+.home-research-bar .research-submit {
+    @apply bg-orange text-white flex justify-center items-center w-full h-full px-1.5 rounded-full rounded-l-none
+}
