@@ -1,125 +1,138 @@
-import { useState } from 'react';
-import { useForm, useController} from 'react-hook-form';
+import { useEffect, useState } from "react";
+import { useForm, useController } from "react-hook-form";
 
-import destionationIcon from '../assets/img/icons/icon_destination.png';
-import timeIcon from '../assets/img/icons/icon_clock.png';
-import dateIcon from '../assets/img/icons/icon_calendar.png';
-import researchIcon from '../assets/img/icons/icon_research.png';
-import {  DesktopDatePicker, PickersLayout, TimeField } from '@mui/x-date-pickers';
-import { styled } from '@mui/material/styles'
+import destionationIcon from "../assets/img/icons/icon_destination.png";
+import timeIcon from "../assets/img/icons/icon_clock.png";
+import dateIcon from "../assets/img/icons/icon_calendar.png";
+import researchIcon from "../assets/img/icons/icon_research.png";
 
+import { useRef } from "react";
+import ResearchBarMap from "./ResearchBarMap";
 
-const ResearchBar = ({onSearch}) => {
+const ResearchBar = ({ onSearch }) => {
+  const [userData, setUserData] = useState({});
+  const [errors, setErrors] = useState({});
 
-    const [userData,setUserData] = useState({})
-    const [errors,setErrors] = useState({})
+  const { register, control, handleSubmit } = useForm();
 
-    const { register , control, handleSubmit } = useForm();
+  const { departureField } = useController({ name: "departure", control });
+  const { destinationField } = useController({ name: "destination", control });
+  const { dateField } = useController({ name: "date", control });
+  const { timeField } = useController({ name: "time", control });
 
-    const { departureField }    = useController({name: 'departure', control})
-    const { destinationField }  = useController({name: 'destination', control})
-    const { dateField }         = useController({name: 'date', control})
-    const { timeField }         = useController({name: 'time', control})
+  const { departure, destination, date, time } = userData;
+  const formRef = useRef(null);
+  /////////////////////////////////////////////////////////
+  const DefaultLocation = { lat: 36.75, long: 3.05 };
+  const DefaultZoom = 10;
 
+  const geoLocDest = useRef(null);
 
-    const {departure,destination,date,time} = userData;
-    console.log("🚀 ~ file: ResearchBar.jsx:25 ~ ResearchBar ~ date:", date)
-    console.log("🚀 ~ file: ResearchBar.jsx:25 ~ ResearchBar ~ time:", time)
+  const [defaultLocation, setDefaultLocation] = useState(DefaultLocation);
+  const [isDepartMapOpen, setIsDepartMapOpen] = useState(false);
+  const [isDestMapOpen, setIsDestMapOpen] = useState(false);
 
+  const [departCoord, setDepartCoord] = useState(DefaultLocation);
+  const [location, setLocation] = useState(defaultLocation);
 
-    /////////////////////////////////////////////////
-    //              onChange Functions
-    /////////////////////////////////////////////////
-    const onTimeChange = (options) => {
-        console.log("🚀 ~ file: ResearchBar.jsx:29 ~ onTimeChange ~ options:", options)
-        userData.time = {
-            hour: options["$H"],
-            minutes: options["$m"]
-        };
-        setUserData(userData)
-    }
+  /////////////////////////////////////////////////
+  //              onChange Functions
+  /////////////////////////////////////////////////
+  const onTimeChange = (options) => {
+    userData.time = {
+      hour: options["$H"],
+      minutes: options["$m"],
+    };
+    setUserData(userData);
+  };
 
-    const onDateChange = (options) => {
-        userData.date = {
-            day: options["$D"],
-            month: options["$M"],
-            year: options["$Y"]
-        };
-        setUserData(userData)    
-    }   
+  const onDateChange = (options) => {
+    userData.date = {
+      day: options["$D"],
+      month: options["$M"],
+      year: options["$Y"],
+    };
+    setUserData(userData);
+  };
 
-    const validateData = () => {
-        return {}
-    }
-    
-    
-    const handleSearch = (formValues) => {
-        
-    
-        //const errors = validateData();
-        //
-        //if (Object.keys(errors).length) {
-        //    setErrors(errors);
-        //    return ;
-        //}
+  const validateData = () => {
+    return {};
+  };
 
-        setErrors({})
-        onSearch(formValues);
-    }
+  const handleSearch = (formValues) => {
+    //const errors = validateData();
+    //
+    //if (Object.keys(errors).length) {
+    //    setErrors(errors);
+    //    return ;
+    //}
 
-    const StyledPickersLayout = styled(PickersLayout)({
-        '.MuiDateCalendar-root': {
-          color: '#bbdefb',
-          borderRadius: 2,
-          borderWidth: 1,
-          borderColor: '#2196f3',
-          border: '1px solid',
-          backgroundColor: '#0d47a1',
-        }
-      })
+    setErrors({});
+    onSearch(formValues);
+  };
 
-    return (
-        
+  return (
+    <>
+      <form
+        ref={formRef}
+        onSubmit={handleSubmit(handleSearch)}
+        className="home-research-bar"
+      >
+        <div className="category research-departure col-span-3">
+          <img src={destionationIcon} alt="Destination" />
 
+          <div className="research-input">
+            <p
+              className="cursor-pointer"
+              onClick={() => setIsDepartMapOpen(true)}
+            >
+              Départ
+            </p>
+            {isDepartMapOpen && (
+              <div className="departure-map">
+                <ResearchBarMap
+                  setCoord={setDepartCoord}
+                  coord={departCoord}
+                  setIsMapOpen={setIsDepartMapOpen}
+                />
+              </div>
+            )}
+          </div>
+          <hr className="separator" />
+        </div>
 
+        <div className="category !text-bg-green-dark research-destination col-span-3">
+          <img src={destionationIcon} alt="Destination" />
+          <hr className="separator" />
+        </div>
 
-        <form onSubmit={handleSubmit(handleSearch)} className="home-research-bar">
-           <div className="research-departure">
-                <img src={destionationIcon} alt="Destination" />
-                <input {...register('departure')} placeholder='Destination Départ' />
-            </div>
-            <hr className="w-1 h-10 inline-block bg-bg-green-dark" ></hr>
-            
+        <div className="category research-date col-span-2">
+          <img src={dateIcon} alt="Date Depart" />
+          <input className="research-input" type="text" placeholder="Date" />
+          <hr className="separator" />
+        </div>
 
-            <div className="research-destination">
-                <img src={destionationIcon} alt="Destination" />
-                <input {...register('destionation')} placeholder='Destination Arrivée' />
-            </div>     
+        <div className="category research-time  col-span-2">
+          <img
+            className="!text-bg-green-dark "
+            src={timeIcon}
+            alt="Heure Depart"
+          />
+          <input placeholder="Heure" className="research-input" type="text" />
+        </div>
 
-            <div className="research-date">
-                <img src={dateIcon} alt="Date Depart" />
-                <DesktopDatePicker slots={{
-        layout: StyledPickersLayout,
-      }}  format="DD:MM:YYYY" onChange={onDateChange} label='Date Départ' />
-            </div>     
+        <div
+          onClick={() => {
+            formRef.current.submit();
+          }}
+          className="cursor-pointer category research-submit col-span-2"
+        >
+          <img src={researchIcon} alt="Submit button" />
+          <button type="submit">Rechercher</button>
+        </div>
+      </form>
+    </>
+  );
+};
 
-
-            <div className="research-time">
-                <img src={timeIcon} alt="Heure Depart" />
-                <TimeField format="HH:mm" onChange={onTimeChange} label='Heure de Départ' />
-            </div>  
-
-
-
-
-             <div className="research-submit">
-                <img src={researchIcon} alt="Submit button" />
-                <button type='submit'>Rechercher</button>       
-            </div>   
-    
-
-        </form>
-    );
-}
- 
 export default ResearchBar;

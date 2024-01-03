@@ -1,7 +1,6 @@
 import { useController, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { number, optional, string, z } from "zod";
-import { Select } from "@mui/material";
 import { useState } from "react";
 import { errorToast } from "../utils/helpers";
 
@@ -27,7 +26,7 @@ const RegisterForm = ({ onRegister }) => {
       vehicleModel: currentTab === 1 ? optional(string()) : string().min(1),
       vehicleBrand: currentTab === 1 ? optional(string()) : string().min(1),
       vehicleYear:
-        currentTab === 1 ? optional(number().positive()) : number().positive(),
+        currentTab === 1 ? optional(string().min(2)) : string().min(2),
       vehicleMatricule: currentTab === 1 ? optional(string()) : string().min(1),
       vehicleMaxPlace:
         currentTab === 1 ? optional(number().positive()) : number().positive(),
@@ -53,10 +52,7 @@ const RegisterForm = ({ onRegister }) => {
     resolver: zodResolver(schema),
   });
   const { field: userTypeField } = useController({ name: "type", control });
-  const { field: vehicleYearField } = useController({
-    name: "vehicleYear",
-    control,
-  });
+
   const { field: maxPlaceField } = useController({
     name: "vehicleMaxPlace",
     control,
@@ -220,11 +216,7 @@ const RegisterForm = ({ onRegister }) => {
                 type="number"
                 min="1950"
                 max={yearMax}
-                value={vehicleYearField.value}
-                onChange={(data) => {
-                  const year = Number(data.target.value);
-                  vehicleYearField.onChange(year);
-                }}
+                {...register("vehicleYear")}
               />
             </div>
 

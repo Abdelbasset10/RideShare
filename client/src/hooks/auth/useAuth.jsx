@@ -4,17 +4,23 @@ import { useCookies } from "react-cookie";
 import { BASE_URL } from "../../utils/globals";
 import axios from "axios";
 import { fetchFnc } from "../../utils/fetch";
+import { useLocalStorage } from "./useLocalStorage";
 
 export const useAuth = () => {
   const { user, addUser, removeUser } = useUser();
   const [cookies] = useCookies(["user"]);
+  const { setItem, getItem, removeItem } = useLocalStorage();
 
   useEffect(() => {
-    const user = cookies.user;
+    const user = getItem("user");
+    console.log("🚀 ~ file: useAuth.jsx:16 ~ useEffect ~ user:", user);
+
     if (user) {
       addUser(user);
+    } else {
+      removeUser();
     }
-  });
+  }, []);
 
   const login = async (userCredentials) => {
     const form = new FormData();
@@ -22,21 +28,21 @@ export const useAuth = () => {
       form.append(key, userCredentials[key]);
     }
 
-    return new Promise((resolve, reject) => {
-      fetchFnc({
+    try {
+      const data = await fetchFnc({
         url: "auth/sign-in",
         method: "POST",
         data: form,
-      })
-        .then((data) => {
-          console.log("🚀 ~ file: useAuth.jsx:31 ~ .then ~ data:", data);
-          resolve(data);
-        })
-        .catch((e) => {
-          console.log("🚀 ~ file: useAuth.jsx:35 ~ login ~ e:", e);
-          reject(e);
-        });
-    });
+      });
+      console.log("🚀 ~ file: useAuth.jsx:36 ~ login ~ data:", data);
+      let user = data.data.user;
+      user.apiKey = data.data.token;
+
+      addUser(user);
+      return "Utilisateur crée ave succes";
+    } catch (e) {
+      throw e || e?.message;
+    }
   };
 
   const logout = () => {

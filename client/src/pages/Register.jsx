@@ -8,8 +8,11 @@ import { fetchFnc } from "../utils/fetch";
 import { useAuth } from "../hooks/auth/useAuth";
 import { errorToast, successToast } from "../utils/helpers";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const onRegister = async (data) => {
     const formData = new FormData();
 
@@ -27,17 +30,19 @@ const Register = () => {
       formData.append(key, data[key]);
     }
 
-    fetchFnc({
-      url: "auth/sign-up",
-      method: "post",
-      headers: {
-        "Content-Type": "multipart/form-data",
-        "Access-Control-Allow-Origin": "*",
-      },
-      data: data,
-    })
-      .then((successMsg) => successToast(successMsg))
-      .catch((errMsg) => errorToast(errMsg));
+    console.log(`type de placeMax`, formData);
+
+    try {
+      const successMsg = await fetchFnc({
+        url: "auth/sign-up",
+        method: "post",
+        data: data,
+      });
+      navigate("login");
+      successToast(successMsg);
+    } catch (errMsg) {
+      errorToast(errMsg);
+    }
   };
 
   return (

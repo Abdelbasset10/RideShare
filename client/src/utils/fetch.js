@@ -1,32 +1,24 @@
 import axios from "axios";
 import { BASE_URL } from "./globals";
 
-export const fetchFnc = ({ url, method = "GET", headers = {}, data = {} }) => {
+export const fetchFnc = async ({
+  url,
+  method = "GET",
+  headers = {},
+  data = {},
+}) => {
   url = `${BASE_URL}/${url}`;
+  headers["Access-Control-Allow-Origin"] = "*";
 
-  return new Promise((resolve, reject) => {
-    axios({
+  try {
+    const res = await axios({
       method: method,
       url: url,
       data: data,
-    })
-      .then((res) => {
-        if (!res.ok) {
-          return res.json().then((errorData) => {
-            reject(errorData.message || "Unknown error occurred");
-          });
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (data.ok) {
-          resolve(data);
-        } else {
-          reject(data.message || "Unknown error occurred");
-        }
-      })
-      .catch((err) => {
-        reject(err?.response?.data?.message || err?.message);
-      });
-  });
+      headers: headers,
+    });
+    return res;
+  } catch (e) {
+    throw e?.response?.data?.message || "Erreur lors de la connexion";
+  }
 };

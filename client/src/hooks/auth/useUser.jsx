@@ -1,21 +1,22 @@
 import { useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useCookies } from "react-cookie";
-
+import { useLocalStorage } from "./useLocalStorage";
 
 export const useUser = () => {
   const { user, setUser } = useContext(AuthContext);
-  const  [cookies,setCookie, removeCookie] = useCookies(['user']);
+  const { setItem, removeItem } = useLocalStorage();
 
-  const addUser = (user) => {
-    setUser(user);
-    setCookie("user", JSON.stringify(user));
+  const addUser = (userData) => {
+    console.log("🚀 ~ file: useUser.jsx:10 ~ addUser ~ setUser:", setUser);
+    setUser(userData);
+    setItem("user", userData);
   };
 
   const removeUser = () => {
     setUser(null);
-    removeCookie("user");
+    removeItem("user");
   };
 
-  return { user, addUser, removeUser };
+  return { user, addUser, removeUser, setUser };
 };

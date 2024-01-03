@@ -12,8 +12,9 @@ import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import AddRoute from "./pages/AddRoute";
 import { CookiesProvider } from "react-cookie";
-import {  AuthContextProvider} from "./contexts/AuthContext";
 import { useAuth } from "./hooks/auth/useAuth";
+import { AuthContext } from "./contexts/AuthContext";
+import { useEffect, useMemo, useState } from "react";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,13 +33,19 @@ const router = createBrowserRouter(
 );
 
 const App = () => {
-  const { user,setUser } = useAuth();
-  
+  const [user, setUser] = useState(null);
+  const value = useMemo(() => ({ user, setUser }), [user]);
+
   return (
     <CookiesProvider>
-      <AuthContextProvider value={{ user, setUser }}>
-        <RouterProvider router={router} />
-      </AuthContextProvider>
+      <AuthContext.Provider value={value}>
+        {useMemo(
+          () => (
+            <RouterProvider router={router} />
+          ),
+          []
+        )}
+      </AuthContext.Provider>
     </CookiesProvider>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import presentationIllustration from "../assets/img/illustrations/illustration_home_page_about.png";
 import FirstIllustration from "../assets/img/illustrations/illustration_how_to_step_1.png";
 import SecondIllustration from "../assets/img/illustrations/illustration_how_to_step_2.png";
@@ -9,32 +9,30 @@ import NearestTrajetsList from "../components/NearestTrajetsList";
 import Footer from "../components/Footer";
 
 import { useGeolocated } from "react-geolocated";
+import useGeolocation from "../hooks/localization/useGeolocation";
+import { AuthContext } from "../contexts/AuthContext";
+
+//TODO
+//import Tooltip from "@mui/material/Tooltip";
+//import IconButton from "@mui/material/IconButton";
+//import HelpIcon from "@mui/icons-material/Help";
+//import Zoom from "@mui/material/Zoom";
 
 const Home = () => {
-  const [userData, setUserData] = useState({});
   const trajets = {
     trajets: [{}],
   };
 
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(success, error);
-  } else {
-    console.log("Geolocation not supported");
-  }
+  const { position, error } = useGeolocation();
 
-  function success(position) {
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-  }
-
-  function error() {
-    console.log("Unable to retrieve your location");
-  }
+  const tooltipText = error
+    ? `Trajets récuperes par date d'ajout du a une erreur lors de la localisation`
+    : `Trajets récuperes par trajet plus proche de votre position`;
 
   const onSearch = (e) => {
     console.log("🚀 ~ file: Home.jsx:11 ~ onSearch ~ e:", e);
   };
+
   return (
     <main className="main-section">
       <section className="w-full bg-bg-green-dark">
@@ -63,7 +61,9 @@ const Home = () => {
         <div className="w-8/12 m-auto">
           <div className="header">
             <p>Parcourez les Offres de Covoiturage</p>
-            <h1>Trajets disponibles</h1>
+            <div className="flex justify-center items-start">
+              <h1 className="mr-1">Trajets disponibles</h1>
+            </div>
           </div>
 
           <NearestTrajetsList trajets={trajets} />

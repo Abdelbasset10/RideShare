@@ -1,11 +1,9 @@
 import { useController, useForm } from "react-hook-form";
 import { useAuth } from "../hooks/auth/useAuth";
-import { validateDate } from "@mui/x-date-pickers/internals";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { string, z } from "zod";
-import { redirect, useNavigate, useNavigation } from "react-router-dom";
-import { toast } from "react-toastify";
+import { redirect, useNavigate } from "react-router-dom";
 import { errorToast, successToast } from "../utils/helpers";
 
 import manIllustration from "../assets/img/illustrations/illustration_man_sitting.png";
@@ -28,17 +26,14 @@ const Login = () => {
   const { errors: formErrors } = formState;
 
   const handleLogin = async (data) => {
-    login(data)
-      .then((res) => {
-        console.log("🚀 ~ file: Login.jsx:31 ~ handleLogin ~ res:", res);
-
-        navigate("/");
-        successToast("Connexion effectué avec succès");
-      })
-      .catch((errMessage) => {
-        console.error(errMessage);
-        errorToast(`${errMessage} : Impossible de vous connecter`);
-      });
+    try {
+      await login(data);
+      navigate("/");
+      successToast("Connexion effectué avec succès");
+    } catch (errMessage) {
+      console.error(errMessage);
+      errorToast(`${errMessage} : Impossible de vous connecter`);
+    }
   };
 
   return (
