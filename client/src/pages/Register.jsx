@@ -38,8 +38,8 @@ const Register = () => {
         method: "post",
         data: data,
       });
-      navigate("login");
-      successToast(successMsg);
+      navigate("/login");
+      successToast("Utilisateur crée avec succes");
     } catch (errMsg) {
       errorToast(errMsg);
     }
