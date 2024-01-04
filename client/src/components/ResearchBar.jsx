@@ -23,7 +23,7 @@ const ResearchBar = ({ onSearch }) => {
   const { departure, destination, date, time } = userData;
   const formRef = useRef(null);
   /////////////////////////////////////////////////////////
-  const DefaultLocation = { lat: 36.75, long: 3.05 };
+  const DefaultLocation = { lat: 36.75, lng: 3.05 };
   const DefaultZoom = 10;
 
   const geoLocDest = useRef(null);
@@ -32,7 +32,8 @@ const ResearchBar = ({ onSearch }) => {
   const [isDepartMapOpen, setIsDepartMapOpen] = useState(false);
   const [isDestMapOpen, setIsDestMapOpen] = useState(false);
 
-  const [departCoord, setDepartCoord] = useState(DefaultLocation);
+  const [departCoord, setDepartCoord] = useState(null);
+  const [destCoord, setDestCoord] = useState(null);
   const [location, setLocation] = useState(defaultLocation);
 
   /////////////////////////////////////////////////
@@ -86,29 +87,49 @@ const ResearchBar = ({ onSearch }) => {
               className="cursor-pointer"
               onClick={() => setIsDepartMapOpen(true)}
             >
-              Départ
+              {departCoord
+                ? `${departCoord.lng.toFixed(3)}, ${departCoord.lat.toFixed(3)}`
+                : "Depart"}
             </p>
             {isDepartMapOpen && (
-              <div className="departure-map">
-                <ResearchBarMap
-                  setCoord={setDepartCoord}
-                  coord={departCoord}
-                  setIsMapOpen={setIsDepartMapOpen}
-                />
-              </div>
+              <ResearchBarMap
+                defaultLoc={DefaultLocation}
+                setCoord={setDepartCoord}
+                coord={departCoord}
+                setIsMapOpen={setIsDepartMapOpen}
+              />
             )}
           </div>
           <hr className="separator" />
         </div>
 
-        <div className="category !text-bg-green-dark research-destination col-span-3">
+        <div className="category research-departure col-span-3">
           <img src={destionationIcon} alt="Destination" />
+          <div className="research-input">
+            <p
+              className="cursor-pointer"
+              onClick={() => setIsDestMapOpen(true)}
+            >
+              {destCoord
+                ? `${destCoord.lng.toFixed(3)}, ${destCoord.lat.toFixed(3)}`
+                : "Destination"}
+            </p>
+          </div>
+          {isDestMapOpen && (
+            <div className="departure-map">
+              <ResearchBarMap
+                defaultLoc={DefaultLocation}
+                setCoord={setDestCoord}
+                coord={destCoord}
+                setIsMapOpen={setIsDestMapOpen}
+              />
+            </div>
+          )}
           <hr className="separator" />
         </div>
 
         <div className="category research-date col-span-2">
-          <img src={dateIcon} alt="Date Depart" />
-          <input className="research-input" type="text" placeholder="Date" />
+          <input className="research-input" type="date" placeholder="Date" />
           <hr className="separator" />
         </div>
 
@@ -118,7 +139,7 @@ const ResearchBar = ({ onSearch }) => {
             src={timeIcon}
             alt="Heure Depart"
           />
-          <input placeholder="Heure" className="research-input" type="text" />
+          <input placeholder="Heure" className="research-input" type="time" />
         </div>
 
         <div

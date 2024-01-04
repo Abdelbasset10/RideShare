@@ -17,7 +17,7 @@
 /***************************************/
 
 .home-research-bar .research-input {
-    @apply py-1.5 placeholder:text-bg-green-dark w-full
+    @apply py-1.5 placeholder:text-bg-green-dark w-full relative
 }
 
 .home-research-bar input {
@@ -26,4 +26,25 @@
 
 .home-research-bar .research-submit {
     @apply bg-orange text-white flex justify-center items-center w-full h-full px-1.5 rounded-full rounded-l-none
+}
+
+.research-map-container {
+    position: fixed;
+    width: 86vw;
+    height: 70vh;
+    top: 50%;
+    left: 50%;
+    margin-top: -35vh;
+    /* Negative half of height. */
+    margin-left: -43vw;
+
+    @apply z-10;
+}
+
+.research-map-container .map-container {
+    @apply w-full h-full z-10
+}
+
+.research-map-container .done-btn {
+    @apply bg-white ring-4 ring-bg-green-dark rounded-2xl animate-bounce z-20 text-bg-green-dark px-5 py-1.5 text-xl absolute left-[45%] right-[45%] top-5
 }

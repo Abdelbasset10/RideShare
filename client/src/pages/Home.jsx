@@ -11,6 +11,7 @@ import Footer from "../components/Footer";
 import { useGeolocated } from "react-geolocated";
 import useGeolocation from "../hooks/localization/useGeolocation";
 import { AuthContext } from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 //TODO
 //import Tooltip from "@mui/material/Tooltip";
@@ -33,8 +34,10 @@ const Home = () => {
     console.log("🚀 ~ file: Home.jsx:11 ~ onSearch ~ e:", e);
   };
 
+  
+
   return (
-    <main className="main-section">
+    <main className="main-section ">
       <section className="w-full bg-bg-green-dark">
         <div className="presentation-wrapper">
           <div className="presentation-part-upper">
