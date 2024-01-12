@@ -4,8 +4,8 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import Home from "./pages/Home";
-import RootLayout from "./layouts/RootLayout";
+import Home from "./pages/Home.tsx";
+import RootLayout from "./layouts/RootLayout.tsx";
 import Login from "./pages/Login";
 import SearchRoute from "./pages/SearchRoute";
 import Register from "./pages/Register";
@@ -13,8 +13,9 @@ import NotFound from "./pages/NotFound";
 import AddRoute from "./pages/AddRoute";
 import { CookiesProvider } from "react-cookie";
 import { useAuth } from "./hooks/auth/useAuth";
-import { AuthContext } from "./contexts/AuthContext";
-import { useEffect, useMemo, useState } from "react";
+import { AuthContext } from "./contexts/AuthContext.tsx";
+import { FC, useMemo, useState } from "react";
+import React from "react";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,19 +33,13 @@ const router = createBrowserRouter(
   )
 );
 
-const App = () => {
+const App: FC = () => {
   const [user, setUser] = useState(null);
-  const value = useMemo(() => ({ user, setUser }), [user]);
 
   return (
     <CookiesProvider>
-      <AuthContext.Provider value={value}>
-        {useMemo(
-          () => (
-            <RouterProvider router={router} />
-          ),
-          []
-        )}
+      <AuthContext.Provider value={{ user: user, setUser: setUser }}>
+        <RouterProvider router={router} />
       </AuthContext.Provider>
     </CookiesProvider>
   );
