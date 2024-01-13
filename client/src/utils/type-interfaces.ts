@@ -1,3 +1,5 @@
+import { z, string } from "zod";
+
 export interface User {
   id: string;
   first_name: string;
@@ -15,7 +17,7 @@ enum Gender {
   FEMALE = "FEMALE",
 }
 
-enum UserTypes {
+export enum UserTypes {
   CHAUFFEUR = "CHAUFFEUR",
   ADMIN = "ADMIN",
   VOYAGEUR = "VOYAGEUR",

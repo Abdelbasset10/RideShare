@@ -12,9 +12,8 @@ export default function RootLayout() {
       <Navbar />
       <main>
         <Outlet />
-
-        <Footer />
       </main>
+      <Footer />
     </div>
   );
 }

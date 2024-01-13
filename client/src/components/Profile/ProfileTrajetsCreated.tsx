@@ -3,14 +3,15 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const ProfileAccount = () => {
+const ProfileTrajetsCreated = () => {
   const [activePanel, setActivePanel] = useState(1);
 
-const schema = z.object({
+  const schema = z.object({});
 
-}
-
-  const { register, handleSubmit, errors } = useForm({resolver: zodResolver(schema)});
+  const { register, handleSubmit, formState } = useForm({
+    resolver: zodResolver(schema),
+  });
+  const errors = formState.errors;
   const handlePanelChange = (panelNumber) => {
     setActivePanel(panelNumber);
   };
@@ -32,7 +33,7 @@ const schema = z.object({
       </nav>
 
       {activePanel === 1 && (
-        <form onSubmit={handleSubmit()}>
+        <form onSubmit={() => {}}>
           <div className="profile-img-wrapper">
             {/* Add the profile picture change functionality here */}
             <label htmlFor="profilePicture">Profile Picture:</label>
@@ -68,4 +69,4 @@ const schema = z.object({
   );
 };
 
-export default ProfileAccount;
+export default ProfileTrajetsCreated;

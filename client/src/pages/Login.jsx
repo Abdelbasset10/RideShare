@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { string, z } from "zod";
 import { redirect, useNavigate } from "react-router-dom";
-import { errorToast, successToast } from "../utils/helpers";
+import { errorToast, successToast } from "../utils/helpers.ts";
 
 import manIllustration from "../assets/img/illustrations/illustration_man_sitting.png";
 import avatarIcon from "../assets/img/icons/icon_avatar.png";

@@ -1,0 +1,70 @@
+.profile-section {
+    @apply w-8/12 m-auto flex justify-center items-center;
+    height: calc(100vh - 80px - 60px);
+}
+
+.profile-section-wrapper {
+    @apply py-10 h-full w-full grid grid-cols-9 gap-x-5 justify-center items-center
+}
+
+/* LEFT PART */
+
+.profile-left-part {
+    @apply px-5 py-6 h-full col-span-2 bg-beige flex flex-col justify-between items-start
+}
+
+.profile-links-list {
+    @apply flex flex-col justify-start items-start
+}
+
+.profile-links-list .links-item {
+    @apply flex mb-4 cursor-pointer justify-start items-center text-bg-green-dark hover:font-bold
+}
+
+.profile-links-list .links-item img {
+    @apply h-5 w-5 mr-2
+}
+
+/* RIGHT PART WRAPPER */
+
+.profile-right-part {
+    @apply h-full col-span-7 w-full bg-beige
+}
+
+/* Account Right Part */
+
+.profile-account-wrapper {
+    @apply h-full py-6 px-10
+}
+
+.profile-account-navbar ul {
+    @apply flex justify-start items-center
+}
+
+.profile-account-navbar li {
+    @apply mr-6 cursor-pointer font-bold text-black opacity-70 hover:opacity-100 hover:text-bg-green-dark border-b-2 border-black hover:border-bg-green-dark
+}
+
+.profile-account-navbar .active {
+    @apply opacity-100 text-bg-green-dark border-bg-green-dark
+}
+
+.account-profile-informations-wrapper {
+    @apply h-full flex flex-col justify-between items-start pb-6
+}
+
+.profile-account-form {
+    @apply h-full
+}
+
+.profile-account-form .form-group {
+    @apply text-bg-green-dark
+}
+
+.profile-account-form .form-row input, .profile-account-form .form-row select {
+    @apply border-2 border-bg-green-dark rounded-sm px-1 py-1
+}
+
+.account-profile-img-wrapper {
+    @apply flex-col flex justify-start items-start mt-4
+}
