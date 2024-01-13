@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthContext } from "../../contexts/AuthContext";
+import { AuthContext } from "../../contexts/AuthContext.tsx";
 import { useCookies } from "react-cookie";
 import { useLocalStorage } from "./useLocalStorage";
 

@@ -4,20 +4,14 @@ import FirstIllustration from "../assets/img/illustrations/illustration_how_to_s
 import SecondIllustration from "../assets/img/illustrations/illustration_how_to_step_2.png";
 import ThirdIllustration from "../assets/img/illustrations/illustration_how_to_step_3.png";
 
-import ResearchBar from "../components/ResearchBar";
-import NearestTrajetsList from "../components/NearestTrajetsList";
-import Footer from "../components/Footer";
+import ResearchBar from "../components/ResearchBar.jsx";
+import NearestTrajetsList from "../components/NearestTrajetsList.jsx";
 
 import { useGeolocated } from "react-geolocated";
-import useGeolocation from "../hooks/localization/useGeolocation";
-import { AuthContext } from "../contexts/AuthContext";
+import useGeolocation from "../hooks/localization/useGeolocation.jsx";
+import { AuthContext } from "../contexts/AuthContext.tsx";
 import { useNavigate } from "react-router-dom";
-
-//TODO
-//import Tooltip from "@mui/material/Tooltip";
-//import IconButton from "@mui/material/IconButton";
-//import HelpIcon from "@mui/icons-material/Help";
-//import Zoom from "@mui/material/Zoom";
+import React from "react";
 
 const Home = () => {
   const trajets = {
@@ -30,11 +24,7 @@ const Home = () => {
     ? `Trajets récuperes par date d'ajout du a une erreur lors de la localisation`
     : `Trajets récuperes par trajet plus proche de votre position`;
 
-  const onSearch = (e) => {
-    console.log("🚀 ~ file: Home.jsx:11 ~ onSearch ~ e:", e);
-  };
-
-  
+  const onSearch = (e) => {};
 
   return (
     <main className="main-section ">
@@ -130,8 +120,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </main>
   );
 };

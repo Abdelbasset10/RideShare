@@ -1,7 +1,8 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import { ToastContainer } from "react-toastify";
+import Navbar from "../components/Navbar.tsx";
 import { useAuth } from "../hooks/auth/useAuth";
+import React from "react";
+import Footer from "../components/Footer.tsx";
 
 export default function RootLayout() {
   const { user } = useAuth();
@@ -12,6 +13,7 @@ export default function RootLayout() {
       <main>
         <Outlet />
       </main>
+      <Footer />
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import rideshareLogo from "../assets/img/logo.png";
 import { useContext } from "react";
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from "../contexts/AuthContext.tsx";
+import React from "react";
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);

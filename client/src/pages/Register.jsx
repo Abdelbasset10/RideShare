@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { number, string, z } from "zod";
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../components/RegisterForm.tsx";
 import manIllustration from "../assets/img/illustrations/illustration_register_man.png";
 import avatarIcon from "../assets/img/icons/icon_avatar.png";
 import { fetchFnc } from "../utils/fetch";
 import { useAuth } from "../hooks/auth/useAuth";
-import { errorToast, successToast } from "../utils/helpers";
+import { errorToast, successToast } from "../utils/helpers.ts";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
