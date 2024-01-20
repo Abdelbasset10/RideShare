@@ -24,8 +24,7 @@ const Profile = () => {
         return <ProfileAccount />;
 
       case rightMenuTypes.trajets_created:
-        return <div className="w-full">TRAJETS CREES</div>;
-      //return <ProfileTrajetsCreated />;
+        return <ProfileTrajetsCreated />;
 
       case rightMenuTypes.trajets_reserved:
         return <div className="w-full">TRAJETS reserves</div>;
