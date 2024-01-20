@@ -1,71 +1,183 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useContext, useState } from "react";
+import TrajetsGrid from "./TrajetsGrid.tsx";
+import { useFetch } from "../../hooks/fetch/useFetch.jsx";
+import { AuthContext } from "../../contexts/AuthContext.tsx";
+import { Car, Position, Trajet } from "../../utils/type-interfaces.ts";
+import TrajetEdit from "./TrajetEdit.tsx";
+import { redirect } from "react-router-dom";
+import { set } from "react-hook-form";
+import TrajetCreate from "./TrajetCreate.tsx";
 
 const ProfileTrajetsCreated = () => {
-  const [activePanel, setActivePanel] = useState(1);
+  const user = useContext(AuthContext).user;
 
-  const schema = z.object({});
+  const [trajetEdit, setTrajetEdit] = useState<Trajet | null>(null);
+  const [trajetCreate, setTrajetCreate] = useState<boolean>(false);
 
-  const { register, handleSubmit, formState } = useForm({
-    resolver: zodResolver(schema),
-  });
-  const errors = formState.errors;
-  const handlePanelChange = (panelNumber) => {
-    setActivePanel(panelNumber);
+  const position: Position = {
+    id: "1",
+    latitude: "151",
+    longitude: "151",
+    start_trajets: [],
+    end_trajets: [],
+    name: "Paris",
+  };
+  const car: Car = {
+    id: "1",
+    marque: "BMW",
+    model: "X5",
+    max_places: 5,
+    owner: user,
+    trajets: [],
+    matricule: "15151-115-16",
+    year: "2015",
   };
 
+  const loading = false;
+  const error = false;
+  const trajets: Trajet[] = [
+    {
+      id: "1",
+      position_start: position,
+      position_end: position,
+      start_date: "2021-03-01",
+      hour_start: "12:00",
+      price: 10,
+      nb_place: 2,
+      reservations: [],
+      chauffeur: user,
+      car: car,
+    },
+    {
+      id: "2",
+      position_start: position,
+      position_end: position,
+      start_date: "2021-03-01",
+      hour_start: "12:00",
+      price: 10,
+      nb_place: 2,
+      reservations: [],
+      chauffeur: user,
+      car: car,
+    },
+    {
+      id: "3",
+      position_start: position,
+      position_end: position,
+      start_date: "2021-03-01",
+      hour_start: "12:00",
+      price: 10,
+      nb_place: 2,
+      reservations: [],
+      chauffeur: user,
+      car: car,
+    },
+    {
+      id: "4",
+      position_start: position,
+      position_end: position,
+      start_date: "2021-03-01",
+      hour_start: "12:00",
+      price: 10,
+      nb_place: 2,
+      reservations: [],
+      chauffeur: user,
+      car: car,
+    },
+    {
+      id: "5",
+      position_start: position,
+      position_end: position,
+      start_date: "2021-03-01",
+      hour_start: "12:00",
+      price: 10,
+      nb_place: 2,
+      reservations: [],
+      chauffeur: user,
+      car: car,
+    },
+    {
+      id: "6",
+      position_start: position,
+      position_end: position,
+      start_date: "2021-04-01",
+      hour_start: "12:00",
+      price: 10,
+      nb_place: 2,
+      reservations: [],
+      chauffeur: user,
+      car: car,
+    },
+  ];
+
+  //const { loading, value, error } = useFetch(`trajets/created/${user?.id}`);
+
+  const displayTitle = () => {
+    if (trajetEdit === null && !trajetCreate) {
+      return <p>Votre liste de trajets crées</p>;
+    } else if (trajetEdit !== null) {
+      return <p>Modification du trajet</p>;
+    } else if (trajetCreate) {
+      return <p>Création d'un nouveau trajet</p>;
+    }
+  };
   return (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <a onClick={() => handlePanelChange(1)}>Panel 1</a>
-          </li>
-          <li>
-            <a onClick={() => handlePanelChange(2)}>Panel 2</a>
-          </li>
-          <li>
-            <a onClick={() => handlePanelChange(3)}>Panel 3</a>
-          </li>
-        </ul>
+    <main className="trajets-created-wrapper">
+      <nav className="header">
+        <div className="left-part">
+          <h1>Mes Trajets</h1>
+          {displayTitle()}
+        </div>
+
+        <div className="right-part">
+          <button
+            className="add-trajet-btn"
+            onClick={() => {
+              if (trajetCreate || trajetEdit) {
+                setTrajetCreate(false);
+                setTrajetEdit(null);
+              } else {
+                setTrajetCreate(true);
+                setTrajetEdit(null);
+              }
+            }}
+          >
+            {trajetCreate || trajetEdit
+              ? "Retour"
+              : "Ajouter un nouveau trajet"}
+          </button>
+        </div>
       </nav>
 
-      {activePanel === 1 && (
-        <form onSubmit={() => {}}>
-          <div className="profile-img-wrapper">
-            {/* Add the profile picture change functionality here */}
-            <label htmlFor="profilePicture">Profile Picture:</label>
-            <input type="file" id="profilePicture" accept="image/*" />
-          </div>
+      <div className="grid-trajets-wrapper">
+        {loading && <div>Chargement...</div>}
+        {error && <div>Erreur lors du chargement des trajets</div>}
+        {trajets && trajetEdit === null && !trajetCreate && (
+          <TrajetsGrid
+            limit={3}
+            trajets={trajets}
+            actions={[
+              {
+                onClick: (trajet: Trajet) => {
+                  setTrajetEdit(trajet);
+                  setTrajetCreate(false);
+                },
+                label: "Edit",
+                class: "bg-blue-400 text-white",
+              },
+              {
+                onClick: (trajet: Trajet) => console.log("REMOVE", trajet.id),
+                label: "Remove",
+                class: "bg-red-700 text-white",
+              },
+            ]}
+          />
+        )}
 
-          <hr />
-
-          <label htmlFor="name">Nom</label>
-          <input type="text" id="name" />
-
-          <label htmlFor="familyName">Prénom:</label>
-          <input type="text" id="familyName" />
-
-          <label htmlFor="email">Email:</label>
-          <input type="email" id="email" />
-
-          <label htmlFor="phoneNumber">Phone Number:</label>
-          <input type="tel" id="phoneNumber" />
-
-          <label htmlFor="accountType">Account Type:</label>
-          <select id="accountType">
-            <option value="individual">Individual</option>
-            <option value="business">Business</option>
-          </select>
-        </form>
-      )}
-
-      {activePanel === 2 && <div>Panel 2 content</div>}
-
-      {activePanel === 3 && <div>Panel 3 content</div>}
-    </div>
+        {trajetEdit && !trajetCreate && <TrajetEdit trajet={trajetEdit} />}
+        {!trajetEdit && trajetCreate && <TrajetCreate />}
+      </div>
+    </main>
   );
 };
 

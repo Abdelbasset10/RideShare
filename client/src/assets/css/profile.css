@@ -68,3 +68,68 @@
 .account-profile-img-wrapper {
     @apply flex-col flex justify-start items-start mt-4
 }
+
+/****************************************************/
+/*TRAJET CRÉES
+****************************************************/
+
+.trajets-created-wrapper {
+    @apply h-full
+}
+
+.trajets-created-wrapper .header {
+    @apply flex justify-between items-center px-4 py-4
+}
+
+.trajets-created-wrapper .header .left-part {
+    @apply flex flex-col justify-start items-start
+}
+
+.trajets-created-wrapper .header .left-part h1 {
+    @apply text-xl text-bg-green-dark font-bold
+}
+
+.trajets-created-wrapper .header .right-part .add-trajet-btn {
+    @apply bg-bg-green-dark text-sm text-white px-4 py-2 rounded-md cursor-pointer
+}
+
+.grid-trajets-wrapper {
+    @apply h-full w-full mt-4
+}
+
+.grid-trajets {
+    @apply w-full font-normal;
+}
+
+.grid-trajets thead {
+    @apply bg-bg-green-dark text-white text-xs
+}
+
+.grid-trajets thead th {
+    @apply py-3
+}
+
+.grid-trajets tbody {
+    @apply text-sm overflow-x-scroll
+}
+
+.grid-trajets tbody th {
+    @apply py-4 font-normal text-sm overflow-x-scroll;
+    border-bottom: 1px solid #ddd;
+}
+
+.grid-trajets tbody th button {
+    @apply px-2 py-1 rounded-md mr-2
+}
+
+.grid-trajets tfoot .pagination {
+    @apply flex justify-end items-center px-4 py-2
+}
+
+.grid-trajets tfoot .pagination * {
+    @apply mr-2 text-sm
+}
+
+.grid-trajets img {
+    @apply cursor-pointer mr-2
+}

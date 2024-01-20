@@ -18,13 +18,14 @@ import { useAuth } from "./hooks/auth/useAuth";
 import { AuthContext } from "./contexts/AuthContext.tsx";
 import { FC, useMemo, useState } from "react";
 import React from "react";
+import { User } from "./utils/type-interfaces.ts";
 
 const App: FC = () => {
   const [user, setUser] = useState(null);
 
   return (
     <CookiesProvider>
-      <AuthContext.Provider value={{ user: user, setUser: setUser }}>
+      <AuthContext.Provider value={{ user, setUser }}>
         <RouterProvider
           router={createBrowserRouter(
             createRoutesFromElements(

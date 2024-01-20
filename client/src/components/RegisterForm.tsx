@@ -1,9 +1,8 @@
 import { useController, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { number, optional, string, z } from "zod";
 import { useState } from "react";
 import { errorToast } from "../utils/helpers";
-import { number, optional, string, z } from "zod";
-import { UserTypes } from "../utils/type-interfaces.ts";
 import React from "react";
 
 // TODO REGEX
@@ -11,58 +10,27 @@ import React from "react";
 const RegisterForm = ({ onRegister }) => {
   const [currentTab, setCurrentTab] = useState(1);
 
-  const isChauffeur = (data: any) => data.type === UserTypes.CHAUFFEUR;
-
-  // TODO CHECK REGISTER ZOD SCHEMA
   const schema = z
     .object({
       email: string().email(),
-      first_name: string().min(2),
-      last_name: string().min(2),
-      n_tlph: string()
+      firstName: string().min(2),
+      lastName: string().min(2),
+      phoneNumber: string()
         .min(4)
         .regex(new RegExp("^0[567][0-9]{8}$"), "Numéro de telephone invalide"),
-      type: z.enum(Object.values(UserTypes) as [string, ...string[]]), // 'VOYAGEUR' or 'CHAUFFEUR'
+      type: z.enum(["VOYAGEUR", "CHAUFFEUR"]), // 'VOYAGEUR' or 'CHAUFFEUR'
       password: string().min(3),
       passwordConfirm: string().min(3),
       gender: z.enum(["MALE", "FEMALE"]), // 'MALE' or 'FEMALE'
       matricule: string().min(4),
 
-      vehicleModel: z
-        .string()
-        .min(1)
-        .refine(isChauffeur, {
-          message: "Vehicle model is required for chauffeur",
-          path: ["vehicleModel"],
-        }),
-      vehicleBrand: z
-        .string()
-        .min(1)
-        .refine(isChauffeur, {
-          message: "Vehicle brand is required for chauffeur",
-          path: ["vehicleBrand"],
-        }),
-      vehicleYear: z
-        .string()
-        .min(2)
-        .refine(isChauffeur, {
-          message: "Vehicle year is required for chauffeur",
-          path: ["vehicleYear"],
-        }),
-      vehicleMatricule: z
-        .string()
-        .min(1)
-        .refine(isChauffeur, {
-          message: "Vehicle matricule is required for chauffeur",
-          path: ["vehicleMatricule"],
-        }),
-      vehicleMaxPlace: z
-        .number()
-        .positive()
-        .refine(isChauffeur, {
-          message: "Vehicle max place is required for chauffeur",
-          path: ["vehicleMaxPlace"],
-        }),
+      vehicleModel: currentTab === 1 ? optional(string()) : string().min(1),
+      vehicleBrand: currentTab === 1 ? optional(string()) : string().min(1),
+      vehicleYear:
+        currentTab === 1 ? optional(string().min(2)) : string().min(2),
+      vehicleMatricule: currentTab === 1 ? optional(string()) : string().min(1),
+      vehicleMaxPlace:
+        currentTab === 1 ? optional(number().positive()) : number().positive(),
     })
     .refine((data) => data.password === data.passwordConfirm, {
       path: ["passwordConfirm"],
@@ -111,34 +79,33 @@ const RegisterForm = ({ onRegister }) => {
         <>
           <div className="form-row grid-cols-3">
             <div className="form-group ">
-              <label htmlFor="last_name">Nom </label>
+              <label htmlFor="lastName">Nom </label>
               <div className="error-msg">
-                {errors?.last_name?.message?.toString()}
+                {errors?.lastName?.message?.toString() ?? ""}
               </div>
 
-              <input id="last_name" type="text" {...register("last_name")} />
+              <input id="lastName" type="text" {...register("lastName")} />
             </div>
 
             <div className="form-group mr-5">
-              <label htmlFor="first_name">Prénom</label>
+              <label htmlFor="firstName">Prénom</label>
               <div className="error-msg">
-                {errors?.first_name?.message?.toString()}
+                {errors?.firstName?.message?.toString() ?? ""}
               </div>
 
-              <input id="first_name" type="text" {...register("first_name")} />
+              <input id="firstName" type="text" {...register("firstName")} />
             </div>
 
             <div className="form-group">
-              <label htmlFor="n_tlph">Numéro Téléphone</label>
+              <label htmlFor="phoneNumber">Numéro Téléphone</label>
               <div className="error-msg">
-                {errors?.n_tlph?.message?.toString()}
+                {errors?.phoneNumber?.message?.toString() ?? ""}
               </div>
 
               <input
-                id="n_tlph"
-                // END: be15d9bcejpp
+                id="phoneNumber"
                 type="text"
-                {...register("n_tlph")}
+                {...register("phoneNumber")}
               />
             </div>
           </div>
@@ -147,7 +114,7 @@ const RegisterForm = ({ onRegister }) => {
             <div className="form-row form-group">
               <label htmlFor="email">Email</label>
               <div className="error-msg">
-                {errors?.email?.message?.toString()}
+                {errors?.email?.message?.toString() ?? ""}
               </div>
 
               <input id="email" type="email" {...register("email")} />
@@ -156,7 +123,7 @@ const RegisterForm = ({ onRegister }) => {
             <div className="form-group">
               <label htmlFor="matricule">Matricule</label>
               <div className="error-msg">
-                {errors?.matricule?.message?.toString()}
+                {errors?.matricule?.message?.toString() ?? ""}
               </div>
               <input id="matricule" type="text" {...register("matricule")} />
             </div>
@@ -166,7 +133,7 @@ const RegisterForm = ({ onRegister }) => {
             <div className="form-group">
               <label htmlFor="password">Mot de Passe</label>
               <div className="error-msg">
-                {errors?.password?.message?.toString()}
+                {errors?.password?.message?.toString() ?? ""}
               </div>
 
               <input id="password" type="password" {...register("password")} />
@@ -175,7 +142,7 @@ const RegisterForm = ({ onRegister }) => {
             <div className="form-group">
               <label htmlFor="passwordConfirm">Confirmer Mot de Passe</label>
               <div className="error-msg">
-                {errors?.passwordConfirm?.message?.toString()}
+                {errors?.passwordConfirm?.message?.toString() ?? ""}
               </div>
 
               <input
@@ -190,7 +157,7 @@ const RegisterForm = ({ onRegister }) => {
             <div className="form-group">
               <label htmlFor="gender">Sexe</label>
               <div className="error-msg">
-                {errors?.gender?.message?.toString()}
+                {errors?.gender?.message?.toString() ?? ""}
               </div>
 
               <select id="gender" {...register("gender")}>
@@ -203,7 +170,7 @@ const RegisterForm = ({ onRegister }) => {
             <div className="form-group">
               <label htmlFor="typeAccount">Type de compte</label>
               <div className="error-msg">
-                {errors?.type?.message?.toString()}
+                {errors?.type?.message?.toString() ?? ""}
               </div>
 
               <select
@@ -225,7 +192,7 @@ const RegisterForm = ({ onRegister }) => {
           <div className="form-row form-group">
             <label htmlFor="vehicleMatricule">Matricule Véhicule</label>
             <div className="error-msg">
-              {errors?.vehicleMatricule?.message?.toString()}
+              {errors?.vehicleMatricule?.message?.toString() ?? ""}
             </div>
 
             <input
@@ -239,7 +206,7 @@ const RegisterForm = ({ onRegister }) => {
             <div className="form-group">
               <label htmlFor="vehicleBrand">Marque du véhicule</label>
               <div className="error-msg">
-                {errors?.vehicleBrand?.message?.toString()}
+                {errors?.vehicleBrand?.message?.toString() ?? ""}
               </div>
               <input
                 id="vehicleBrand"
@@ -251,7 +218,7 @@ const RegisterForm = ({ onRegister }) => {
             <div className="form-group">
               <label htmlFor="vehicleModel">Modèle Véhicule</label>
               <div className="error-msg">
-                {errors?.vehicleModel?.message?.toString()}
+                {errors?.vehicleModel?.message?.toString() ?? ""}
               </div>
 
               <input
@@ -266,7 +233,7 @@ const RegisterForm = ({ onRegister }) => {
             <div className="form-group">
               <label htmlFor="vehicleYear">Année du Véhicule</label>
               <div className="error-msg">
-                {errors?.vehicleYear?.message?.toString()}
+                {errors?.vehicleYear?.message?.toString() ?? ""}
               </div>
 
               <input
@@ -281,7 +248,7 @@ const RegisterForm = ({ onRegister }) => {
             <div className="form-group">
               <label htmlFor="vehicleMaxPlace">Nombre de Place Max</label>
               <div className="error-msg">
-                {errors?.vehicleMaxPlace?.message?.toString()}
+                {errors?.vehicleMaxPlace?.message?.toString() ?? ""}
               </div>
 
               <input
