@@ -8,11 +8,16 @@
   box-sizing: border-box;
 }
 
+#root, .root-layout {
+  height: 100%;
+}
+
 @layer components {
   @import url("navbar.css");
   @import url("presentation.css");
   @import url("card.css");
   @import url("how-to.css");
+  @import url("research.css");
   @import url("research-bar.css");
   @import url("register.css");
   @import url("login.css");

@@ -1,10 +1,12 @@
 .profile-section {
     @apply w-8/12 m-auto flex justify-center items-center;
     height: calc(100vh - 80px - 60px);
+    
 }
 
 .profile-section-wrapper {
-    @apply py-10 h-full w-full grid grid-cols-9 gap-x-5 justify-center items-center
+    @apply py-10 h-full w-full grid grid-cols-9 gap-x-5 justify-center items-center;
+    overflow: hidden;
 }
 
 /* LEFT PART */

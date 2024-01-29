@@ -5,8 +5,10 @@ interface TrajetsGridProps {
   trajets: Trajet[];
   actions: TrajetsGridActionsButtons[];
   limit?: number;
+  price_label: string;
+  place_label: string;
 }
-const TrajetsGrid = ({ trajets, actions, limit = 10 }: TrajetsGridProps) => {
+const TrajetsGrid = ({ trajets, actions, limit = 10, place_label = "Place(s) restante(s)", price_label = "Prix" }: TrajetsGridProps) => {
   const pageNumbers = trajets.length / limit;
 
   const [page, setPage] = useState(1);
@@ -39,8 +41,8 @@ const TrajetsGrid = ({ trajets, actions, limit = 10 }: TrajetsGridProps) => {
           <th>Lieu Arrivée</th>
           <th>Date Départ</th>
           <th>Heure Départ</th>
-          <th>Prix</th>
-          <th>Place(s) restante(s)</th>
+          <th>{price_label}</th>
+          <th>{place_label}</th>
           <th>Actions</th>
         </tr>
       </thead>

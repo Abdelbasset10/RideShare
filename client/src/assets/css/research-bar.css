@@ -1,5 +1,5 @@
 .home-research-bar {
-    @apply text-bg-green-dark my-10 w-full pl-3 grid grid-cols-12 items-center rounded-full bg-white
+    @apply border-bg-green-dark border text-bg-green-dark my-10 w-full pl-3 grid grid-cols-12 items-center rounded-full bg-white
 }
 
 .home-research-bar .category {
@@ -17,11 +17,11 @@
 /***************************************/
 
 .home-research-bar .research-input {
-    @apply py-1.5 placeholder:text-bg-green-dark w-full relative
+    @apply py-1.5  placeholder:text-bg-green-dark w-full relative
 }
 
 .home-research-bar input {
-    @apply w-full
+    @apply w-full 
 }
 
 .home-research-bar .research-submit {
