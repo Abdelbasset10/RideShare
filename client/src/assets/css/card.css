@@ -69,11 +69,18 @@
 /*****************************************/
 
 .trajet-middle {
+    @apply flex flex-col justify-center items-center
+}
+.trajet-middle > div {
     @apply grid grid-cols-8
     mb-10
     w-full
     px-5
     
+}
+
+.trajet-middle .reserve-btn {
+    @apply w-10/12 bg-orange text-white rounded-md py-0.5 my-2 text-center
 }
 
 .trajet-middle .position-separator {
