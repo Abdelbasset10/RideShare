@@ -19,6 +19,11 @@ import { AuthContext } from "./contexts/AuthContext.tsx";
 import { FC, useMemo, useState } from "react";
 import React from "react";
 import { User } from "./utils/type-interfaces.ts";
+import TrajetCreate from "./components/Profile/TrajetCreate.tsx";
+import Box from "./components/Box.tsx";
+
+
+
 
 const App: FC = () => {
   const [user, setUser] = useState(null);
@@ -58,7 +63,9 @@ const App: FC = () => {
                 />
 
                 <Route path="routes/search" element={<SearchRoute />} />
-                <Route path="routes/add" element={<AddRoute />} />
+                <Route path="routes/add" element={<Box/>} />
+            
+              
 
                 <Route path="*" element={<NotFound />} />
               </Route>
