@@ -53,6 +53,7 @@ model Trajet {
   hour_start  String
   hour_end    String
   nb_place  Int
+  price Float
 
   reservations Reservation[] @relation("reservation for trajet")
 

@@ -97,6 +97,10 @@ const getUser = async (req,res) => {
         const user = await prisma.user.findUnique({
             where:{
                 id
+            },
+            include:{
+                trajets:true,
+                reservations:true
             }
         })
 
@@ -109,6 +113,8 @@ const getUser = async (req,res) => {
         return res.status(500).json({message:error.message})
     }
 }
+
+
 
 
 module.exports = {
