@@ -154,7 +154,14 @@ const getCloseTrajets = async (req,res) => {
                     gte:min_shape_long
                 }
             }
-        }
+        },
+        include:{
+            reservations:true,
+            chaufeur:true,
+            car:true,
+            position_start:true,
+            position_end:true 
+         }
     })
     return res.status(200).json(close_trajets)
     } catch (error) {
@@ -225,9 +232,12 @@ const getAllTrajets = async (req,res) => {
     try {
         const trajets = await prisma.trajet.findMany({
             include:{
-             position_start:true,
-             position_end:true
-            }
+                reservations:true,
+                chaufeur:true,
+                car:true,
+                position_start:true,
+                position_end:true 
+             }
          })
          return res.status(200).json(trajets)
     } catch (error) {
@@ -246,7 +256,14 @@ const getTrajet = async (req,res) => {
     const trajet = await prisma.trajet.findUnique({
         where:{
             id
-        }
+        },
+        include:{
+            reservations:true,
+            chaufeur:true,
+            car:true,
+            position_start:true,
+            position_end:true 
+         }
     })
 
     if(!trajet){
@@ -270,6 +287,13 @@ const getUserTrajets = async (req,res) => {
         const trajets = await prisma.trajet.findMany({
             where:{
                 chauffeur_id:id
+            },
+            include:{
+               reservations:true,
+               chaufeur:true,
+               car:true,
+               position_start:true,
+               position_end:true 
             }
         })
 

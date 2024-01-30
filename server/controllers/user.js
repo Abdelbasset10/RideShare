@@ -79,7 +79,13 @@ const deleteUser = async (req,res) => {
 
 const getUsers = async (req,res) => {
     try {
-        const users = await prisma.user.findMany({})
+        const users = await prisma.user.findMany({
+            include:{
+                trajets:true,
+                reservations:true,
+                car:true
+            }
+        })
         return res.status(200).json(users)
     } catch (error) {
         return res.status(500).json({message:error.message})
@@ -100,7 +106,8 @@ const getUser = async (req,res) => {
             },
             include:{
                 trajets:true,
-                reservations:true
+                reservations:true,
+                car:true
             }
         })
 
