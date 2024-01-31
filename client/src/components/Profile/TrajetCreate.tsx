@@ -10,6 +10,9 @@ import { z, string, optional } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../hooks/auth/useAuth";
 import Remplir from '../../assets/img/icons/Remplir.png';
+import destionationIcon from "../../assets/img/icons/icon_destination.png";
+import ResearchBarMap from "../ResearchBarMap";
+
 
 const TrajetCreate = () => {
   const { user } = useAuth();
@@ -39,6 +42,13 @@ const TrajetCreate = () => {
     console.log("🚀 ~ onUserEdit ~ data:", data);
   };
 
+  const [departCoord, setDepartCoord] = useState(null);
+  const [isDepartMapOpen, setIsDepartMapOpen] = useState(false);
+  const DefaultLocation = { lat: 36.75, lng: 3.05 };
+
+  
+
+
   return (
     <div className="profile-account-wrapper">
       
@@ -58,7 +68,33 @@ const TrajetCreate = () => {
 
                 <hr className="w-full border my-4" />
                 <div className="form-row grid-cols-2">
+
+
                   <div className="form-group">
+                      
+                     
+                      <img src={destionationIcon} alt="Destination" />
+
+                      <div className="research-input">
+                        <p
+                          className="cursor-pointer"
+                          onClick={() => setIsDepartMapOpen(true)}
+                        >
+                          {departCoord
+                            ? `${departCoord?.lng.toFixed(3)}, ${departCoord.lat.toFixed(3)}`
+                            : "Depart"}
+                        </p>
+                        {isDepartMapOpen && (
+                          <ResearchBarMap
+                            defaultLoc={DefaultLocation}
+                            setCoord={setDepartCoord}
+                            coord={departCoord}
+                            setIsMapOpen={setIsDepartMapOpen}
+                          />
+                        )}
+                      </div>
+
+                  
                     <label htmlFor="Lieu_depart">Lieu de Départ:</label>
                     <input
                       id="Lieu_depart"

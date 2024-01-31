@@ -6,6 +6,8 @@ import AdminResearchIcon from "../assets/img/icons/icon-research.png";
 import { useAuth } from "../hooks/auth/useAuth";
 import { useNavigate } from "react-router-dom";
 import { successToast } from "../utils/helpers.ts";
+import AdminProfileTrajets from "../components/Admin/AdminProfileTrajets.tsx";
+import AdminProfileUsers from "../components/Admin/AdminProfileUsers.tsx";
 
 
 const AdminProfile = () => {
@@ -17,9 +19,9 @@ const AdminProfile = () => {
     const displayPanel = () => {
         switch (currentPanel) {
             case "trajets":
-                return <div>trajets</div>
+                return <AdminProfileTrajets />
             case "users":
-                return <div>users</div>
+                return <AdminProfileUsers />
         }
     }
 
@@ -56,7 +58,6 @@ const AdminProfile = () => {
                     navigator("/login");
                     successToast("Déconnexion réussie");
                     logout();
-                
                   }
                   
               }}
@@ -68,10 +69,12 @@ const AdminProfile = () => {
           </div>
 
           <div className="admin-right-part">
-            <nav className="admin-research-bar">
+            <nav className="admin-research-bar mb-2">
               <img className="w-7" src={AdminResearchIcon} alt="#" />
               <input placeholder="Rechercher" />
             </nav>
+
+            <div className="admin-right-part-wrapper">{displayPanel()}</div>
           </div>
         </div>
       </div>

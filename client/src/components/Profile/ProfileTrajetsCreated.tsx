@@ -1,21 +1,35 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Grid from "./Grid.tsx";
 import { useFetch } from "../../hooks/fetch/useFetch.tsx";
 import { AuthContext } from "../../contexts/AuthContext.tsx";
-import { Car, Position, Trajet } from "../../utils/type-interfaces.ts";
+import { Car, Position, Trajet, UserTypes } from "../../utils/type-interfaces.ts";
 import TrajetEdit from "./TrajetEdit.tsx";
-import { redirect } from "react-router-dom";
+import { redirect, useNavigate } from "react-router-dom";
 import { set } from "react-hook-form";
 import TrajetCreate from "./TrajetCreate.tsx";
+import { errorToast } from "../../utils/helpers.ts";
 
 const ProfileTrajetsCreated = ({create = false}) => {
   const user = useContext(AuthContext).user;
-
+  const navigate = useNavigate();
   const [trajetEdit, setTrajetEdit] = useState<Trajet | null>(null);
   const [trajetCreate, setTrajetCreate] = useState<boolean>(create);
+    
+  console.log("car",  user?.car);
+  useEffect(() => {
+    if (!user || user.type !== UserTypes.CHAUFFEUR) {
+      errorToast("Vous n'êtes pas autorisé à accéder à cette page");
+      navigate("/");
+    }
+  }, [trajetEdit, trajetCreate, create]);
+
   
-  
-  let { data, loading, error } : {data: Trajet[] | undefined,loading: boolean | undefined, error: any} =  
+
+  let {
+    data,
+    loading,
+    error,
+  }: { data: Trajet[] | undefined; loading: boolean | undefined; error: any } =
     useFetch({
       url: `trajet/user/${user?.id}`,
       method: "GET",
@@ -23,6 +37,10 @@ const ProfileTrajetsCreated = ({create = false}) => {
         Authorization: `Bearer ${user?.apiKey}`,
       },
     });
+  
+ 
+  
+  
 
 
   /*const position: Position = {

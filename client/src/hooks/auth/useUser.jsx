@@ -8,7 +8,7 @@ export const useUser = () => {
   const { setItem, removeItem } = useLocalStorage();
 
   const addUser = (userData) => {
-    console.log("🚀 ~ file: useUser.jsx:10 ~ addUser ~ setUser:", setUser);
+    removeItem("user");
     setUser(userData);
     setItem("user", userData);
   };
