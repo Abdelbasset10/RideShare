@@ -11,6 +11,7 @@ const prisma = require('./utils/prisma')
 const authRoute = require('./routes/auth')
 const userRoute = require('./routes/user')
 const trajetRoute = require('./routes/trajet')
+const reservationRoute = require('./routes/reservation')
 
 const app = express()
 var upload = multer();
@@ -26,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/auth',authRoute)
 app.use('/trajet',trajetRoute)
 app.use('/user',userRoute)
+app.use('/reservation',reservationRoute)
 
 
 const PORT = process.env.PORT || 5000
