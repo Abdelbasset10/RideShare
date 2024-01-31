@@ -8,11 +8,12 @@ import { redirect } from "react-router-dom";
 import { set } from "react-hook-form";
 import TrajetCreate from "./TrajetCreate.tsx";
 
-const ProfileTrajetsCreated = () => {
+const ProfileTrajetsCreated = ({create = false}) => {
   const user = useContext(AuthContext).user;
 
   const [trajetEdit, setTrajetEdit] = useState<Trajet | null>(null);
-  const [trajetCreate, setTrajetCreate] = useState<boolean>(false);
+  const [trajetCreate, setTrajetCreate] = useState<boolean>(create);
+  
   
   let { data, loading, error } : {data: Trajet[] | undefined,loading: boolean | undefined, error: any} =  
     useFetch({

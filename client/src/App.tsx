@@ -48,7 +48,7 @@ const App: FC = () => {
                   }
                 />
                 <Route
-                  path="profile"
+                  path="profile/:type/:create"
                   element={
                     <ProtectedRoute redirectPath="/" isAllowed={user != null}>
                       <Profile />
