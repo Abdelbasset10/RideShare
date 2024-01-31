@@ -11,6 +11,7 @@ export interface User {
   picture: string;
   gender: Gender;
   car: Car;
+  apiKey: string;
 }
 
 export interface Position {

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import TrajetsGrid from "./TrajetsGrid.tsx";
-import { useFetch } from "../../hooks/fetch/useFetch.jsx";
+import { useFetch } from "../../hooks/fetch/useFetch.tsx";
 import { AuthContext } from "../../contexts/AuthContext.tsx";
 import { Car, Position, Trajet } from "../../utils/type-interfaces.ts";
 import TrajetEdit from "./TrajetEdit.tsx";
@@ -10,9 +10,29 @@ import TrajetCreate from "./TrajetCreate.tsx";
 
 const ProfileTrajetsCreated = () => {
   const user = useContext(AuthContext).user;
+  let data,error,loading;
 
   const [trajetEdit, setTrajetEdit] = useState<Trajet | null>(null);
   const [trajetCreate, setTrajetCreate] = useState<boolean>(false);
+  
+  const ret = useFetch({
+    url: `trajets/user/${user?.id}`,
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${user?.apiKey}`,
+    },
+  });
+
+    
+    data = ret.data;
+    console.log("🚀 ~ ProfileTrajetsCreated ~ data:", data)
+    error = ret.error;
+    console.log("🚀 ~ ProfileTrajetsCreated ~ error:", error)
+    loading = ret.loading;
+    console.log("🚀 ~ ProfileTrajetsCreated ~ loading:", loading)
+    
+
+  
 
   const position: Position = {
     id: "1",
@@ -33,9 +53,7 @@ const ProfileTrajetsCreated = () => {
     year: "2015",
   };
 
-  const loading = false;
-  const error = false;
-  const trajets: Trajet[] = [
+  /*const trajets: Trajet[] = [
     {
       id: "1",
       position_start: position,
@@ -108,10 +126,10 @@ const ProfileTrajetsCreated = () => {
       chauffeur: user,
       car: car,
     },
-  ];
+  ];*/
 
-  //const { loading, value, error } = useFetch(`trajets/created/${user?.id}`);
-
+  data = data || [];
+  
   const displayTitle = () => {
     if (trajetEdit === null && !trajetCreate) {
       return <p>Votre liste de trajets crées</p>;
@@ -152,10 +170,10 @@ const ProfileTrajetsCreated = () => {
       <div className="grid-trajets-wrapper">
         {loading && <div>Chargement...</div>}
         {error && <div>Erreur lors du chargement des trajets</div>}
-        {trajets && trajetEdit === null && !trajetCreate && (
+        {data && trajetEdit === null && !trajetCreate && (
           <TrajetsGrid
             limit={3}
-            trajets={trajets}
+            trajets={data}
             actions={[
               {
                 onClick: (trajet: Trajet) => {

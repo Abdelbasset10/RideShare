@@ -1,7 +1,6 @@
 import { useState } from "react";
 import ResearchBar from "../components/ResearchBar";
 import TrajetCard from "../components/TrajetCard";
-import { useFetch } from "../hooks/fetch/useFetch"; 
 
 
 
@@ -14,7 +13,6 @@ const SearchRoute = () => {
       time:false
     })
 
-    //const {data,loading,error} = useFetch('')
     const filters = [
       {"value":"nearest","label":"Trier par plus proches"},
       {"value":"price","label":"Trier par prix plus bas"},
