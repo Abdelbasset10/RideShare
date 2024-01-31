@@ -10,29 +10,19 @@ import TrajetCreate from "./TrajetCreate.tsx";
 
 const ProfileTrajetsCreated = () => {
   const user = useContext(AuthContext).user;
-  let data,error,loading;
 
   const [trajetEdit, setTrajetEdit] = useState<Trajet | null>(null);
   const [trajetCreate, setTrajetCreate] = useState<boolean>(false);
   
-  const ret = useFetch({
-    url: `trajets/user/${user?.id}`,
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${user?.apiKey}`,
-    },
-  });
+  let { data, loading, error } : {data: Trajet[] | undefined,loading: boolean | undefined, error: any} =  
+    useFetch({
+      url: `trajet/user/${user?.id}`,
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${user?.apiKey}`,
+      },
+    });
 
-    
-    data = ret.data;
-    console.log("🚀 ~ ProfileTrajetsCreated ~ data:", data)
-    error = ret.error;
-    console.log("🚀 ~ ProfileTrajetsCreated ~ error:", error)
-    loading = ret.loading;
-    console.log("🚀 ~ ProfileTrajetsCreated ~ loading:", loading)
-    
-
-  
 
   const position: Position = {
     id: "1",

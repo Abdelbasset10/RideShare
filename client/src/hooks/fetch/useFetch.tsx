@@ -16,7 +16,7 @@ const DEFAULT_OPTIONS = {
  * @param {[]} dependencies
  * @returns
  */
-export const useFetch = async (
+export const useFetch =  (
   {url,
   getQueryOptions = {},
   method = "GET",
