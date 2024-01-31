@@ -18,8 +18,14 @@ import { useAuth } from "./hooks/auth/useAuth";
 import { AuthContext } from "./contexts/AuthContext.tsx";
 import { FC, useMemo, useState } from "react";
 import React from "react";
-import { User, UserTypes } from "./utils/type-interfaces.ts";
+
+
+import { User,UserTypes} from "./utils/type-interfaces.ts";
+import TrajetCreate from "./components/Profile/TrajetCreate.tsx";
+import Box from "./components/Box.tsx";
 import AdminProfile from "./pages/AdminProfile.tsx";
+
+
 
 const App: FC = () => {
   const [user, setUser] = useState<User | any>(null);
@@ -69,7 +75,9 @@ const App: FC = () => {
                 />
 
                 <Route path="routes/search" element={<SearchRoute />} />
-                <Route path="routes/add" element={<AddRoute />} />
+                <Route path="routes/add" element={<Box/>} />
+            
+              
 
                 <Route path="*" element={<NotFound />} />
               </Route>
