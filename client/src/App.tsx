@@ -19,6 +19,7 @@ import { AuthContext } from "./contexts/AuthContext.tsx";
 import { FC, useMemo, useState } from "react";
 import React from "react";
 import { User } from "./utils/type-interfaces.ts";
+import TrajetCard from "./components/TrajetCard.jsx";
 
 const App: FC = () => {
   const [user, setUser] = useState(null);
