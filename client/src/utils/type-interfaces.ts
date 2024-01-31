@@ -54,7 +54,7 @@ export interface Car {
   owner: User | null;
 }
 
-export interface TrajetsGridActionsButtons {
+export interface GridActionsButtons {
   onClick: (trajet: Trajet) => void;
   label: string;
   class: string;

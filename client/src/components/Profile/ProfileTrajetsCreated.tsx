@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import TrajetsGrid from "./TrajetsGrid.tsx";
+import Grid from "./Grid.tsx";
 import { useFetch } from "../../hooks/fetch/useFetch.tsx";
 import { AuthContext } from "../../contexts/AuthContext.tsx";
 import { Car, Position, Trajet } from "../../utils/type-interfaces.ts";
@@ -24,7 +24,7 @@ const ProfileTrajetsCreated = () => {
     });
 
 
-  const position: Position = {
+  /*const position: Position = {
     id: "1",
     latitude: "151",
     longitude: "151",
@@ -43,7 +43,7 @@ const ProfileTrajetsCreated = () => {
     year: "2015",
   };
 
-  /*const trajets: Trajet[] = [
+  const trajets: Trajet[] = [
     {
       id: "1",
       position_start: position,
@@ -129,6 +129,24 @@ const ProfileTrajetsCreated = () => {
       return <p>Création d'un nouveau trajet</p>;
     }
   };
+
+
+  const filteredData = () => {
+
+    return data?.map((trajet) => {
+      const { id, position_start, position_end, start_date, hour_start, price, nb_place } = trajet;
+      return {
+        id,
+        position_start: position_start.name,
+        position_end: position_end.name,
+        start_date,
+        hour_start,
+        price,
+        nb_place,
+      };
+    });
+  }
+
   return (
     <main className="trajets-created-wrapper">
       <nav className="header">
@@ -161,9 +179,10 @@ const ProfileTrajetsCreated = () => {
         {loading && <div>Chargement...</div>}
         {error && <div>Erreur lors du chargement des trajets</div>}
         {data && trajetEdit === null && !trajetCreate && (
-          <TrajetsGrid
+          <Grid
             limit={3}
-            trajets={data}
+            header={["ID","Départ", "Arrivée", "Date", "Heure", "Prix", "Places disponibles", "Actions"]}
+            data={filteredData()}
             actions={[
               {
                 onClick: (trajet: Trajet) => {

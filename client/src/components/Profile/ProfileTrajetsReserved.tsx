@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import TrajetsGrid from "./TrajetsGrid.tsx";
+import Grid from "./Grid.tsx";
 import { useFetch } from "../../hooks/fetch/useFetch.tsx";
 import { AuthContext } from "../../contexts/AuthContext.tsx";
 import { Car, Position, Trajet } from "../../utils/type-interfaces.ts";
@@ -21,7 +21,7 @@ const ProfileTrajetsReserved = () => {
 
   data === undefined ? data = [] : data = data;
 
-  const position: Position = {
+ /* const position: Position = {
     id: "1",
     latitude: "151",
     longitude: "151",
@@ -40,7 +40,7 @@ const ProfileTrajetsReserved = () => {
     year: "2015",
   };
 
-  /*const trajets: Trajet[] = [
+  const trajets: Trajet[] = [
     {
       id: "1",
       position_start: position,
@@ -115,6 +115,29 @@ const ProfileTrajetsReserved = () => {
     },
   ];*/
 
+  const filteredData = () => {
+    return data?.map((trajet) => {
+      const {
+        id,
+        position_start,
+        position_end,
+        start_date,
+        hour_start,
+        price,
+        nb_place,
+      } = trajet;
+      return {
+        id,
+        position_start: position_start.name,
+        position_end: position_end.name,
+        start_date,
+        hour_start,
+        price,
+        nb_place,
+      };
+    });
+  };
+
  
   return (
     <main className="trajets-created-wrapper">
@@ -124,20 +147,26 @@ const ProfileTrajetsReserved = () => {
           <p>Votre liste de réservations</p>
         </div>
 
-        <div className="right-part">
-          
-        </div>
+        <div className="right-part"></div>
       </nav>
 
       <div className="grid-trajets-wrapper">
         {loading && <div>Chargement...</div>}
         {error && <div>Erreur lors du chargement des trajets</div>}
-        {data  && (
-          <TrajetsGrid
-            price_label="Prix Total"
-            place_label="Place(s) réservée(s)"
+        {data && (
+          <Grid
+            header={[
+              "ID",
+              "Départ",
+              "Arrivée",
+              "Date",
+              "Heure",
+              "Prix Total",
+              "Places reserves",
+              "Actions",
+            ]}
+            data={filteredData()}
             limit={3}
-            trajets={data}
             actions={[
               {
                 onClick: (trajet: Trajet) => console.log("REMOVE", trajet.id),
@@ -147,8 +176,6 @@ const ProfileTrajetsReserved = () => {
             ]}
           />
         )}
-
-
       </div>
     </main>
   );
