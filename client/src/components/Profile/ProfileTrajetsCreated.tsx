@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
-import TrajetsGrid from "./TrajetsGrid.tsx";
-import { useFetch } from "../../hooks/fetch/useFetch.jsx";
+import Grid from "./Grid.tsx";
+import { useFetch } from "../../hooks/fetch/useFetch.tsx";
 import { AuthContext } from "../../contexts/AuthContext.tsx";
 import { Car, Position, Trajet } from "../../utils/type-interfaces.ts";
 import TrajetEdit from "./TrajetEdit.tsx";
@@ -8,13 +8,24 @@ import { redirect } from "react-router-dom";
 import { set } from "react-hook-form";
 import TrajetCreate from "./TrajetCreate.tsx";
 
-const ProfileTrajetsCreated = () => {
+const ProfileTrajetsCreated = ({create = false}) => {
   const user = useContext(AuthContext).user;
 
   const [trajetEdit, setTrajetEdit] = useState<Trajet | null>(null);
-  const [trajetCreate, setTrajetCreate] = useState<boolean>(false);
+  const [trajetCreate, setTrajetCreate] = useState<boolean>(create);
+  
+  
+  let { data, loading, error } : {data: Trajet[] | undefined,loading: boolean | undefined, error: any} =  
+    useFetch({
+      url: `trajet/user/${user?.id}`,
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${user?.apiKey}`,
+      },
+    });
 
-  const position: Position = {
+
+  /*const position: Position = {
     id: "1",
     latitude: "151",
     longitude: "151",
@@ -33,8 +44,6 @@ const ProfileTrajetsCreated = () => {
     year: "2015",
   };
 
-  const loading = false;
-  const error = false;
   const trajets: Trajet[] = [
     {
       id: "1",
@@ -108,10 +117,10 @@ const ProfileTrajetsCreated = () => {
       chauffeur: user,
       car: car,
     },
-  ];
+  ];*/
 
-  //const { loading, value, error } = useFetch(`trajets/created/${user?.id}`);
-
+  data = data || [];
+  
   const displayTitle = () => {
     if (trajetEdit === null && !trajetCreate) {
       return <p>Votre liste de trajets crées</p>;
@@ -121,6 +130,24 @@ const ProfileTrajetsCreated = () => {
       return <p>Création d'un nouveau trajet</p>;
     }
   };
+
+
+  const filteredData = () => {
+
+    return data?.map((trajet) => {
+      const { id, position_start, position_end, start_date, hour_start, price, nb_place } = trajet;
+      return {
+        id,
+        position_start: position_start.name,
+        position_end: position_end.name,
+        start_date,
+        hour_start,
+        price,
+        nb_place,
+      };
+    });
+  }
+
   return (
     <main className="trajets-created-wrapper">
       <nav className="header">
@@ -152,10 +179,11 @@ const ProfileTrajetsCreated = () => {
       <div className="grid-trajets-wrapper">
         {loading && <div>Chargement...</div>}
         {error && <div>Erreur lors du chargement des trajets</div>}
-        {trajets && trajetEdit === null && !trajetCreate && (
-          <TrajetsGrid
+        {data && trajetEdit === null && !trajetCreate && (
+          <Grid
             limit={3}
-            trajets={trajets}
+            header={["ID","Départ", "Arrivée", "Date", "Heure", "Prix", "Places disponibles", "Actions"]}
+            data={filteredData()}
             actions={[
               {
                 onClick: (trajet: Trajet) => {

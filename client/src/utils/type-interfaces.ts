@@ -11,6 +11,7 @@ export interface User {
   picture: string;
   gender: Gender;
   car: Car;
+  apiKey: string;
 }
 
 export interface Position {
@@ -53,7 +54,7 @@ export interface Car {
   owner: User | null;
 }
 
-export interface TrajetsGridActionsButtons {
+export interface GridActionsButtons {
   onClick: (trajet: Trajet) => void;
   label: string;
   class: string;
