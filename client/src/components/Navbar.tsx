@@ -3,10 +3,10 @@ import rideshareLogo from "../assets/img/logo.png";
 import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext.tsx";
 import React from "react";
+import { UserTypes } from "../utils/type-interfaces.ts";
 
 const Navbar = () => {
   const { user } = useContext(AuthContext);
-  console.log("🚀 ~ file: Navbar.jsx:8 ~ Navbar ~ user:", user);
 
   return (
     <nav className="navbar ">
@@ -31,9 +31,15 @@ const Navbar = () => {
             </>
           )}
 
-          {user && (
+          {user && user.type !== UserTypes.ADMIN && (
             <Link to="profile" className="profile-btn">
               Profile
+            </Link>
+          )}
+
+          {user && user.type === UserTypes.VOYAGEUR && (
+            <Link to="admin" className="profile-btn">
+              Admin
             </Link>
           )}
         </div>
