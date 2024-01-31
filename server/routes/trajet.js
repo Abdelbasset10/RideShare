@@ -8,7 +8,7 @@ router.post("/create",isSignIn, createTrajet);
 router.get("/",getAllTrajets)
 router.get("/:id",getTrajet)
 router.get("/close",getCloseTrajets)
-router.get("/user",isSignIn,getUserTrajets)
+router.get("/user/:id",isSignIn,getUserTrajets)
 router.patch('/update/:id',isSignIn,updateTrajet)
 router.patch('/reserver/:id',isSignIn,reserverTrajet)
 router.delete('/delete/:id',isSignIn,deleteTrajet)
