@@ -101,6 +101,11 @@ const signIn = async (req, res) => {
       where: {
         email: email,
       },
+      include:{
+        car:true,
+        trajets:true,
+        reservations:true
+      }
     });
 
     if (!isExistsUser) {
