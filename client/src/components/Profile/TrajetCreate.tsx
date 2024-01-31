@@ -1,10 +1,4 @@
-/*import React from "react";
 
-const TrajetCreate = () => {
-  return <div>Creation TRajet</div>;
-};
-
-export default TrajetCreate;*/
 import React, { useEffect, useState } from "react";
 import {
   FieldValues,
@@ -46,7 +40,11 @@ const TrajetCreate = () => {
 
   return (
     <div className="profile-account-wrapper">
-   
+      
+    <div className="font-bold text-2xl text-center relative w-17 h-13 mr-4"> 
+       
+        <p>Veuiller Remplir les Champs Suivants</p> 
+        </div>
       {(activePanel === 1 || activePanel === 2) && (
         <form
           className="profile-account-form"
@@ -80,7 +78,7 @@ const TrajetCreate = () => {
                 <div className="form-row grid-cols-2">
                   <div className="form-group">
                     <label htmlFor="Date_depart">Date de Départ:</label>
-                    <input id="Date_depart" type="Date_depart" />
+                    <input id="Date_depart" type="text" />
                   </div>
 
                   <div className="form-group">
@@ -90,33 +88,31 @@ const TrajetCreate = () => {
                 </div>
 
                 <div className="form-row grid-cols-2">
-                <div className="form-group">
+                  <div className="form-group">
                     <label htmlFor="place_dispo">Places Disponibles:</label>
-                    <input id="place_dispo" type="place_dispo" />
+                    <input id="place_dispo" type="text" />
                   </div>
-                <div className="form-group">
+                  <div className="form-group">
                     <label htmlFor="prix">Prix:</label>
-                    <input id="prix" type="prix" />
+                    <input id="prix" type="text" />
                 </div>
-
-          
                 </div>
-
-
-              </div>
-
+              <div className="flex flex-row justify-center items-center space-x-4" >
               <button
-                className="bg-orange text-white rounded-md px-2.5 py-1"
+                className="bg-orange text-white rounded-md px-2.5 py-1  "
                 type="submit"
               >
                 Ajouter
               </button>
               <button
-                className="bg-orange text-white rounded-md px-2.5 py-1"
+                className="bg-orange text-white rounded-md px-2.5 py-1 "
                 type="submit"
               >
                 Annuler
               </button>
+              </div>
+              </div>
+
             </div>
           )}
 

@@ -59,6 +59,7 @@
 
 .profile-account-form .form-group {
     @apply text-bg-green-dark
+    
 }
 
 .profile-account-form .form-row input, .profile-account-form .form-row select {
