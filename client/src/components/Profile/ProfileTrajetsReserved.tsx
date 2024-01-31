@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import TrajetsGrid from "./TrajetsGrid.tsx";
-import { useFetch } from "../../hooks/fetch/useFetch.jsx";
+import { useFetch } from "../../hooks/fetch/useFetch.tsx";
 import { AuthContext } from "../../contexts/AuthContext.tsx";
 import { Car, Position, Trajet } from "../../utils/type-interfaces.ts";
 import TrajetEdit from "./TrajetEdit.tsx";
@@ -11,8 +11,15 @@ import TrajetCreate from "./TrajetCreate.tsx";
 const ProfileTrajetsReserved = () => {
   const user = useContext(AuthContext).user;
 
-  //const [trajetEdit, setTrajetEdit] = useState<Trajet | null>(null);
-  //const [trajetCreate, setTrajetCreate] = useState<boolean>(false);
+  let { data, loading, error } : {data: Trajet[] | undefined,loading: boolean | undefined, error: any} = useFetch({
+    url: `reservation/${user?.id}`,
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${user?.apiKey}`,
+    },
+  });
+
+  data === undefined ? data = [] : data = data;
 
   const position: Position = {
     id: "1",
@@ -33,9 +40,7 @@ const ProfileTrajetsReserved = () => {
     year: "2015",
   };
 
-  const loading = false;
-  const error = false;
-  const trajets: Trajet[] = [
+  /*const trajets: Trajet[] = [
     {
       id: "1",
       position_start: position,
@@ -108,7 +113,7 @@ const ProfileTrajetsReserved = () => {
       chauffeur: user,
       car: car,
     },
-  ];
+  ];*/
 
  
   return (
@@ -127,12 +132,12 @@ const ProfileTrajetsReserved = () => {
       <div className="grid-trajets-wrapper">
         {loading && <div>Chargement...</div>}
         {error && <div>Erreur lors du chargement des trajets</div>}
-        {trajets  && (
+        {data  && (
           <TrajetsGrid
             price_label="Prix Total"
             place_label="Place(s) réservée(s)"
             limit={3}
-            trajets={trajets}
+            trajets={data}
             actions={[
               {
                 onClick: (trajet: Trajet) => console.log("REMOVE", trajet.id),

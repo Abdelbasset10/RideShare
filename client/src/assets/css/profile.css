@@ -128,6 +128,11 @@
     @apply flex justify-end items-center px-4 py-2
 }
 
+.grid-trajets tfoot .pagination img {
+    @apply w-4 mr-2
+}
+
+
 .grid-trajets tfoot .pagination * {
     @apply mr-2 text-sm
 }

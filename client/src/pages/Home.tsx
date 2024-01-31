@@ -10,7 +10,7 @@ import NearestTrajetsList from "../components/NearestTrajetsList.jsx";
 import { useGeolocated } from "react-geolocated";
 import useGeolocation from "../hooks/localization/useGeolocation.jsx";
 import { AuthContext } from "../contexts/AuthContext.tsx";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import React from "react";
 
 const Home = () => {
@@ -18,6 +18,7 @@ const Home = () => {
     trajets: [{}],
   };
 
+  const navigate = useNavigate();
   const { position, error } = useGeolocation();
 
   const tooltipText = error
@@ -25,6 +26,7 @@ const Home = () => {
     : `Trajets récuperes par trajet plus proche de votre position`;
 
   const onSearch = (e) => {};
+
 
   return (
     <main className="main-section ">
@@ -61,7 +63,10 @@ const Home = () => {
 
           <NearestTrajetsList trajets={trajets} />
 
-          <div className="btn rounded-2xl  w-fit m-auto bg-orange text-white text-lg px-4 py-1">
+          <div
+            onClick={() => {window.scrollTo(0, 0);navigate("/routes/search")}}
+            className="btn hover:cursor-pointer rounded-2xl  w-fit m-auto bg-orange text-white text-lg px-4 py-1"
+          >
             VOIR PLUS
           </div>
         </div>

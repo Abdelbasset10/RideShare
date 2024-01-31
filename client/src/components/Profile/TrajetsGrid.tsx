@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Trajet, TrajetsGridActionsButtons } from "../../utils/type-interfaces";
+import precedentIcon from "../../assets/img/icons/icon_arrow_precedent.png";
+import nextIcon from "../../assets/img/icons/icon_arrow_next.png";
+
 
 interface TrajetsGridProps {
   trajets: Trajet[];
@@ -78,8 +81,8 @@ const TrajetsGrid = ({ trajets, actions, limit = 10, place_label = "Place(s) res
               <p>
                 {(page - 1) * limit + 1} - {page * limit} of {trajets.length}
               </p>
-              <img src="#" alt="Left" onClick={precedentPage} />
-              <img src="#" alt="Right" onClick={nextPage} />
+              <img src={precedentIcon} alt="Left" onClick={precedentPage} />
+              <img src={nextIcon} alt="Right" onClick={nextPage} />
             </div>
           </td>
         </tr>
