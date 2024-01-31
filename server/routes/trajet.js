@@ -1,15 +1,17 @@
 const express = require("express");
-const { createTrajet, reserverTrajet, getCloseTrajets, getAllTrajets, getTrajet, updateTrajet, deleteTrajet} = require("../controllers/trajet");
+const { createTrajet, reserverTrajet, getCloseTrajets, getAllTrajets, getTrajet, updateTrajet, deleteTrajet, getUserTrajets} = require("../controllers/trajet");
+const { isSignIn } = require("../middleware");
 
 const router = express.Router();
 
-router.post("/create", createTrajet);
+router.post("/create",isSignIn, createTrajet);
 router.get("/",getAllTrajets)
 router.get("/:id",getTrajet)
 router.get("/close",getCloseTrajets)
-router.patch('/update/:id',updateTrajet)
-router.patch('/reserver/:id',reserverTrajet)
-router.delete('/delete/:id',deleteTrajet)
+router.get("/user/:id",isSignIn,getUserTrajets)
+router.patch('/update/:id',isSignIn,updateTrajet)
+router.patch('/reserver/:id',isSignIn,reserverTrajet)
+router.delete('/delete/:id',isSignIn,deleteTrajet)
 
 
 

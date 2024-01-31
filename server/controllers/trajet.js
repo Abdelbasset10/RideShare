@@ -2,9 +2,9 @@ const prisma = require('../utils/prisma')
 
 const createTrajet = async (req,res) => {
     try {
-        const { start_date,hour_start,nb_place,chauffeur_id,start_lat,start_long,end_lat,end_long } = req.body;
+        const { start_date,hour_start,nb_place,chauffeur_id,start_lat,start_long,end_lat,end_long,price } = req.body;
 
-        if (!start_date  || !hour_start || !nb_place || !chauffeur_id ||!start_lat || !start_long || !end_lat || !end_long) {
+        if (!start_date  || !hour_start || !nb_place || !chauffeur_id ||!start_lat || !start_long || !end_lat || !end_long || !price) {
           return res.status(400).json({ message: "Make sure to fill all trajets informations!" });
         }
 
@@ -38,6 +38,10 @@ const createTrajet = async (req,res) => {
             return res.status(400).json({message:`nb places must be ${user.car.max_places}`})
         }
 
+        if(price < 0){
+            return res.status(400).json({message:`price cant be < 0`})
+        }
+
         const start_position = await prisma.position.create({
             data:{
                 latitude:start_lat,
@@ -50,6 +54,7 @@ const createTrajet = async (req,res) => {
                 longitude:end_long
             }
         })
+        
 
        await prisma.trajet.create({
         data:{
@@ -149,7 +154,14 @@ const getCloseTrajets = async (req,res) => {
                     gte:min_shape_long
                 }
             }
-        }
+        },
+        include:{
+            reservations:true,
+            chaufeur:true,
+            car:true,
+            position_start:true,
+            position_end:true 
+         }
     })
     return res.status(200).json(close_trajets)
     } catch (error) {
@@ -163,18 +175,24 @@ const updateTrajet = async (req,res) => {
     try {
         const {id} = req.params
 
+        const {userId} = req.body
+
         if(!id){
             return res.status(400).json({message:"Trajet id is required"})
         }
 
     const trajet = await prisma.trajet.findUnique({
         where:{
-            id
+            id,
         }
     })
 
     if(!trajet){
         return res.status(404).json({message:"Trajet does not exists!"})
+    }
+
+    if(trajet.chauffeur_id !== userId){
+        return res.status(400).json({message:"You can't update trajet that's not yours!!"})
     }
 
     if(req.body.start_date){
@@ -214,9 +232,12 @@ const getAllTrajets = async (req,res) => {
     try {
         const trajets = await prisma.trajet.findMany({
             include:{
-             position_start:true,
-             position_end:true
-            }
+                reservations:true,
+                chaufeur:true,
+                car:true,
+                position_start:true,
+                position_end:true 
+             }
          })
          return res.status(200).json(trajets)
     } catch (error) {
@@ -235,7 +256,14 @@ const getTrajet = async (req,res) => {
     const trajet = await prisma.trajet.findUnique({
         where:{
             id
-        }
+        },
+        include:{
+            reservations:true,
+            chaufeur:true,
+            car:true,
+            position_start:true,
+            position_end:true 
+         }
     })
 
     if(!trajet){
@@ -243,6 +271,35 @@ const getTrajet = async (req,res) => {
     }
 
     return res.status(200).json(trajet)
+    } catch (error) {
+        return res.status(500).json({message:error.message})
+    }
+}
+
+const getUserTrajets = async (req,res) => {
+    try {
+        const {id} = req.params
+
+        if(!id){
+            return res.status(400).json({message:"User id is required!"})
+        }
+
+        const trajets = await prisma.trajet.findMany({
+            where:{
+                chauffeur_id:id
+            },
+            include:{
+               reservations:true,
+               chaufeur:true,
+               car:true,
+               position_start:true,
+               position_end:true 
+            }
+        })
+
+
+
+        return res.status(200).json(trajets)
     } catch (error) {
         return res.status(500).json({message:error.message})
     }
@@ -275,7 +332,6 @@ const deleteTrajet = async (req,res) => {
         const trajet = await prisma.trajet.findUnique({
             where:{
                 id,
-                chauffeur_id:userId
             },
             include:{
                 position_start:true,
@@ -284,8 +340,20 @@ const deleteTrajet = async (req,res) => {
         })
 
         if(!trajet){
-            return res.status(401).json({message:"You can't delete trajet that's you are not the owner!"})
+            return res.status(401).json({message:"Trajet does not exists!"})
         }
+
+        if(trajet.chauffeur_id !== userId){
+            return res.status(400).json({message:"You can't delete trajet that's you are not the owner!"})
+        }
+
+        await prisma.position.delete({
+            where:{
+                start_trajets:trajet.position_start,
+                end_trajets:trajet.position_end
+            }
+        })
+
         await prisma.trajet.delete({
             where:{
                 id
@@ -310,5 +378,6 @@ module.exports = {
     getTrajet,
     updateTrajet,
     deleteTrajet,
-    reserverTrajet
+    reserverTrajet,
+    getUserTrajets
 }
