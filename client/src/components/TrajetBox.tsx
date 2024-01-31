@@ -17,7 +17,7 @@ const Box = () => {
         </div>
 
                 <div className="trajet-upper-right"> 
-                    <p className="trajet-prix text-base font-bold text-gray-800">300,00 DA</p>
+                    <p className="trajet-prix text-base font-bold text-gray-800">300,00DA</p>
                 </div>
             </div>
      
