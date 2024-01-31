@@ -37,7 +37,7 @@ const Navbar = () => {
             </Link>
           )}
 
-          {user && user.type === UserTypes.VOYAGEUR && (
+          {user && /*user.type === UserTypes.ADMIN &&*/ (
             <Link to="admin" className="profile-btn">
               Admin
             </Link>
