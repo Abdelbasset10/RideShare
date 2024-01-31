@@ -9,6 +9,7 @@ import {
 import { z, string, optional } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../hooks/auth/useAuth";
+import Remplir from '../../assets/img/icons/Remplir.png';
 
 const TrajetCreate = () => {
   const { user } = useAuth();
@@ -41,8 +42,8 @@ const TrajetCreate = () => {
   return (
     <div className="profile-account-wrapper">
       
-    <div className="font-bold text-2xl text-center relative w-17 h-13 mr-4"> 
-       
+    <div className="font-bold text-2xl w-17 h-10 flex justify-center items-center"> 
+        <img className="w-12"src={Remplir} alt="Remplir icon" />
         <p>Veuiller Remplir les Champs Suivants</p> 
         </div>
       {(activePanel === 1 || activePanel === 2) && (

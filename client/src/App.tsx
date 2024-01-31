@@ -63,7 +63,7 @@ const App: FC = () => {
                 />
 
                 <Route path="routes/search" element={<SearchRoute />} />
-                <Route path="routes/add" element={<Box/>} />
+                <Route path="routes/add" element={<Profile/>} />
             
               
 
