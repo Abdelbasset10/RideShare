@@ -1,7 +1,9 @@
 import { useState } from "react";
 import ResearchBar from "../components/ResearchBar";
 import TrajetCard from "../components/TrajetCard";
-import { useFetch } from "../hooks/fetch/useFetch"; 
+import { Trajet } from "../utils/type-interfaces.ts";
+import { useFetch } from "../hooks/fetch/useFetch.tsx";
+import React from "react";
 
 
 
@@ -14,7 +16,6 @@ const SearchRoute = () => {
       time:false
     })
 
-    //const {data,loading,error} = useFetch('')
     const filters = [
       {"value":"nearest","label":"Trier par plus proches"},
       {"value":"price","label":"Trier par prix plus bas"},
@@ -51,7 +52,21 @@ const SearchRoute = () => {
       });
     }
 
-   
+    let {
+      data,
+      loading,
+      error,
+    }: {
+      data: Trajet[] | undefined,
+      loading: boolean | undefined,
+      error: any,
+    } = useFetch({
+      url: `trajet`,
+      method: "GET",
+      headers: {},
+    });
+
+   data = [] || data; 
     
     return (
       <main className="research">
@@ -59,7 +74,7 @@ const SearchRoute = () => {
           <section className="research-header-wrapper">
             <h1>Rechercher un trajet</h1>
 
-            <ResearchBar />
+            <ResearchBar onSearch={undefined} />
           </section>
 
           <section className="research-body">
@@ -72,13 +87,9 @@ const SearchRoute = () => {
               <div className="research-separator"></div>
 
               <div className="research-result">
-                <TrajetCard trajet={{}} />
-                <TrajetCard trajet={{}} />
-                <TrajetCard trajet={{}} />
-                <TrajetCard trajet={{}} />
-                <TrajetCard trajet={{}} />
-                <TrajetCard trajet={{}} />
-                <TrajetCard trajet={{}} />
+                  {data !== undefined && data.map((trajet: Trajet) => (
+                    <TrajetCard trajet={trajet} />
+                  ))}
               </div>
             </div>
           </section>
