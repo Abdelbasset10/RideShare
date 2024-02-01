@@ -378,10 +378,12 @@ const deleteTrajet = async (req,res) => {
             },
         })
 
-        await prisma.position.delete({
+        await prisma.position.deleteMany({
           where: {
-            start_trajets: trajet.position_start,
-            end_trajets: trajet.position_end,
+            OR: [
+              { id: trajet.position_start.id },
+              { id: trajet.position_end.id },
+            ],
           },
         });
          
