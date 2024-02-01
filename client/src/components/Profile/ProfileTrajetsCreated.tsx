@@ -15,7 +15,6 @@ const ProfileTrajetsCreated = ({create = false}) => {
   const [trajetEdit, setTrajetEdit] = useState<Trajet | null>(null);
   const [trajetCreate, setTrajetCreate] = useState<boolean>(create);
     
-  console.log("car",  user?.car);
   useEffect(() => {
     if (!user || user.type !== UserTypes.CHAUFFEUR) {
       errorToast("Vous n'êtes pas autorisé à accéder à cette page");
@@ -40,104 +39,13 @@ const ProfileTrajetsCreated = ({create = false}) => {
   
  
   
+    
+
+
   
 
-
-  /*const position: Position = {
-    id: "1",
-    latitude: "151",
-    longitude: "151",
-    start_trajets: [],
-    end_trajets: [],
-    name: "Paris",
-  };
-  const car: Car = {
-    id: "1",
-    marque: "BMW",
-    model: "X5",
-    max_places: 5,
-    owner: user,
-    trajets: [],
-    matricule: "15151-115-16",
-    year: "2015",
-  };
-
-  const trajets: Trajet[] = [
-    {
-      id: "1",
-      position_start: position,
-      position_end: position,
-      start_date: "2021-03-01",
-      hour_start: "12:00",
-      price: 10,
-      nb_place: 2,
-      reservations: [],
-      chauffeur: user,
-      car: car,
-    },
-    {
-      id: "2",
-      position_start: position,
-      position_end: position,
-      start_date: "2021-03-01",
-      hour_start: "12:00",
-      price: 10,
-      nb_place: 2,
-      reservations: [],
-      chauffeur: user,
-      car: car,
-    },
-    {
-      id: "3",
-      position_start: position,
-      position_end: position,
-      start_date: "2021-03-01",
-      hour_start: "12:00",
-      price: 10,
-      nb_place: 2,
-      reservations: [],
-      chauffeur: user,
-      car: car,
-    },
-    {
-      id: "4",
-      position_start: position,
-      position_end: position,
-      start_date: "2021-03-01",
-      hour_start: "12:00",
-      price: 10,
-      nb_place: 2,
-      reservations: [],
-      chauffeur: user,
-      car: car,
-    },
-    {
-      id: "5",
-      position_start: position,
-      position_end: position,
-      start_date: "2021-03-01",
-      hour_start: "12:00",
-      price: 10,
-      nb_place: 2,
-      reservations: [],
-      chauffeur: user,
-      car: car,
-    },
-    {
-      id: "6",
-      position_start: position,
-      position_end: position,
-      start_date: "2021-04-01",
-      hour_start: "12:00",
-      price: 10,
-      nb_place: 2,
-      reservations: [],
-      chauffeur: user,
-      car: car,
-    },
-  ];*/
-
   data = data || [];
+  console.log("🚀 ~ ProfileTrajetsCreated ~ data:", data)
   
   const displayTitle = () => {
     if (trajetEdit === null && !trajetCreate) {
@@ -154,13 +62,18 @@ const ProfileTrajetsCreated = ({create = false}) => {
 
     return data?.map((trajet) => {
       const { id, position_start, position_end, start_date, hour_start, price, nb_place } = trajet;
+      //TODO : change position_start and position_end to position_start.name and position_end.name + change price to price + "€"
+      console.log(
+        "🚀 ~ ProfileTrajetsCreated ~ position_end ~ trajet",
+        position_end
+      );
+
       return {
-        id,
         position_start: position_start.name,
         position_end: position_end.name,
         start_date,
         hour_start,
-        price,
+        price: `500 DZD`,
         nb_place,
       };
     });
@@ -199,9 +112,10 @@ const ProfileTrajetsCreated = ({create = false}) => {
         {error && <div>Erreur lors du chargement des trajets</div>}
         {data && trajetEdit === null && !trajetCreate && (
           <Grid
-            limit={3}
-            header={["ID","Départ", "Arrivée", "Date", "Heure", "Prix", "Places disponibles", "Actions"]}
-            data={filteredData()}
+            limit={6}
+            data={data}
+            header={["Départ", "Arrivée", "Date", "Heure", "Prix", "Places disponibles", "Actions"]}
+            filteredData={filteredData()}
             actions={[
               {
                 onClick: (trajet: Trajet) => {

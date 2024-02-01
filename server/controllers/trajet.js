@@ -2,11 +2,31 @@ const prisma = require('../utils/prisma')
 
 const createTrajet = async (req,res) => {
     try {
-        const { start_date,hour_start,nb_place,chauffeur_id,start_lat,start_long,end_lat,end_long,price } = req.body;
+        let {
+          start_date,
+          hour_start,
+          nb_place,
+          chauffeur_id,
+          start_lat,
+          start_long,
+          start_name,
+          end_lat,
+          end_long,
+          end_name,
+          price,
+        } = req.body;
 
-        if (!start_date  || !hour_start || !nb_place || !chauffeur_id ||!start_lat || !start_long || !end_lat || !end_long || !price) {
+        if (!start_date  || !hour_start || !nb_place || !chauffeur_id ||!start_lat || !start_long || !start_name || !end_name || !end_lat || !end_long || !price) {
           return res.status(400).json({ message: "Make sure to fill all trajets informations!" });
         }
+
+        nb_place = parseInt(nb_place)
+        start_lat = parseFloat(start_lat)
+        start_long = parseFloat(start_long)
+        end_lat = parseFloat(end_lat)
+        end_long = parseFloat(end_long)
+        price = parseFloat(price)
+
 
         const user = await prisma.user.findUnique({
             where:{
@@ -44,14 +64,16 @@ const createTrajet = async (req,res) => {
 
         const start_position = await prisma.position.create({
             data:{
-                latitude:start_lat,
-                longitude:start_long
+                latitude: start_lat,
+                longitude: start_long,
+                name: start_name
             }
         })
         const end_position = await prisma.position.create({
             data:{
-                latitude:end_lat,
-                longitude:end_long
+                latitude: end_lat,
+                longitude:end_long,
+                name: end_name
             }
         })
         
@@ -62,6 +84,7 @@ const createTrajet = async (req,res) => {
             hour_end:"18:00",
             hour_start,
             nb_place,
+            price,
             chauffeur_id,
             position_startId:start_position.id,
             position_endId:end_position.id,
@@ -293,7 +316,7 @@ const getUserTrajets = async (req,res) => {
                chaufeur:true,
                car:true,
                position_start:true,
-               position_end:true 
+               position_end:true,
             }
         })
 

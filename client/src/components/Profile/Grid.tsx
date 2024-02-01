@@ -6,11 +6,12 @@ import nextIcon from "../../assets/img/icons/icon_arrow_next.png";
 
 interface GridProps {
   header: string[];
-  data : any[];
+  data: any[];
+  filteredData: any[];
   actions: GridActionsButtons[];
   limit?: number;
 }
-const TrajetsGrid = ({ data, header,actions, limit = 10 }: GridProps) => {
+const TrajetsGrid = ({ filteredData,data, header,actions, limit = 10 }: GridProps) => {
   const pageNumbers = data.length / limit;
 
   const [page, setPage] = useState(1);
@@ -31,8 +32,8 @@ const TrajetsGrid = ({ data, header,actions, limit = 10 }: GridProps) => {
     const start = (page - 1) * limit;
     const end = start + limit;
 
-    if (data.length === 0) return [];
-    return data.slice(start, end);
+    if (filteredData.length === 0) return [];
+    return filteredData.slice(start, end);
   };
 
   return (
@@ -47,9 +48,12 @@ const TrajetsGrid = ({ data, header,actions, limit = 10 }: GridProps) => {
       </thead>
 
       <tbody>
-        {displayData().map((trajet) => {
-          let arr = Object.entries(trajet);
+        {displayData().map((trajetFiltered) => {
+          let arr = Object.entries(trajetFiltered);
+          const dataIndex = filteredData.indexOf(trajetFiltered);
 
+          const trajet = data[dataIndex];
+          
           const thArr = arr.map(([key, value]) => {
             return <th key={key}>{value}</th>;
           });
@@ -68,7 +72,6 @@ const TrajetsGrid = ({ data, header,actions, limit = 10 }: GridProps) => {
                   </button>
                 ))}
               </th>
-              
             </tr>
           );
         })}
@@ -79,7 +82,8 @@ const TrajetsGrid = ({ data, header,actions, limit = 10 }: GridProps) => {
           <td colSpan={7}>
             <div className="pagination">
               <p>
-                {(page - 1) * limit + 1} - {page * limit} of {data.length}
+                {(page - 1) * limit + 1} - {page * limit} of{" "}
+                {filteredData.length}
               </p>
               <img src={precedentIcon} alt="Left" onClick={precedentPage} />
               <img src={nextIcon} alt="Right" onClick={nextPage} />

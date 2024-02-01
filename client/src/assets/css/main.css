@@ -22,6 +22,7 @@ html,body, #root, .root-layout {
   @import url("register.css");
   @import url("login.css");
   @import url("profile.css");
+  @import url("TrajetCreate.css");
 
   @import url("admin/admin-profile.css");
 }

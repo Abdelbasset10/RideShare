@@ -21,100 +21,7 @@ const ProfileTrajetsReserved = () => {
 
   data === undefined ? data = [] : data = data;
 
- /* const position: Position = {
-    id: "1",
-    latitude: "151",
-    longitude: "151",
-    start_trajets: [],
-    end_trajets: [],
-    name: "Paris",
-  };
-  const car: Car = {
-    id: "1",
-    marque: "BMW",
-    model: "X5",
-    max_places: 5,
-    owner: user,
-    trajets: [],
-    matricule: "15151-115-16",
-    year: "2015",
-  };
-
-  const trajets: Trajet[] = [
-    {
-      id: "1",
-      position_start: position,
-      position_end: position,
-      start_date: "2021-03-01",
-      hour_start: "12:00",
-      price: 10,
-      nb_place: 2,
-      reservations: [],
-      chauffeur: user,
-      car: car,
-    },
-    {
-      id: "2",
-      position_start: position,
-      position_end: position,
-      start_date: "2021-03-01",
-      hour_start: "12:00",
-      price: 10,
-      nb_place: 2,
-      reservations: [],
-      chauffeur: user,
-      car: car,
-    },
-    {
-      id: "3",
-      position_start: position,
-      position_end: position,
-      start_date: "2021-03-01",
-      hour_start: "12:00",
-      price: 10,
-      nb_place: 2,
-      reservations: [],
-      chauffeur: user,
-      car: car,
-    },
-    {
-      id: "4",
-      position_start: position,
-      position_end: position,
-      start_date: "2021-03-01",
-      hour_start: "12:00",
-      price: 10,
-      nb_place: 2,
-      reservations: [],
-      chauffeur: user,
-      car: car,
-    },
-    {
-      id: "5",
-      position_start: position,
-      position_end: position,
-      start_date: "2021-03-01",
-      hour_start: "12:00",
-      price: 10,
-      nb_place: 2,
-      reservations: [],
-      chauffeur: user,
-      car: car,
-    },
-    {
-      id: "6",
-      position_start: position,
-      position_end: position,
-      start_date: "2021-04-01",
-      hour_start: "12:00",
-      price: 10,
-      nb_place: 2,
-      reservations: [],
-      chauffeur: user,
-      car: car,
-    },
-  ];*/
-
+ 
   const filteredData = () => {
     return data?.map((trajet) => {
       const {
@@ -156,7 +63,6 @@ const ProfileTrajetsReserved = () => {
         {data && (
           <Grid
             header={[
-              "ID",
               "Départ",
               "Arrivée",
               "Date",
@@ -165,7 +71,8 @@ const ProfileTrajetsReserved = () => {
               "Places reserves",
               "Actions",
             ]}
-            data={filteredData()}
+            data={data}
+            filteredData={filteredData()}
             limit={3}
             actions={[
               {
