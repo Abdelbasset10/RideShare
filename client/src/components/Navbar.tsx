@@ -19,7 +19,7 @@ const Navbar = () => {
         <div className="navbar-right">
           <Link to="/">Acceuil</Link>
           <Link to="/routes/search">Rechercher Trajet</Link>
-          <Link to="/routes/add">Ajouter Trajet</Link>
+          <Link to="/profile/trajets_created/1">Ajouter Trajet</Link>
           {!user && (
             <>
               <Link className="btn-register" to="/register">
@@ -37,8 +37,11 @@ const Navbar = () => {
             </Link>
           )}
 
-          {user && /*user.type === UserTypes.ADMIN &&*/ (
-            <Link to="/admin" className="profile-btn">
+          {user && (
+            /*user.type === UserTypes.ADMIN &&*/ <Link
+              to="/admin"
+              className="profile-btn"
+            >
               Admin
             </Link>
           )}

@@ -59,7 +59,7 @@ model Trajet {
 
   reservations Reservation[] @relation("reservation for trajet")
 
-  chaufeur User? @relation("chauffeur",fields: [chauffeur_id],references: [id])
+  chauffeur User? @relation("chauffeur",fields: [chauffeur_id],references: [id])
   chauffeur_id  String? @db.ObjectId
 
   car Car @relation("car of trajet",fields: [car_id],references: [id])
