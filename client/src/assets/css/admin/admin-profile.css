@@ -1,0 +1,48 @@
+
+
+
+.admin-profile-wrapper {
+    @apply w-full h-full px-10 ;
+    height: calc(100vh - 140px);
+}
+.admin-research-bar {
+    @apply w-[96%] flex  m-auto py-2 px-8 pl-4 rounded-xl mt-4 text-black bg-white
+}
+
+.admin-research-bar input {
+    @apply w-full pl-1 self-center h-full outline-none bg-transparent;
+}
+
+.admin-body {
+    @apply w-full  h-full py-4 grid grid-cols-12 gap-4;
+}
+
+
+.admin-left-part {
+    @apply col-span-2 w-full h-full flex flex-col justify-between items-start;
+}
+.admin-left-part-nav {
+    @apply  flex w-full flex-col items-start justify-start;
+}
+
+.admin-left-part-nav .admin-left-item {
+    @apply w-full flex rounded-xl hover:cursor-pointer items-center justify-start text-black opacity-75 px-4 py-2 my-2 ;
+}
+
+.admin-left-part-nav .admin-left-item img {
+    @apply w-6 mr-2
+}
+
+.admin-left-part-nav  .active {
+    @apply opacity-100  bg-bg-green-dark text-white;
+}
+
+.admin-left-part .admin-signout {
+    @apply w-full rounded-xl px-4 py-2 hover:cursor-pointer bg-beige flex justify-start items-center;
+}
+
+
+
+.admin-right-part {
+    @apply h-full bg-beige rounded-2xl col-span-10;
+}

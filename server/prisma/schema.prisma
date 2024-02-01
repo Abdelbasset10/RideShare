@@ -42,6 +42,8 @@ model Position {
   id   String  @id @default(auto()) @map("_id") @db.ObjectId
   longitude Float
   latitude  Float
+  name  String?
+
 
   start_trajets  Trajet[] @relation("position start of travel")
   end_trajets  Trajet[] @relation("position end of travel")
@@ -53,7 +55,7 @@ model Trajet {
   hour_start  String
   hour_end    String
   nb_place  Int
-  price Float
+  price Float?
 
   reservations Reservation[] @relation("reservation for trajet")
 

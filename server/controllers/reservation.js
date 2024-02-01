@@ -10,7 +10,7 @@ const getUserReservations = async (req,res) => {
 
         const reservations = await prisma.reservation.findMany({
             where:{
-                user_id:id
+                user_id:id,
             },
             include:{
                 trajet:true,
@@ -81,7 +81,77 @@ const updateReservations = async (req,res) => {
     }
 }
 
+const deleteReservation = async (req,res) => {
+    try {
+        const {id} = req.params
+        const {userId} = req.body
+
+        if(!id){
+            return res.status(400).json({message:"Reservation is required"})
+        }
+
+        if(!userId){
+            return res.status(400).json({message:"User who will delete this trajet is required"})
+        }
+
+        const reservation = await prisma.reservation.findUnique({
+            where:{
+                id
+            },
+            include:{
+                trajet:true,
+                user:true
+            }
+        })
+
+        if(!reservation){
+            return res.status(404).json({message:"Reservation does not exists!"})
+        }
+
+        const user = await prisma.user.findUnique({
+            where:{
+                id:userId
+            }
+        })
+
+        if(!user){
+            return res.status(404).json({message:"User does not exists!"})
+        }
+
+        const trajet = await prisma.trajet.findUnique({
+            where:{
+                id:reservation.trajet_id
+            },
+        })
+
+        if(reservation.user_id !== userId || reservation.user_id !== trajet.chauffeur_id){
+            return res.status(401).json({message:'UnAuthorized'})
+        }
+
+        await prisma.trajet.update({
+            where:{
+                id:reservation.trajet_id
+            },
+            data:{
+                nb_place:+ reservation.nb_place,
+            }
+        })
+
+        await prisma.reservation.delete({
+            where:{
+                id
+            }
+        })
+
+        return res.status(200).json({message:"Reservation is deleted"})
+
+    } catch (error) {
+        return res.status(500).json({message:error.message})
+    }
+}
+
 module.exports = {
     getUserReservations,
-    updateReservations
+    updateReservations,
+    deleteReservation
 }

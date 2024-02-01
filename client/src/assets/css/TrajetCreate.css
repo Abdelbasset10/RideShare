@@ -1,45 +1,21 @@
-.placeholder {
-    flex: 1 0 0;
-    letter-spacing: 0.5px;
-  }
-  
-  .placeholder-1 {
-    flex: 1 0 0;
-    letter-spacing: 0.5px;
-  }
-  
-  .frame_2609047 {
-    flex: 1 0 0;
-  }
-  
-  .placeholder-2 {
-    flex: 1 0 0;
-    letter-spacing: 0.5px;
-  }
-  
-  .stock_q {
-    flex: 1 0 0;
-  }
-  
-  .placeholder-3 {
-    flex: 1 0 0;
-    letter-spacing: 0.5px;
-  }
-  
-  .frame_2609047-1 {
-    flex: 1 0 0;
-  }
-  
-  .placeholder-4 {
-    flex: 1 0 0;
-    letter-spacing: 0.5px;
-  }
-  
-  .stock_q-1 {
-    flex: 1 0 0;
-  }
-  
-  .placeholder-5 {
-    flex: 1 0 0;
-    letter-spacing: 0.5px;
+.profile-create-trajet-form {
+  @apply w-full text-bg-green-dark
+}
+
+.profile-create-trajet-form .form-row {
+  @apply w-full
+}
+
+.profile-create-trajet-form .form-group {
+  @apply w-full flex text-bg-green-dark mb-4
+}
+
+.profile-create-trajet-form .research-input {
+  @apply w-full border-2 border-bg-green-dark rounded px-1.5 py-1
+}
+
+.profile-create-trajet-form input[type="text"],.profile-create-trajet-form input[type="number"],.profile-create-trajet-form input[type="date"],.profile-create-trajet-form input[type="time"] {
+  @apply bg-transparent w-full border-2
+   border-bg-green-dark rounded px-1.5 py-1
+     focus:outline-none
   }
