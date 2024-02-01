@@ -24,15 +24,17 @@ import { User,UserTypes} from "./utils/type-interfaces.ts";
 import TrajetCreate from "./components/Profile/TrajetCreate.tsx";
 import Box from "./components/Box.tsx";
 import AdminProfile from "./pages/AdminProfile.tsx";
+import useGeolocation from "./hooks/localization/useGeolocation.jsx";
 
 
 
 const App: FC = () => {
   const [user, setUser] = useState<User | any>(null);
+  const {position,error: errorPos} = useGeolocation();
 
   return (
     <CookiesProvider>
-      <AuthContext.Provider value={{ user, setUser }}>
+      <AuthContext.Provider value={{ user, setUser,position,errorPos }}>
         <RouterProvider
           router={createBrowserRouter(
             createRoutesFromElements(

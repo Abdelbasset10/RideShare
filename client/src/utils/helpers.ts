@@ -32,12 +32,11 @@ export const errorToast = (message) => {
  * @param {object} queryOptions
  */
 export const formatGetQueryOptions = (queryOptions = {}) => {
+  
   let returnValue = "";
-  if (queryOptions.length > 0) {
-    for (let [key, value] of queryOptions.entries()) {
+    for (let [key, value] of Object.entries(queryOptions)) {
       returnValue = `${returnValue}${key}=${value}&`;
       console.log(key + " = " + value);
-    }
   }
 };
 

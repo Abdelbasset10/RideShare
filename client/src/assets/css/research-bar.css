@@ -46,5 +46,9 @@
 }
 
 .research-map-container .done-btn {
-    @apply bg-white ring-4 ring-bg-green-dark rounded-2xl animate-bounce z-20 text-bg-green-dark px-5 py-1.5 text-xl absolute left-[45%] right-[45%] top-5
+    @apply bg-white ring-4 ring-bg-green-dark rounded-2xl animate-bounce z-20 text-bg-green-dark px-5 py-1.5 text-xl absolute left-[40%] right-[45%] top-5
+}
+
+.research-map-container .refresh-btn {
+    @apply  ring-4 ring-red-500 rounded-2xl animate-bounce z-20 bg-red-600 text-white px-5 py-1.5 text-xl absolute left-[53%] right-[45%] top-5
 }

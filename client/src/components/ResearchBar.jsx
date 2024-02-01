@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm, useController } from "react-hook-form";
 
 import destionationIcon from "../assets/img/icons/icon_destination.png";
@@ -9,12 +9,15 @@ import researchIcon from "../assets/img/icons/icon_research.png";
 import { useRef } from "react";
 import ResearchBarMap from "./ResearchBarMap";
 import MapInput from "./Map/MapInput.tsx";
+import useGeolocation from "../hooks/localization/useGeolocation";
+import { AuthContext } from "../contexts/AuthContext.tsx";
 
 const ResearchBar = ({ onSearch }) => {
   const [userData, setUserData] = useState({});
   const [errors, setErrors] = useState({});
 
   const { register, control, handleSubmit } = useForm();
+  const context = useContext(AuthContext);
 
   const { departureField } = useController({ name: "departure", control });
   const { destinationField } = useController({ name: "destination", control });
@@ -24,6 +27,9 @@ const ResearchBar = ({ onSearch }) => {
   const { departure, destination, date, time } = userData;
   const formRef = useRef(null);
   /////////////////////////////////////////////////////////
+  
+
+
   const DefaultLocation = { lat: 36.75, lng: 3.05 };
   const DefaultZoom = 10;
 
@@ -88,7 +94,8 @@ const ResearchBar = ({ onSearch }) => {
             setIsMapOpen={setIsDepartMapOpen}
             coord={departCoord}
             setCoord={setDepartCoord}
-            DefaultLocation={DefaultLocation}
+            displayDefaultLoc={true}
+            DefaultLocation={context.position ? {lat: context.position.latitude,lng: context.position.longitude} : DefaultLocation}
           />
           <hr className="separator" />
         </div>
@@ -100,7 +107,10 @@ const ResearchBar = ({ onSearch }) => {
             setIsMapOpen={setIsDestMapOpen}
             coord={destCoord}
             setCoord={setDestCoord}
-            DefaultLocation={DefaultLocation}
+            displayDefaultLoc={true}
+            label="Destination"
+            DefaultLocation={context.position ? {lat: context.position.latitude,lng: context.position.longitude} : DefaultLocation}
+
           />
           
           <hr className="separator" />

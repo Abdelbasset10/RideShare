@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ResearchBar from "../components/ResearchBar";
-import TrajetCard from "../components/TrajetCard";
+import TrajetCard from "../components/TrajetCard.tsx";
 import { Trajet } from "../utils/type-interfaces.ts";
 import { useFetch } from "../hooks/fetch/useFetch.tsx";
 import React from "react";

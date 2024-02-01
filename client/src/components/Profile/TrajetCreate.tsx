@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   FieldValues,
   SubmitHandler,
@@ -17,6 +17,7 @@ import { fetchFnc } from "../../utils/fetch.js";
 import { useNavigate } from "react-router-dom";
 import { errorToast, successToast } from "../../utils/helpers.ts";
 import { GEOCOD_API_KEY } from "../../utils/globals.js";
+import { AuthContext } from "../../contexts/AuthContext.tsx";
 
 
 const TrajetCreate = () => {
@@ -49,7 +50,7 @@ const TrajetCreate = () => {
 
   const navigate = useNavigate();
 
-
+const context = useContext(AuthContext)
   
 
   const [departCoord, setDepartCoord] = useState(null);
@@ -75,8 +76,7 @@ const TrajetCreate = () => {
       chauffeur_id: user?.id,
     };
 
-    console.log("🚀 ~ onCreateTrajet ~ trajet", trajet);
-    
+
 
     const formData = new FormData();
     formData.append("start_date", trajet.start_date);
@@ -134,7 +134,9 @@ const TrajetCreate = () => {
                   setIsMapOpen={setIsDepartMapOpen}
                   coord={departCoord}
                   setCoord={setDepartCoord}
-                  DefaultLocation={DefaultLocation}
+                  displayDefaultLoc={true}
+                  DefaultLocation={context.position ? {lat: context.position.latitude,lng: context.position.longitude} : DefaultLocation}
+
                 />
               </div>
 
@@ -145,7 +147,10 @@ const TrajetCreate = () => {
                   setIsMapOpen={setIsDestMapOpen}
                   coord={destCoord}
                   setCoord={setDestCoord}
-                  DefaultLocation={DefaultLocation}
+                  displayDefaultLoc={true}
+                  label="Destination"
+                  DefaultLocation={context.position ? {lat: context.position.latitude,lng: context.position.longitude} : DefaultLocation}
+
                 />
               </div>
             </div>
