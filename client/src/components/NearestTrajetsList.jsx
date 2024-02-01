@@ -1,5 +1,5 @@
 import Slider from "react-slick";
-import TrajetCard from "./TrajetCard";
+import TrajetCard from "./TrajetCard.tsx";
 
 function SamplePrevArrow(props) {
     const { className, style, onClick } = props;
@@ -41,14 +41,11 @@ const NearestTrajetsList = ({trajets}) => {
     return (
         <div className="cards-list">
             <Slider {...settings}>
-                 <TrajetCard trajet={{}} />
-                 <TrajetCard trajet={{}} />
-                 <TrajetCard trajet={{}} />
-                 <TrajetCard trajet={{}} />
-                 <TrajetCard trajet={{}} />
-                 <TrajetCard trajet={{}} />
-                 <TrajetCard trajet={{}} />
-                 <TrajetCard trajet={{}} />
+
+                  {trajets.map((trajet) => {
+                    return <TrajetCard trajet={trajet} />
+                  })}
+                 
             </Slider>    
         </div>
     );

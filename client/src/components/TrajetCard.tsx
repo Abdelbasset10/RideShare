@@ -4,19 +4,25 @@ import TimeIcon from '../assets/img/icons/icon_clock.png'
 import VehicleIcon from '../assets/img/icons/icon_vehicle.png'
 import SeatsIcon from '../assets/img/icons/icon_profile_white.png'
 import PositionSeparator from '../assets/img/icons/position_separator.png'
+import React from 'react'
+import { Trajet } from '../utils/type-interfaces.ts'
 
-const TrajetCard = ({trajet}) => {
+interface TrajetCardProps {
+  trajet: Trajet
+}
+
+const TrajetCard = ({trajet} : TrajetCardProps) => {
     return (
-      <div className="trajet-card">
+      <div className="trajet-card h-full">
         <div className="trajet-upper">
           <div className="trajet-upper-left">
-            <p className="trajet-date">23/12/2023</p>
-            <p className="trajet-prix">250,00 DA</p>
+            <p className="trajet-date">{trajet.start_date}</p>
+            <p className="trajet-prix">{trajet.price} DA</p>
           </div>
 
           <div className="trajet-upper-right">
             <img src={ProfileImage} alt="Profile" />
-            <p className="trajet-prix">Sarah</p>
+            <p className="trajet-prix">{trajet.chauffeur?.first_name}</p>
           </div>
         </div>
 
@@ -24,7 +30,7 @@ const TrajetCard = ({trajet}) => {
           <div>
             <div className="position-depart">
               <img src={PositionIcon} alt="Position" />
-              <p>Départ</p>
+              <p>{trajet.position_start?.name}</p>
             </div>
 
             <img
@@ -35,7 +41,7 @@ const TrajetCard = ({trajet}) => {
 
             <div className="position-destination">
               <img src={PositionIcon} alt="Position" />
-              <p>Destination</p>
+              <p>{trajet.position_end?.name}</p>
             </div>
           </div>
 
@@ -45,12 +51,12 @@ const TrajetCard = ({trajet}) => {
         <div className="trajet-lower">
           <div className="informations informations-time">
             <img src={TimeIcon} alt="Time" />
-            <p>09:00</p>
+            <p>{trajet.hour_start}</p>
           </div>
 
           <div className="informations col-span-3 informations-vehicle">
             <img src={VehicleIcon} alt="Time" />
-            <p>Type Auto</p>
+            <p>{trajet.car.marque} {trajet.car.model}</p>
           </div>
 
           <div className="informations informations-seat">

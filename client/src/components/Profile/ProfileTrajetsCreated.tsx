@@ -7,7 +7,8 @@ import TrajetEdit from "./TrajetEdit.tsx";
 import { redirect, useNavigate } from "react-router-dom";
 import { set } from "react-hook-form";
 import TrajetCreate from "./TrajetCreate.tsx";
-import { errorToast } from "../../utils/helpers.ts";
+import { errorToast, successToast } from "../../utils/helpers.ts";
+import { fetchFnc } from "../../utils/fetch.js";
 
 const ProfileTrajetsCreated = ({create = false}) => {
   const user = useContext(AuthContext).user;
@@ -126,7 +127,29 @@ const ProfileTrajetsCreated = ({create = false}) => {
                 class: "bg-blue-400 text-white",
               },
               {
-                onClick: (trajet: Trajet) => console.log("REMOVE", trajet.id),
+                onClick: async (trajet: Trajet) =>  {
+
+                  if (window.confirm("Etes vous sur de vouloir supprimer ce trajet ?")) {
+                  
+                    const formData = new FormData();
+                    console.log("trajet"ntrajet);
+                    
+                    formData.append("chauffeur_id",trajet.?chauffeur?.id);
+                    try {
+                      await fetchFnc({
+                        url: `trajet/delete/${trajet?.id}`,
+                        data: formData,
+                        method: "DELETE",
+                        headers: {  
+                          Authorization: `Bearer ${user?.apiKey}`,
+                        }
+                      });
+                      successToast("Trajet supprimé avec succès");
+                     } catch(e) {
+                       errorToast(e);
+                     }
+                  }
+                },
                 label: "Remove",
                 class: "bg-red-700 text-white",
               },

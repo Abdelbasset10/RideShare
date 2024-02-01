@@ -32,17 +32,17 @@ import ProfilBox from "./components/Profile/ProfilBox.tsx";
 import ProfileTrajetsCreated from "./components/Profile/ProfileTrajetsCreated.tsx";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import EditTrajet from "./components/EditTrajet.tsx";
-
-
+import useGeolocation from "./hooks/localization/useGeolocation.jsx";
 
 
 
 const App: FC = () => {
   const [user, setUser] = useState<User | any>(null);
+  const {position,error: errorPos} = useGeolocation();
 
   return (
     <CookiesProvider>
-      <AuthContext.Provider value={{ user, setUser }}>
+      <AuthContext.Provider value={{ user, setUser,position,errorPos }}>
         <RouterProvider
           router={createBrowserRouter(
             createRoutesFromElements(

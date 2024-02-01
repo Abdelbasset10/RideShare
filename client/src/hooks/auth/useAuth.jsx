@@ -38,7 +38,7 @@ export const useAuth = () => {
       user.apiKey = data.data.token;
 
       addUser(user);
-      return "Utilisateur crée ave succes";
+      return "Connexion effectué  avec succes";
     } catch (e) {
       throw e || e?.message;
     }

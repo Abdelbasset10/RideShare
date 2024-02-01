@@ -5,6 +5,7 @@ const useGeolocation = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
+
     const successHandler = (pos) => {
       const { latitude, longitude } = pos.coords;
       setPosition({ latitude, longitude });
@@ -16,8 +17,8 @@ const useGeolocation = () => {
 
     const options = {
       enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0,
+      timeout: 10000,
+      maximumAge: 100,
     };
 
     const watchId = navigator.geolocation.getCurrentPosition(
