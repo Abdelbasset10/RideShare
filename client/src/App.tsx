@@ -26,6 +26,7 @@ import TrajetCreate from "./components/Profile/TrajetCreate.tsx";
 import Box from "./components/Box.tsx";
 import Navbar from "./components/Navbar.tsx";
 import AdminProfile from "./pages/AdminProfile.tsx";
+import TrajetEdit from "./components/Profile/TrajetEdit.tsx";
 
 
 
