@@ -192,7 +192,29 @@ const getCloseTrajets = async (req,res) => {
     }
 }
 
+const searchTrajet = async (req,res) => {
+    try {
+        const {start_place,end_place,date,start_hour} = req.query
 
+        const trajets = await prisma.trajet.findMany({
+            where:{
+                position_start:{
+                    name:start_place || undefined
+                },
+                position_end:{
+                    name:end_place || undefined
+                },
+                start_date:date || undefined,
+                hour_start:start_hour || undefined
+            }
+        })
+
+        return res.status(200).json(trajets)
+
+    } catch (error) {
+        return res.status(500).json({messaeg:error.message})
+    }
+}
 
 const updateTrajet = async (req,res) => {
     try {
@@ -406,5 +428,6 @@ module.exports = {
     updateTrajet,
     deleteTrajet,
     reserverTrajet,
-    getUserTrajets
+    getUserTrajets,
+    searchTrajet
 }
