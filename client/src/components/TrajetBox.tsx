@@ -7,7 +7,7 @@ import Vecteur from '../assets/img/icons/vecteur.png';
 
 const Box = () => {
   return (
-    <div className="bg-white drop-shadow-lg rounded-lg p-4 w-64">
+    <div className="bg-white drop-shadow-lg rounded-lg p-4 w-2/6">
          <div className="trajet-upper ">
          <img className='h-3/4 w-6 ml-px' src={Vecteur} alt="vecteur" />
         <div className="trajet-upper-left  ">

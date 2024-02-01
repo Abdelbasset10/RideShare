@@ -26,7 +26,10 @@ import TrajetCreate from "./components/Profile/TrajetCreate.tsx";
 import Box from "./components/TrajetBox.tsx";
 import Navbar from "./components/Navbar.tsx";
 import AdminProfile from "./pages/AdminProfile.tsx";
-import { DetailsTrajet } from "./pages/DetailsTrajet.jsx";
+import DetailsTrajet  from "./pages/DetailsTrajet.jsx";
+import TrajetEdit from "./components/Profile/TrajetEdit.tsx";
+import ProfilBox from "./components/Profile/ProfilBox.tsx";
+import ProfileTrajetsCreated from "./components/Profile/ProfileTrajetsCreated.tsx";
 
 
 
@@ -79,8 +82,8 @@ const App: FC = () => {
                 />
                  
 
-                <Route path="routes/search" element={<SearchRoute />} />
-                <Route path="routes/add" element={<DetailsTrajet/>} />
+                <Route path="routes/search" element={<DetailsTrajet/>} />
+                <Route path="routes/add" element={<AddRoute/>} />
             
               
 
