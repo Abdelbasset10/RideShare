@@ -8,6 +8,7 @@ import ProfileTrajetsCreated from "../components/Profile/ProfileTrajetsCreated.t
 import ProfileTrajetsReserved from "../components/Profile/ProfileTrajetsReserved.tsx";
 
 const Profile = () => {
+
   enum rightMenuTypes {
     account,
     trajets_created,
@@ -27,9 +28,8 @@ const Profile = () => {
         return <ProfileTrajetsCreated />;
 
       case rightMenuTypes.trajets_reserved:
-        return <div className="w-full">TRAJETS reserves</div>;
+        return <ProfileTrajetsReserved />;
 
-      //return <ProfileTrajetsReserved />;
     }
   };
 

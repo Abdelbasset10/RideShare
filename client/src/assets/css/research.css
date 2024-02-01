@@ -1,0 +1,81 @@
+.research {
+    @apply h-full;
+    min-height: calc(100vh - 80px - 60px);
+}
+
+.research-wrapper {
+    @apply flex flex-col h-full  justify-start items-start;
+    min-height: calc(100vh - 80px - 60px);
+
+
+}
+
+.research-header-wrapper {
+    @apply m-auto my-10 h-full w-8/12
+    text-center
+    flex flex-col justify-center items-center 
+}
+.research-header-wrapper h1 {
+    @apply text-5xl text-bg-green-dark font-bold 
+}
+
+
+
+/**********************************
+*** RESEARCH BODY
+************************************/
+
+.research-body {
+    @apply w-full h-full bg-beige pt-5;
+}
+
+.research-body-wrapper {
+    @apply m-auto w-10/12 h-full
+    text-center
+    grid grid-cols-12 gap-x-5 
+}
+
+/**********************************
+*** RESEARCH FITLER
+************************************/
+.research-filter {
+    @apply col-span-4 h-full w-8/12 m-auto flex flex-col justify-start items-start
+}
+
+.research-filter h3 {
+    @apply text-xl text-orange font-bold my-2.5
+}
+
+
+.tri-list {
+    @apply flex flex-col justify-start items-start
+}
+
+.tri-item-wrapper {
+    @apply flex w-full justify-between items-center mb-2 
+}
+.tri-item-wrapper label {
+    @apply mr-3
+}
+
+/**********************************
+*** RESEARCH SEPARATOR
+************************************/
+.research-separator {
+    @apply bg-orange w-1 h-full col-span-1;
+}
+
+/**********************************
+*** RESEARCH RESULTS
+************************************/
+
+.research-result {
+    @apply col-span-7 h-full w-10/12 flex flex-col justify-start items-start;
+    overflow: auto  !important;
+
+}
+
+.research-result > div {
+    @apply mb-4
+
+}
