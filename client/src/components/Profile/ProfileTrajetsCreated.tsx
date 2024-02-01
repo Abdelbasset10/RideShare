@@ -132,9 +132,9 @@ const ProfileTrajetsCreated = ({create = false}) => {
                   if (window.confirm("Etes vous sur de vouloir supprimer ce trajet ?")) {
                   
                     const formData = new FormData();
-                    console.log("trajet"ntrajet);
+                    console.log("trajet",trajet);
                     
-                    formData.append("chauffeur_id",trajet.?chauffeur?.id);
+                    formData.append("chauffeur_id",trajet?.chauffeur?.id);
                     try {
                       await fetchFnc({
                         url: `trajet/delete/${trajet?.id}`,
