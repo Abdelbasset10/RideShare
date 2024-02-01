@@ -79,7 +79,7 @@ const TrajetCreate = () => {
                 <div className="form-row grid-cols-2">
                   <div className="form-group">
                     <label htmlFor="Date_depart">Date de Départ:</label>
-                    <input id="Date_depart" type="text" />
+                    <input id="Date_depart" type="date" />
                   </div>
 
                   <div className="form-group">

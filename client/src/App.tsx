@@ -18,7 +18,17 @@ import { useAuth } from "./hooks/auth/useAuth";
 import { AuthContext } from "./contexts/AuthContext.tsx";
 import { FC, useMemo, useState } from "react";
 import React from "react";
-import { User } from "./utils/type-interfaces.ts";
+
+
+import { User,UserTypes} from "./utils/type-interfaces.ts";
+import TrajetCreate from "./components/Profile/TrajetCreate.tsx";
+
+import Box from "./components/Box.tsx";
+import Navbar from "./components/Navbar.tsx";
+import AdminProfile from "./pages/AdminProfile.tsx";
+
+
+
 
 const App: FC = () => {
   const [user, setUser] = useState<User | any>(null);
@@ -41,7 +51,7 @@ const App: FC = () => {
                   }
                 />
                 <Route
-                  path="profile/:type/:create"
+                  path="profile"
                   element={
                     <ProtectedRoute redirectPath="/" isAllowed={user != null}>
                       <Profile />
@@ -52,7 +62,7 @@ const App: FC = () => {
                 <Route
                   path="admin"
                   element={
-                    <ProtectedRoute redirectPath="/" isAllowed={(user != null) /*&& (user.type === UserTypes.ADMIN) */}>
+                    <ProtectedRoute redirectPath="/" isAllowed={((user != null) && (user.type === UserTypes.ADMIN))}>
                       <AdminProfile />
                     </ProtectedRoute>
                   }
@@ -66,9 +76,10 @@ const App: FC = () => {
                     </ProtectedRoute>
                   }
                 />
+                 
 
                 <Route path="routes/search" element={<SearchRoute />} />
-                <Route path="routes/add" element={<Box/>} />
+                <Route path="routes/add" element={<Profile/>} />
             
               
 
