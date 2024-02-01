@@ -6,11 +6,25 @@ import {
   TileLayer,
   useMapEvents,
 } from "react-leaflet";
+import { GEOCOD_API_KEY } from "../utils/globals";
 
 function LocationMarker({ coord, setCoord }) {
   const map = useMapEvents({
     click(e) {
-      setCoord(e.latlng);
+     let coord = e.latlng; 
+     fetch(
+        `https://geocode.maps.co/reverse?lat=${coord.lat}&lon=${coord.lng}&api_key=${GEOCOD_API_KEY}`
+      )
+        .then((res) => res.json())
+        .then((data) =>
+          setCoord({
+            ...e.latlng,
+            name: `${data.address.road} , ${data.address.town}`,
+          })
+        ).finally(()=>console.log(coord));
+    
+   
+    
     },
   });
 

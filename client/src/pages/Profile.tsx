@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import CompteLogo from "../assets/img/icons/profile-account-icon.png";
 import TrajetsLogo from "../assets/img/icons/profile-trajets-icon.png";
 import LogoutLogo from "../assets/img/icons/icon_logout.png";
@@ -7,11 +7,16 @@ import ProfileAccount from "../components/Profile/ProfileAccount.tsx";
 import ProfileTrajetsCreated from "../components/Profile/ProfileTrajetsCreated.tsx";
 import ProfileTrajetsReserved from "../components/Profile/ProfileTrajetsReserved.tsx";
 import { boolean } from "zod";
+import { useAuth } from "../hooks/auth/useAuth.jsx";
+import { UserTypes } from "../utils/type-interfaces.ts";
+import { successToast } from "../utils/helpers.ts";
 
 const Profile = () => {
   
     let { type,create } = useParams();
     let createTrajet = create === "1";
+    const {user,logout} = useAuth();
+    const navigator = useNavigate();
 
   const menuTypes = [ 
     "account",
@@ -51,6 +56,7 @@ const Profile = () => {
               <p>Compte</p>
             </li>
 
+             {user?.type === UserTypes.CHAUFFEUR && ( 
             <li
               className="links-item"
               onClick={() => {
@@ -60,6 +66,7 @@ const Profile = () => {
               <img src={TrajetsLogo} alt="TrajetsLogo" />
               <p>Trajets Crées</p>
             </li>
+            )}
 
             <li
               className="links-item"
@@ -72,7 +79,13 @@ const Profile = () => {
             </li>
           </ul>
 
-          <div className="  text-orange cursor-pointer flex items-center justify-start">
+          <div onClick={() => {
+            if (window.confirm("Voulez-vous vraiment vous déconnecter ?")) {
+              navigator("/login");
+              successToast("Déconnexion réussie");
+              logout();
+            }
+          }} className="text-orange cursor-pointer flex items-center justify-start">
             <img
               className="mr-3 h-4 w-auto"
               src={LogoutLogo}

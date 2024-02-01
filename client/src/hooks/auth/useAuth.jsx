@@ -13,7 +13,6 @@ export const useAuth = () => {
 
   useEffect(() => {
     const user = getItem("user");
-    console.log("🚀 ~ file: useAuth.jsx:16 ~ useEffect ~ user:", user);
 
     if (user) {
       addUser(user);

@@ -8,7 +8,7 @@
   box-sizing: border-box;
 }
 
-#root, .root-layout {
+html,body, #root, .root-layout {
   height: 100%;
 }
 
@@ -22,4 +22,7 @@
   @import url("register.css");
   @import url("login.css");
   @import url("profile.css");
+  @import url("TrajetCreate.css");
+
+  @import url("admin/admin-profile.css");
 }
