@@ -52,7 +52,7 @@ const App: FC = () => {
                   }
                 />
                 <Route
-                  path="profile"
+                  path="profile/:type/:create"
                   element={
                     <ProtectedRoute redirectPath="/" isAllowed={user != null}>
                       <Profile />
@@ -63,7 +63,7 @@ const App: FC = () => {
                 <Route
                   path="admin"
                   element={
-                    <ProtectedRoute redirectPath="/" isAllowed={((user != null) && (user.type === UserTypes.ADMIN))}>
+                    <ProtectedRoute redirectPath="/" isAllowed={(user != null) /*&& (user.type === UserTypes.ADMIN) */}>
                       <AdminProfile />
                     </ProtectedRoute>
                   }

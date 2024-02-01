@@ -8,6 +8,7 @@ import researchIcon from "../assets/img/icons/icon_research.png";
 
 import { useRef } from "react";
 import ResearchBarMap from "./ResearchBarMap";
+import MapInput from "./Map/MapInput.tsx";
 
 const ResearchBar = ({ onSearch }) => {
   const [userData, setUserData] = useState({});
@@ -82,49 +83,26 @@ const ResearchBar = ({ onSearch }) => {
         <div className="category research-departure col-span-3">
           <img src={destionationIcon} alt="Destination" />
 
-          <div className="research-input">
-            <p
-              className="cursor-pointer"
-              onClick={() => setIsDepartMapOpen(true)}
-            >
-              {departCoord
-                ? `${departCoord.lng.toFixed(3)}, ${departCoord.lat.toFixed(3)}`
-                : "Depart"}
-            </p>
-            {isDepartMapOpen && (
-              <ResearchBarMap
-                defaultLoc={DefaultLocation}
-                setCoord={setDepartCoord}
-                coord={departCoord}
-                setIsMapOpen={setIsDepartMapOpen}
-              />
-            )}
-          </div>
+          <MapInput
+            isMapOpen={isDepartMapOpen}
+            setIsMapOpen={setIsDepartMapOpen}
+            coord={departCoord}
+            setCoord={setDepartCoord}
+            DefaultLocation={DefaultLocation}
+          />
           <hr className="separator" />
         </div>
 
         <div className="category research-departure col-span-3">
           <img src={destionationIcon} alt="Destination" />
-          <div className="research-input">
-            <p
-              className="cursor-pointer"
-              onClick={() => setIsDestMapOpen(true)}
-            >
-              {destCoord
-                ? `${destCoord.lng.toFixed(3)}, ${destCoord.lat.toFixed(3)}`
-                : "Destination"}
-            </p>
-          </div>
-          {isDestMapOpen && (
-            <div className="departure-map">
-              <ResearchBarMap
-                defaultLoc={DefaultLocation}
-                setCoord={setDestCoord}
-                coord={destCoord}
-                setIsMapOpen={setIsDestMapOpen}
-              />
-            </div>
-          )}
+          <MapInput
+            isMapOpen={isDestMapOpen}
+            setIsMapOpen={setIsDestMapOpen}
+            coord={destCoord}
+            setCoord={setDestCoord}
+            DefaultLocation={DefaultLocation}
+          />
+          
           <hr className="separator" />
         </div>
 

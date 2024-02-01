@@ -6,8 +6,11 @@ export const fetchFnc = async ({
   method = "GET",
   headers = {},
   data = {},
+  relative = true,
 }) => {
-  url = `${BASE_URL}/${url}`;
+  if (relative) {
+    url = `${BASE_URL}/${url}`;
+  }
   headers["Access-Control-Allow-Origin"] = "*";
 
   try {

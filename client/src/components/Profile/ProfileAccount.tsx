@@ -8,6 +8,7 @@ import {
 import { z, string, optional } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../hooks/auth/useAuth";
+import { UserTypes } from "../../utils/type-interfaces.ts";
 
 const ProfileAccount = () => {
   const { user } = useAuth();
@@ -44,9 +45,12 @@ const ProfileAccount = () => {
           <li className={activePanel === 1 ? "active" : ""}>
             <span onClick={() => handlePanelChange(1)}>Profil</span>
           </li>
+          {user?.type === UserTypes.CHAUFFEUR && (
           <li className={activePanel === 2 ? "active" : ""}>
             <span onClick={() => handlePanelChange(2)}>Vehicule</span>
           </li>
+          )}
+
           <li className={activePanel === 3 ? "active" : ""}>
             <span onClick={() => handlePanelChange(3)}>Mot de Passe</span>
           </li>
