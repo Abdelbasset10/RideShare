@@ -20,16 +20,15 @@ import { GEOCOD_API_KEY } from "../../utils/globals.js";
 import { AuthContext } from "../../contexts/AuthContext.tsx";
 
 
-const TrajetCreate = () => {
+const TrajetCreate = ({ setUpdate, update }) => {
   const { user } = useAuth();
 
-
-   const schema = z.object({
-     start_date: string().min(2),
-     hour_start: string().min(2),
-     nb_place: number().positive(),
-     price: number().positive()
-   });
+  const schema = z.object({
+    start_date: string().min(2),
+    hour_start: string().min(2),
+    nb_place: number().positive(),
+    price: number().positive(),
+  });
 
   const { register, handleSubmit, control, formState } = useForm({
     resolver: zodResolver(schema),
@@ -47,24 +46,18 @@ const TrajetCreate = () => {
 
   const { errors } = formState;
 
-
   const navigate = useNavigate();
 
-const context = useContext(AuthContext)
-  
+  const context = useContext(AuthContext);
 
   const [departCoord, setDepartCoord] = useState(null);
   const [isDepartMapOpen, setIsDepartMapOpen] = useState(false);
   const [destCoord, setDestCoord] = useState(null);
   const [isDestMapOpen, setIsDestMapOpen] = useState(false);
-  
+
   const DefaultLocation = { lat: 36.75, lng: 3.05 };
 
   const onCreateTrajet = async (data) => {
-
-   
-
-
     const trajet = {
       ...data,
       start_lat: Number(departCoord?.lat),
@@ -75,8 +68,6 @@ const context = useContext(AuthContext)
       end_name: destCoord?.name,
       chauffeur_id: user?.id,
     };
-
-
 
     const formData = new FormData();
     formData.append("start_date", trajet.start_date);
@@ -90,7 +81,7 @@ const context = useContext(AuthContext)
     formData.append("end_long", trajet.end_long);
     formData.append("end_name", trajet.end_name);
     formData.append("chauffeur_id", trajet.chauffeur_id);
-    
+
     try {
       const successMsg = await fetchFnc({
         url: "trajet/create",
@@ -100,14 +91,12 @@ const context = useContext(AuthContext)
           Authorization: `Bearer ${user?.apiKey}`,
         },
       });
-      navigate("/profile/trajets_created/0");
       successToast("Trajet crée avec succes");
+      setUpdate(!update);
     } catch (errMsg) {
       errorToast(errMsg);
     }
-
   };
-
 
   return (
     <div className="profile-account-wrapper">
@@ -135,8 +124,14 @@ const context = useContext(AuthContext)
                   coord={departCoord}
                   setCoord={setDepartCoord}
                   displayDefaultLoc={true}
-                  DefaultLocation={context.position ? {lat: context.position.latitude,lng: context.position.longitude} : DefaultLocation}
-
+                  DefaultLocation={
+                    context.position
+                      ? {
+                          lat: context.position.latitude,
+                          lng: context.position.longitude,
+                        }
+                      : DefaultLocation
+                  }
                 />
               </div>
 
@@ -149,17 +144,27 @@ const context = useContext(AuthContext)
                   setCoord={setDestCoord}
                   displayDefaultLoc={true}
                   label="Destination"
-                  DefaultLocation={context.position ? {lat: context.position.latitude,lng: context.position.longitude} : DefaultLocation}
-
+                  DefaultLocation={
+                    context.position
+                      ? {
+                          lat: context.position.latitude,
+                          lng: context.position.longitude,
+                        }
+                      : DefaultLocation
+                  }
                 />
               </div>
             </div>
 
-                <div className="form-row grid-cols-2">
-                  <div className="form-group">
-                    <label htmlFor="Date_depart">Date de Départ:</label>
-                    <input id="Date_depart" type="date" {...register("start_date")} />
-                  </div>
+            <div className="form-row grid-cols-2">
+              <div className="form-group">
+                <label htmlFor="Date_depart">Date de Départ:</label>
+                <input
+                  id="Date_depart"
+                  type="date"
+                  {...register("start_date")}
+                />
+              </div>
 
               <div className="form-group">
                 <label htmlFor="heure_depart">l'Heure de Départ:</label>
@@ -217,7 +222,6 @@ const context = useContext(AuthContext)
               >
                 Ajouter
               </button>
-             
             </div>
           </div>
         </div>

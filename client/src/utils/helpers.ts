@@ -38,6 +38,7 @@ export const formatGetQueryOptions = (queryOptions = {}) => {
       returnValue = `${returnValue}${key}=${value}&`;
       console.log(key + " = " + value);
   }
+  return returnValue;
 };
 
 interface UserAuthorizedParams {
