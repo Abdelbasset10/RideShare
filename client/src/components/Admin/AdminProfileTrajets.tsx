@@ -1,7 +1,7 @@
 import React from "react";
 
 const AdminProfileTrajets = () => {
-    // Remplacez cette partie par vos données réelles
+    // les donnes reels
     const trajets = [
         {
             trajet: "lieu1/lieu",
