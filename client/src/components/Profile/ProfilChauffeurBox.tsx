@@ -5,13 +5,13 @@ import Route from '../../assets/img/icons/route.png';
 
 
 
-const ProfilBox = () => {
+const ProfilChauffeurBox = () => {
   return (
     <div className=" bg-white drop-shadow-lg rounded-lg p-4 w-3/12 ">
          <div className="trajet-upper flex flex-col  items-center justify-center">
          <img className='h-20 w-20 ml-px' src={AdminPhoto} alt="Admin Photo" />
       
-          <div className="text-base font-bold text-gray-800   "> Alger Centre</div>
+          <div className="text-base font-bold text-gray-800   "> Nom,Prénom</div>
  
             </div>
      
@@ -30,4 +30,4 @@ const ProfilBox = () => {
   );
 };
 
-export default ProfilBox;
+export default ProfilChauffeurBox;

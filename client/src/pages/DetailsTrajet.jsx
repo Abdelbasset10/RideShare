@@ -1,6 +1,6 @@
 import React from 'react'
 import TrajetBox from "../components/TrajetBox.tsx";
-import ProfilBox from "../components/Profile/ProfilBox.tsx";
+import ProfilChauffeurBox from "../components/Profile/ProfilChauffeurBox.tsx";
 import destionationIcon from "../assets/img/icons/icon_destination.png";
 import Map from "../assets/img/icons/map.png";
 
@@ -22,7 +22,7 @@ const DetailsTrajet = () => {
     <div className='flex  justify-center'>
       <TrajetBox  />
       <div className="mr-80"></div>
-      <ProfilBox />
+      <ProfilChauffeurBox />
     </div>
     <div className="mb-20"></div>
     <div className='flex justify-center'>
