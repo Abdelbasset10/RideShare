@@ -8,6 +8,7 @@ module.exports = {
         yellow: "#FEDA7C",
         beige: "#FFF6ED",
         orange: "#FB7E3E",
+        'custom-green': '#013A29',
       },
       keyframes: {
         btn_hover: {
