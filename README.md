@@ -14,6 +14,7 @@
 
 ### Tools
 - Documentation: Postman
+- UI/UX : Figma
 
 
 
