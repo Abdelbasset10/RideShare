@@ -42,7 +42,7 @@ const App: FC = () => {
 
   return (
     <CookiesProvider>
-      <AuthContext.Provider value={{ user, setUser,position,errorPos }}>
+      <AuthContext.Provider value={{ user, setUser, position, errorPos }}>
         <RouterProvider
           router={createBrowserRouter(
             createRoutesFromElements(
@@ -58,7 +58,7 @@ const App: FC = () => {
                   }
                 />
                 <Route
-                  path="profile"
+                  path="profile/:type/:create"
                   element={
                     <ProtectedRoute redirectPath="/" isAllowed={user != null}>
                       <Profile />
@@ -69,7 +69,12 @@ const App: FC = () => {
                 <Route
                   path="admin"
                   element={
-                    <ProtectedRoute redirectPath="/" isAllowed={((user != null) && (user.type === UserTypes.ADMIN))}>
+                    <ProtectedRoute
+                      redirectPath="/"
+                      isAllowed={
+                        user != null /*&& (user.type === UserTypes.ADMIN) */
+                      }
+                    >
                       <AdminProfile />
                     </ProtectedRoute>
                   }
@@ -83,12 +88,10 @@ const App: FC = () => {
                     </ProtectedRoute>
                   }
                 />
-                 
 
-                <Route path="routes/search" element={<EditTrajet/>} />
-                <Route path="routes/add" element={<Profile/>} />
-            
-              
+
+                <Route path="routes/search" element={<SearchRoute />} />
+                {/*<Route path="routes/add" element={<Profile />} />*/}
 
                 <Route path="*" element={<NotFound />} />
               </Route>

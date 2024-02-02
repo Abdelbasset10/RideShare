@@ -158,13 +158,14 @@ const reserverTrajet = async (req,res) => {
 
 const getCloseTrajets = async (req,res) => {
     try {
-        const {lat,long} = req.body
+        let {lat,long} = req.body
+
         const min_shape_lat = lat -1
         const max_shape_lat = lat +1
 
         const min_shape_long = long -1
         const max_shape_long = long +1
-    
+        
     const close_trajets = await prisma.trajet.findMany({
         where:{
             position_start:{
@@ -180,7 +181,7 @@ const getCloseTrajets = async (req,res) => {
         },
         include:{
             reservations:true,
-            chaufeur:true,
+            chauffeur:true,
             car:true,
             position_start:true,
             position_end:true 
@@ -188,11 +189,33 @@ const getCloseTrajets = async (req,res) => {
     })
     return res.status(200).json(close_trajets)
     } catch (error) {
-        return res.status(500).json({messaeg:error.messaeg})
+        return res.status(500).json({message:error.messaeg})
     }
 }
 
+const searchTrajet = async (req,res) => {
+    try {
+        const {start_place,end_place,date,start_hour} = req.query
 
+        const trajets = await prisma.trajet.findMany({
+            where:{
+                position_start:{
+                    name:start_place || undefined
+                },
+                position_end:{
+                    name:end_place || undefined
+                },
+                start_date:date || undefined,
+                hour_start:start_hour || undefined
+            }
+        })
+
+        return res.status(200).json(trajets)
+
+    } catch (error) {
+        return res.status(500).json({messaeg:error.message})
+    }
+}
 
 const updateTrajet = async (req,res) => {
     try {
@@ -256,7 +279,7 @@ const getAllTrajets = async (req,res) => {
         const trajets = await prisma.trajet.findMany({
             include:{
                 reservations:true,
-                chaufeur:true,
+                chauffeur:true,
                 car:true,
                 position_start:true,
                 position_end:true 
@@ -282,7 +305,7 @@ const getTrajet = async (req,res) => {
         },
         include:{
             reservations:true,
-            chaufeur:true,
+            chauffeur:true,
             car:true,
             position_start:true,
             position_end:true 
@@ -313,7 +336,7 @@ const getUserTrajets = async (req,res) => {
             },
             include:{
                reservations:true,
-               chaufeur:true,
+               chauffeur:true,
                car:true,
                position_start:true,
                position_end:true,
@@ -370,18 +393,22 @@ const deleteTrajet = async (req,res) => {
             return res.status(400).json({message:"You can't delete trajet that's you are not the owner!"})
         }
 
-        await prisma.position.delete({
-            where:{
-                start_trajets:trajet.position_start,
-                end_trajets:trajet.position_end
-            }
-        })
+        
 
         await prisma.trajet.delete({
             where:{
                 id
             },
         })
+
+        await prisma.position.deleteMany({
+          where: {
+            OR: [
+              { id: trajet.position_start.id },
+              { id: trajet.position_end.id },
+            ],
+          },
+        });
          
         
 
@@ -402,5 +429,6 @@ module.exports = {
     updateTrajet,
     deleteTrajet,
     reserverTrajet,
-    getUserTrajets
+    getUserTrajets,
+    searchTrajet
 }

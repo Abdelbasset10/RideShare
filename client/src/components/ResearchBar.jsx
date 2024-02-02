@@ -19,12 +19,7 @@ const ResearchBar = ({ onSearch }) => {
   const { register, control, handleSubmit } = useForm();
   const context = useContext(AuthContext);
 
-  const { departureField } = useController({ name: "departure", control });
-  const { destinationField } = useController({ name: "destination", control });
-  const { dateField } = useController({ name: "date", control });
-  const { timeField } = useController({ name: "time", control });
-
-  const { departure, destination, date, time } = userData;
+  
   const formRef = useRef(null);
   /////////////////////////////////////////////////////////
   
@@ -68,15 +63,13 @@ const ResearchBar = ({ onSearch }) => {
   };
 
   const handleSearch = (formValues) => {
-    //const errors = validateData();
-    //
-    //if (Object.keys(errors).length) {
-    //    setErrors(errors);
-    //    return ;
-    //}
-
-    setErrors({});
-    onSearch(formValues);
+    let val = {...formValues}
+    val.depart_long = departCoord?.lng;
+    val.depart_lat = departCoord?.lat;
+    val.dest_long = destCoord?.lng;
+    val.dest_lat = destCoord?.lat;
+    console.log("formVal", val);
+    onSearch(val);
   };
 
   return (
@@ -95,7 +88,14 @@ const ResearchBar = ({ onSearch }) => {
             coord={departCoord}
             setCoord={setDepartCoord}
             displayDefaultLoc={true}
-            DefaultLocation={context.position ? {lat: context.position.latitude,lng: context.position.longitude} : DefaultLocation}
+            DefaultLocation={
+              context.position
+                ? {
+                    lat: context.position.latitude,
+                    lng: context.position.longitude,
+                  }
+                : DefaultLocation
+            }
           />
           <hr className="separator" />
         </div>
@@ -109,15 +109,26 @@ const ResearchBar = ({ onSearch }) => {
             setCoord={setDestCoord}
             displayDefaultLoc={true}
             label="Destination"
-            DefaultLocation={context.position ? {lat: context.position.latitude,lng: context.position.longitude} : DefaultLocation}
-
+            DefaultLocation={
+              context.position
+                ? {
+                    lat: context.position.latitude,
+                    lng: context.position.longitude,
+                  }
+                : DefaultLocation
+            }
           />
-          
+
           <hr className="separator" />
         </div>
 
         <div className="category research-date col-span-2">
-          <input className="research-input" type="date" placeholder="Date" />
+          <input
+            className="research-input"
+            type="date"
+            {...register("date")}
+            placeholder="Date"
+          />
           <hr className="separator" />
         </div>
 
@@ -127,15 +138,15 @@ const ResearchBar = ({ onSearch }) => {
             src={timeIcon}
             alt="Heure Depart"
           />
-          <input placeholder="Heure" className="research-input" type="time" />
+          <input
+            placeholder="Heure"
+            {...register("start_hour")}
+            className="research-input"
+            type="time"
+          />
         </div>
 
-        <div
-          onClick={() => {
-            formRef.current.submit();
-          }}
-          className="cursor-pointer category research-submit col-span-2"
-        >
+        <div className="cursor-pointer category research-submit col-span-2">
           <img src={researchIcon} alt="Submit button" />
           <button type="submit">Rechercher</button>
         </div>

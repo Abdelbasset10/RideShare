@@ -15,7 +15,8 @@ const ProfileTrajetsCreated = ({create = false}) => {
   const navigate = useNavigate();
   const [trajetEdit, setTrajetEdit] = useState<Trajet | null>(null);
   const [trajetCreate, setTrajetCreate] = useState<boolean>(create);
-    
+  const [update,setUpdate] = useState(false);  
+
   useEffect(() => {
     if (!user || user.type !== UserTypes.CHAUFFEUR) {
       errorToast("Vous n'êtes pas autorisé à accéder à cette page");
@@ -115,7 +116,15 @@ const ProfileTrajetsCreated = ({create = false}) => {
           <Grid
             limit={6}
             data={data}
-            header={["Départ", "Arrivée", "Date", "Heure", "Prix", "Places disponibles", "Actions"]}
+            header={[
+              "Départ",
+              "Arrivée",
+              "Date",
+              "Heure",
+              "Prix",
+              "Places disponibles",
+              "Actions",
+            ]}
             filteredData={filteredData()}
             actions={[
               {
@@ -127,27 +136,29 @@ const ProfileTrajetsCreated = ({create = false}) => {
                 class: "bg-blue-400 text-white",
               },
               {
-                onClick: async (trajet: Trajet) =>  {
-
-                  if (window.confirm("Etes vous sur de vouloir supprimer ce trajet ?")) {
-                  
+                onClick: async (trajet: Trajet) => {
+                  if (
+                    window.confirm(
+                      "Etes vous sur de vouloir supprimer ce trajet ?"
+                    )
+                  ) {
                     const formData = new FormData();
-                    console.log("trajet",trajet);
-                    
-                    formData.append("chauffeur_id",trajet?.chauffeur?.id);
+
+                    formData.append("userId", trajet.chauffeur.id);
+
                     try {
                       await fetchFnc({
                         url: `trajet/delete/${trajet?.id}`,
                         data: formData,
                         method: "DELETE",
-                        headers: {  
+                        headers: {
                           Authorization: `Bearer ${user?.apiKey}`,
-                        }
+                        },
                       });
                       successToast("Trajet supprimé avec succès");
-                     } catch(e) {
-                       errorToast(e);
-                     }
+                    } catch (e) {
+                      errorToast(e);
+                    }
                   }
                 },
                 label: "Remove",
@@ -158,7 +169,9 @@ const ProfileTrajetsCreated = ({create = false}) => {
         )}
 
         {trajetEdit && !trajetCreate && <TrajetEdit trajet={trajetEdit} />}
-        {!trajetEdit && trajetCreate && <TrajetCreate />}
+        {!trajetEdit && trajetCreate && (
+          <TrajetCreate update={update} setUpdate={setUpdate} />
+        )}
       </div>
     </main>
   );
