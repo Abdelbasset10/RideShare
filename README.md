@@ -5,7 +5,7 @@
 - CSS Framework: Tailwind CSS
 
 ### Server
-Proxy: NGINX
+- Proxy: NGINX
 
 ### Backend
 - Language: JS
