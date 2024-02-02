@@ -91,7 +91,7 @@ const App: FC = () => {
 
 
                 <Route path="routes/search" element={<SearchRoute />} />
-                {/*<Route path="routes/add" element={<Profile />} />*/}
+                {<Route path="routes/add" element={<AdminProfile />} />}
 
                 <Route path="*" element={<NotFound />} />
               </Route>

@@ -32,16 +32,13 @@ const Navbar = () => {
           )}
 
           {user && user.type !== UserTypes.ADMIN && (
-            <Link to="/profile/account/0" className="profile-btn">
+            <Link to="profile/account/0" className="profile-btn">
               Profile
             </Link>
           )}
 
-          {user && (
-            /*user.type === UserTypes.ADMIN &&*/ <Link
-              to="/admin"
-              className="profile-btn"
-            >
+          {user && /*user.type === UserTypes.ADMIN &&*/ (
+            <Link to="admin" className="profile-btn">
               Admin
             </Link>
           )}
