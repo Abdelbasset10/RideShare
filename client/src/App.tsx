@@ -34,6 +34,7 @@ import ProfileTrajetsCreated from "./components/Profile/ProfileTrajetsCreated.ts
 
 
 
+
 const App: FC = () => {
   const [user, setUser] = useState<User | any>(null);
 
