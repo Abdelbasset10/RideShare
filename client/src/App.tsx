@@ -33,6 +33,7 @@ import ProfileTrajetsCreated from "./components/Profile/ProfileTrajetsCreated.ts
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import EditTrajet from "./components/EditTrajet.tsx";
 import useGeolocation from "./hooks/localization/useGeolocation.jsx";
+import Test from "./pages/Test.tsx";
 
 
 
@@ -92,7 +93,7 @@ const App: FC = () => {
 
                 <Route path="routes/search" element={<SearchRoute />} />
                 {/*<Route path="routes/add" element={<Profile />} />*/}
-
+                <Route path="/test" element={<Test />} />
                 <Route path="*" element={<NotFound />} />
               </Route>
             )
