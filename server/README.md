@@ -40,9 +40,9 @@
 - deleteReservation
 ### User:
 - updateUser
--deleteUser
--getUsers
--getUser
+- deleteUser
+- getUsers
+- getUser
 
 
 
