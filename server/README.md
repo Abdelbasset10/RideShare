@@ -21,10 +21,10 @@
 - Chaffeur Role
 - simpleUser Role
 
-- ### Authentication:
+### Authentication:
 - Sign Up
 - Sign In
-- ### Trajet:
+### Trajet:
 - createTrajet
 - getAllTrajets
 - getTrajet
@@ -34,11 +34,11 @@
 - updateTrajet
 - reserverTrajet
 - deleteTrajet
-- ### Reservation:
+### Reservation:
 - getUserReservations
 - updateReservations
 - deleteReservation
-- ### User:
+### User:
 - updateUser
 -deleteUser
 -getUsers
