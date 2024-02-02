@@ -279,10 +279,10 @@ const getAllTrajets = async (req,res) => {
         const trajets = await prisma.trajet.findMany({
             include:{
                 reservations:true,
-                chauffeur:true,
                 car:true,
                 position_start:true,
-                position_end:true 
+                position_end:true,
+                chauffeur:true
              }
          })
          return res.status(200).json(trajets)
