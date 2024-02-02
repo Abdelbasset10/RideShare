@@ -51,7 +51,6 @@ const Home = () => {
   };
 
   data = data || []; 
-  console.log(data)
 
   return (
     <main className="main-section ">
