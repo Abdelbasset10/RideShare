@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import presentationIllustration from "../assets/img/illustrations/illustration_home_page_about.png";
 import FirstIllustration from "../assets/img/illustrations/illustration_how_to_step_1.png";
 import SecondIllustration from "../assets/img/illustrations/illustration_how_to_step_2.png";
@@ -22,34 +22,33 @@ const Home = () => {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
 
-  const  url = useRef("trajet");
+  let  url = "trajet";
   let formData = new FormData();
 
-  console.log("statePos",context.position);
 
   if (context.position && context.position?.latitude !== undefined && context.position?.longitude !== undefined) {
     formData.append("lat",context.position.latitude);
     formData.append("long",context.position.longitude);
-    url.current = "trajet/close";    
+    url = "trajet";    
   } else {
-    url.current = "trajet"
+    url = "trajet"
   }
-
-  
-
-  let {data,loading,error} = useFetch({
-    url: url.current,
-    axiosData: formData
-  });
-
-  console.log("data",data);
+    console.log("url", url);
+    console.log("formData", formData);
+    
+    let { data, loading, error } = useFetch({
+      url: url,
+      axiosData: formData,
+    });
 
 
   const tooltipText = context.errorPos
     ? `Trajets récuperes par date d'ajout du a une erreur lors de la localisation`
     : `Trajets récuperes par trajet plus proche de votre position`;
 
-  const onSearch = (e) => {};
+  const onSearch = async (e) => {
+    console.log(e);
+  };
 
   data = data || []; 
   console.log(data)

@@ -33,7 +33,7 @@ export const useFetch =  (
   const fetchData = async () => {
   try {
     let queryString = formatGetQueryOptions(getQueryOptions);
-    url = `${BASE_URL}/${url}?${queryString}`;
+    url = `${BASE_URL}/${url}?${queryString}`
 
     const ret = await axios({
       method: method,

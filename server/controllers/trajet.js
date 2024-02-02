@@ -158,13 +158,14 @@ const reserverTrajet = async (req,res) => {
 
 const getCloseTrajets = async (req,res) => {
     try {
-        const {lat,long} = req.body
+        let {lat,long} = req.body
+
         const min_shape_lat = lat -1
         const max_shape_lat = lat +1
 
         const min_shape_long = long -1
         const max_shape_long = long +1
-    
+        
     const close_trajets = await prisma.trajet.findMany({
         where:{
             position_start:{
@@ -188,7 +189,7 @@ const getCloseTrajets = async (req,res) => {
     })
     return res.status(200).json(close_trajets)
     } catch (error) {
-        return res.status(500).json({messaeg:error.messaeg})
+        return res.status(500).json({message:error.messaeg})
     }
 }
 
