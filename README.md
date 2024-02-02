@@ -1,5 +1,5 @@
 # Tech Stack
-###Front-End
+### Front-End
 - Language: HTML,CSS, TypeScript
 - JS Framework:  ReactJs
 - CSS Framework: Tailwind CSS
@@ -7,12 +7,12 @@
 ### Server
 Proxy: NGINX
 
-###Backend
+### Backend
 - Language: JS
 - Framework: ExpressJS
 - DB: Prisma - MongoDB
 
-###Tools
+### Tools
 - Documentation: Postman
 
 
