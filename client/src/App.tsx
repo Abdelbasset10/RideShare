@@ -23,17 +23,21 @@ import React from "react";
 import { User,UserTypes} from "./utils/type-interfaces.ts";
 import TrajetCreate from "./components/Profile/TrajetCreate.tsx";
 
-import Box from "./components/TrajetBox.tsx";
+
 import Navbar from "./components/Navbar.tsx";
 import AdminProfile from "./pages/AdminProfile.tsx";
 import DetailsTrajet  from "./pages/DetailsTrajet.jsx";
 import TrajetEdit from "./components/Profile/TrajetEdit.tsx";
-import ProfilBox from "./components/Profile/ProfilBox.tsx";
+
 import ProfileTrajetsCreated from "./components/Profile/ProfileTrajetsCreated.tsx";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import EditTrajet from "./components/EditTrajet.tsx";
+
 import useGeolocation from "./hooks/localization/useGeolocation.jsx";
-import Test from "./pages/Test.tsx";
+
+import ProfileChauffeurBox from "./components/Profile/ProfileChauffeurBox.tsx";
+import ProfileUserBox from "./components/Profile/ProfileUserBox.tsx";
+import ProfileEdit from "./components/Profile/ProfileEdit.tsx";
+
 
 
 
@@ -91,9 +95,11 @@ const App: FC = () => {
                 />
 
 
-                <Route path="routes/search" element={<SearchRoute />} />
+
+                <Route path="routes/search" element={<SearchRoute/>} />
                 {/*<Route path="routes/add" element={<Profile />} />*/}
-                <Route path="/test" element={<Test />} />
+               
+
                 <Route path="*" element={<NotFound />} />
               </Route>
             )
