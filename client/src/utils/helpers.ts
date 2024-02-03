@@ -35,9 +35,11 @@ export const formatGetQueryOptions = (queryOptions = {}) => {
   
   let returnValue = "";
     for (let [key, value] of Object.entries(queryOptions)) {
+      if (value !== undefined && value !== "") {
       returnValue = `${returnValue}${key}=${value}&`;
-      console.log(key + " = " + value);
-  }
+     }
+
+   }
   return returnValue;
 };
 

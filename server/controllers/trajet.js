@@ -106,11 +106,13 @@ const reserverTrajet = async (req,res) => {
             return res.status(400).json({message:'Trajet is required!'})
         }
 
-        const {userId,nb_places} = req.body
+        let {userId,nb_places} = req.body
 
         if(!userId){
             return res.status(400).json({message:"User is required!"})
         }
+
+        nb_places = parseFloat(nb_places);
 
         if(nb_places === 0){
             return res.status(400).json({message:"You have to select number of places"})
@@ -393,7 +395,14 @@ const deleteTrajet = async (req,res) => {
             return res.status(400).json({message:"You can't delete trajet that's you are not the owner!"})
         }
 
-        
+await prisma.position.deleteMany({
+    where: {
+      OR: [
+        { id: trajet.position_start.id },
+        { id: trajet.position_end.id },
+      ],
+    },
+  });
 
         await prisma.trajet.delete({
             where:{
@@ -401,14 +410,11 @@ const deleteTrajet = async (req,res) => {
             },
         })
 
-        await prisma.position.deleteMany({
-          where: {
-            OR: [
-              { id: trajet.position_start.id },
-              { id: trajet.position_end.id },
-            ],
-          },
-        });
+       
+
+        
+
+        
          
         
 
