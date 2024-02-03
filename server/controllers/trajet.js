@@ -197,15 +197,42 @@ const getCloseTrajets = async (req,res) => {
 
 const searchTrajet = async (req,res) => {
     try {
-        const {start_place,end_place,date,start_hour} = req.query
+        const {lat_start,long_start,lat_end,long_end,date,start_hour} = req.query
+        const min_shape_start_lat = lat_start -1
+        const max_shape_start_long = lat_start +1
+
+        const min_shape_start_long = long_start -1
+        const max_shape_end_long = long_start +1
+
+        const min_shape_start_lat_end = lat_end -1
+        const max_shape_start_long_end = lat_end +1
+
+        const min_shape_start_long_end = long_end -1
+        const max_shape_end_long_end = long_end +1
+
+     
 
         const trajets = await prisma.trajet.findMany({
             where:{
                 position_start:{
-                    name:start_place || undefined
+                    latitude:{
+                        lte:max_shape_start_long,
+                        gte:min_shape_start_lat
+                    } || undefined,
+                    longitude:{
+                        lte:max_shape_end_long,
+                        gte:min_shape_start_long
+                    } || undefined
                 },
                 position_end:{
-                    name:end_place || undefined
+                    latitude:{
+                        lte:max_shape_start_long_end,
+                        gte:min_shape_start_lat_end
+                    } || undefined,
+                    longitude:{
+                        lte:max_shape_end_long_end,
+                        gte:min_shape_start_long_end
+                    } || undefined
                 },
                 start_date:date || undefined,
                 hour_start:start_hour || undefined
@@ -403,12 +430,7 @@ const deleteTrajet = async (req,res) => {
               }
             });
           });
-      
-          // Wait for all delete operations to complete
-          await Promise.all(deletePromises);
-       
-        
-
+            await Promise.all(deletePromises);
 
         await prisma.trajet.delete({
             where:{
