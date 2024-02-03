@@ -4,16 +4,24 @@ import TimeIcon from '../assets/img/icons/icon_clock.png'
 import VehicleIcon from '../assets/img/icons/icon_vehicle.png'
 import SeatsIcon from '../assets/img/icons/icon_profile_white.png'
 import PositionSeparator from '../assets/img/icons/position_separator.png'
-import React from 'react'
+import React, { useState } from 'react'
 import { Trajet } from '../utils/type-interfaces.ts'
+import ReservationPopup from './ReservationPopup.tsx'
 
 interface TrajetCardProps {
   trajet: Trajet
 }
 
 const TrajetCard = ({trajet} : TrajetCardProps) => {
+
+  const [isOpenPop,setIsOpenPop] = useState(false);
+
+
     return (
+      <>
+      <ReservationPopup isOpen={isOpenPop} trajet={trajet} />  
       <div className="trajet-card h-full">
+
         <div className="trajet-upper">
           <div className="trajet-upper-left">
             <p className="trajet-date">{trajet.start_date}</p>
@@ -45,7 +53,7 @@ const TrajetCard = ({trajet} : TrajetCardProps) => {
             </div>
           </div>
 
-          <button className='reserve-btn'>Réserver</button>  
+          <button onClick={() => setIsOpenPop(true)} className='reserve-btn'>Réserver</button>  
         </div>
 
         <div className="trajet-lower">
@@ -61,10 +69,11 @@ const TrajetCard = ({trajet} : TrajetCardProps) => {
 
           <div className="informations informations-seat">
             <img src={SeatsIcon} alt="Time" />
-            <p>3</p>
+            <p>{trajet.nb_place}</p>
           </div>
         </div>
       </div>
+      </>
     );
 }
  

@@ -72,6 +72,10 @@
     flex flex-col items-center
 }
 
+.trajet-upper-right p {
+    @apply text-center
+}
+
 .trajet-upper-right img {
     @apply  w-16
 }

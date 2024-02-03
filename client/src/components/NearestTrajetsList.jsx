@@ -43,6 +43,7 @@ const NearestTrajetsList = ({trajets}) => {
             <Slider {...settings}>
 
                   {trajets.map((trajet) => {
+                    console.log(trajet.id);
                     return <TrajetCard trajet={trajet} />
                   })}
                  

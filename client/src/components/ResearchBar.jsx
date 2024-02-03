@@ -23,20 +23,8 @@ const ResearchBar = ({ onSearch }) => {
   const formRef = useRef(null);
   /////////////////////////////////////////////////////////
   
-
-
-  const DefaultLocation = { lat: 36.75, lng: 3.05 };
-  const DefaultZoom = 10;
-
-  const geoLocDest = useRef(null);
-
-  const [defaultLocation, setDefaultLocation] = useState(DefaultLocation);
-  const [isDepartMapOpen, setIsDepartMapOpen] = useState(false);
-  const [isDestMapOpen, setIsDestMapOpen] = useState(false);
-
   const [departCoord, setDepartCoord] = useState(null);
   const [destCoord, setDestCoord] = useState(null);
-  const [location, setLocation] = useState(defaultLocation);
 
   /////////////////////////////////////////////////
   //              onChange Functions
@@ -68,7 +56,6 @@ const ResearchBar = ({ onSearch }) => {
     val.depart_lat = departCoord?.lat;
     val.dest_long = destCoord?.lng;
     val.dest_lat = destCoord?.lat;
-    console.log("formVal", val);
     onSearch(val);
   };
 
@@ -83,19 +70,10 @@ const ResearchBar = ({ onSearch }) => {
           <img src={destionationIcon} alt="Destination" />
 
           <MapInput
-            isMapOpen={isDepartMapOpen}
-            setIsMapOpen={setIsDepartMapOpen}
             coord={departCoord}
             setCoord={setDepartCoord}
             displayDefaultLoc={true}
-            DefaultLocation={
-              context.position
-                ? {
-                    lat: context.position.latitude,
-                    lng: context.position.longitude,
-                  }
-                : DefaultLocation
-            }
+            
           />
           <hr className="separator" />
         </div>
@@ -103,20 +81,11 @@ const ResearchBar = ({ onSearch }) => {
         <div className="category research-departure col-span-3">
           <img src={destionationIcon} alt="Destination" />
           <MapInput
-            isMapOpen={isDestMapOpen}
-            setIsMapOpen={setIsDestMapOpen}
             coord={destCoord}
             setCoord={setDestCoord}
             displayDefaultLoc={true}
             label="Destination"
-            DefaultLocation={
-              context.position
-                ? {
-                    lat: context.position.latitude,
-                    lng: context.position.longitude,
-                  }
-                : DefaultLocation
-            }
+            
           />
 
           <hr className="separator" />

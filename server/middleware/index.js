@@ -3,11 +3,13 @@ const jwt = require('jsonwebtoken')
 const isSignIn = async (req,res,next) => {
     try {
         const token = req.headers.Authorization || req.headers.authorization
+        
         if(!token){
             return res.status(401).json({message:"UnAuthenticated!"})
         }
         const paylaod = token.split(" ")[1]
         const decodedToken = jwt.decode(paylaod,process.env.JWT_SECRET)    
+        console.log(decodedToken)
         req.userId = decodedToken.user.id
         req.role = decodedToken.user.type
         next()

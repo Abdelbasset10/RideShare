@@ -44,15 +44,17 @@ function LocationMarker({ coord, setCoord,defaultLoc,displayDefaultLoc,refreshed
   }
 }
 
-const ResearchBarMap = ({ defaultLoc, coord, setCoord, setIsMapOpen, displayDefaultLoc = false }) => {
+const ResearchBarMap = ({ displayCancel,defaultLoc, coord, setCoord, setIsMapOpen, displayDefaultLoc = false }) => {
 
   const refreshed = useRef(false);
 
   useEffect(() => {
+    if (displayDefaultLoc) {
+      setCoord(defaultLoc)
+    }
     document.body.style.overflow = "hidden";
-  });
+  },[]);
 
-  
 
   const approved = () => {
     document.body.style.overflow = "scroll";
@@ -70,9 +72,10 @@ const ResearchBarMap = ({ defaultLoc, coord, setCoord, setIsMapOpen, displayDefa
         <button className="done-btn" onClick={approved}>
           Confirmer
         </button>
+        {!displayCancel &&
         <button className="refresh-btn" onClick={refresh}>
           Refresh
-        </button>
+        </button>}
         <MapContainer
           className="map-container"
           center={coord ? {lat: coord.lat,lng: coord.lng} :  defaultLoc}
