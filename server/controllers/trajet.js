@@ -395,14 +395,9 @@ const deleteTrajet = async (req,res) => {
             return res.status(400).json({message:"You can't delete trajet that's you are not the owner!"})
         }
 
-await prisma.position.deleteMany({
-    where: {
-      OR: [
-        { id: trajet.position_start.id },
-        { id: trajet.position_end.id },
-      ],
-    },
-  });
+       
+
+
 
         await prisma.trajet.delete({
             where:{
@@ -411,7 +406,17 @@ await prisma.position.deleteMany({
         })
 
        
-
+        await prisma.position.delete({
+            where: {
+                id:trajet.position_start.id
+            },
+          });
+        
+          await prisma.position.delete({
+            where: {
+                id:trajet.position_end.id    
+            },
+          });
         
 
         
