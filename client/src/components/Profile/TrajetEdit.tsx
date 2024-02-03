@@ -1,62 +1,114 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Trajet } from "../../utils/type-interfaces";
 import Box from "../Box.tsx";
+import { useForm } from "react-hook-form";
+import MapInput from "../Map/MapInput.tsx";
+import { AuthContext } from "../../contexts/AuthContext.tsx";
+import { fetchFnc } from "../../utils/fetch";
+import { errorToast, successToast } from "../../utils/helpers.ts";
 
 interface TrajetEditProps {
   trajet: Trajet;
 }
 
 const TrajetEdit = ({ trajet }: TrajetEditProps) => {
-  const [formData, setFormData] = useState({
-    lieuDepart: "",
-    lieuArrivee: "",
-    dateDepart: "",
-    heureDepart: "",
-    placesDisponibles: "",
-    prix: ""
+
+  const {register, handleSubmit,control,formState} = useForm({
+    defaultValues: {
+      start_date: trajet.start_date,
+      price: trajet.price,
+      nb_place: trajet.nb_place,
+      hour_start: trajet.hour_start,
+
+    }
   });
+  const {user} = useContext(AuthContext);
+
+  const [departCoord,setDepartCoord] = useState({
+    lat: trajet.position_start.latitude,
+    lng: trajet.position_start.longitude
+  });
+  const [destCoord,setDestCoord] = useState({
+    lat: trajet.position_end.latitude,
+    lng: trajet.position_end.longitude
+  });
+
+  const modifyTrajet = async (e) => {
+     e.userId = user.id;
+     e.start_lat = departCoord.lat;
+     e.end_lat = destCoord.lat;
+
+     e.start_long = departCoord.lng;
+     e.end_long = destCoord.lng;
+     
+     const formData = new FormData();
+     for (let [key,value] of Object.entries(e)) {
+          formData.append(key,value);
+     }
+
+     try {
+     await fetchFnc({
+      url: `trajet/update/${trajet.id}`,
+      method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${user?.apiKey}`,
+        },
+      data: formData
+     })
+     successToast("Trajet edité avec succès");
+    } catch(e) {
+      errorToast(e)
+    }
+     
+  }
+
+
 
   return (
     <div className="flex">
       <div className="w-1/2">
-        <Box/>
+        <Box trajet={trajet}/>
       </div>
       <div className="w-1/2">
-        <form className="space-y-4">
-          <label className="block">
+        <form className="space-y-4" onSubmit={handleSubmit(modifyTrajet)}>
             <span className="text-custom-green">Lieu de Départ :</span>
-            <input type="text" name="lieuDepart" className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-          </label>
-          <label className="block">
+            <MapInput
+            coord={departCoord}
+            setCoord={setDepartCoord}
+            displayDefaultLoc={true}
+            cancelBtn={true}
+          />
             <span className=" text-custom-green">Lieu d’Arrivée :</span>
-            <input type="text" name="lieuArrivee" className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-          </label>
+            <MapInput
+            coord={destCoord}
+            setCoord={setDestCoord}
+            displayDefaultLoc={true}
+            cancelBtn={true}
+          />
+
           <div className="flex space-x-4">
             <label className="block w-1/2">
               <span className=" text-custom-green">Date de Départ :</span>
-              <input type="date" name="dateDepart" className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+              <input type="date" {...register("start_date")} className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
             </label>
             <label className="block w-1/2">
               <span className=" text-custom-green">l’Heure de Départ :</span>
-              <input type="time" name="heureDepart" className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+              <input type="time"   {...register("hour_start")} className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
             </label>
           </div>
           <div className="flex space-x-4">
             <label className="block w-1/2">
               <span className=" text-custom-green">Places Disponibles :</span>
-              <input type="number" name="placesDisponibles" min="0"className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+              <input type="number"  {...register("nb_place")} min="0" className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
             </label>
             <label className="block w-1/2">
               <span className=" text-custom-green">Prix :</span>
-              <input type="number" min="0" name="prix" className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+              <input type="number" min="0" {...register("price")}  className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
             </label>
           </div>
           <div className="flex items-center justify-between">
-            <button type="button" className="bg-orange-500 text-white rounded-full px-2.5 py-1 ">
+            <button  type="submit" className="bg-orange-500 text-white bg-bg-green-dark rounded-full px-2.5 py-1 ">
               Modifier
-            </button>
-            <button type="button" className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-              Annuler
             </button>
           </div>
         </form>

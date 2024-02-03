@@ -119,39 +119,21 @@ const TrajetCreate = ({ setUpdate, update }) => {
                   {errors?.departCoord?.message?.toString() ?? ""}
                 </div>
                 <MapInput
-                  isMapOpen={isDepartMapOpen}
-                  setIsMapOpen={setIsDepartMapOpen}
                   coord={departCoord}
                   setCoord={setDepartCoord}
                   displayDefaultLoc={true}
-                  DefaultLocation={
-                    context.position
-                      ? {
-                          lat: context.position.latitude,
-                          lng: context.position.longitude,
-                        }
-                      : DefaultLocation
-                  }
+                  
                 />
               </div>
 
               <div className="form-group">
                 <label htmlFor="Lieu_arrivee">Lieu d'Arrivé:</label>
                 <MapInput
-                  isMapOpen={isDestMapOpen}
-                  setIsMapOpen={setIsDestMapOpen}
                   coord={destCoord}
                   setCoord={setDestCoord}
                   displayDefaultLoc={true}
                   label="Destination"
-                  DefaultLocation={
-                    context.position
-                      ? {
-                          lat: context.position.latitude,
-                          lng: context.position.longitude,
-                        }
-                      : DefaultLocation
-                  }
+                  
                 />
               </div>
             </div>
