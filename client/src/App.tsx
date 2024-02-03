@@ -92,8 +92,8 @@ const App: FC = () => {
                 />
 
 
-                <Route path="routes/search" element={<ProfileTrajetsCreated />} />
-                {<Route path="routes/add" element={<SearchRoute />} />}
+                <Route path="routes/search" element={<SearchRoute />} />
+                {<Route path="routes/add" element={<AddRoute />} />}
 
                 <Route path="*" element={<NotFound />} />
               </Route>
