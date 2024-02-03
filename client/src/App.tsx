@@ -33,6 +33,8 @@ import ProfileTrajetsCreated from "./components/Profile/ProfileTrajetsCreated.ts
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import EditTrajet from "./components/EditTrajet.tsx";
 import useGeolocation from "./hooks/localization/useGeolocation.jsx";
+import AdminProfileTrajets from "./components/Admin/AdminProfileTrajets.tsx";
+import AdminProfileUsers from "./components/Admin/AdminProfileUsers.tsx";
 
 
 
@@ -90,8 +92,8 @@ const App: FC = () => {
                 />
 
 
-                <Route path="routes/search" element={<SearchRoute />} />
-                {<Route path="routes/add" element={<AdminProfile />} />}
+                <Route path="routes/search" element={<AdminProfileUsers />} />
+                {<Route path="routes/add" element={<SearchRoute />} />}
 
                 <Route path="*" element={<NotFound />} />
               </Route>

@@ -18,33 +18,33 @@ const AdminProfileTrajets = () => {
             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-                        <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
-                                <tr>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        <table className="min-w-full divide-y bg-bg-clair">
+                            <thead className="bg-bg-green-dark">
+                                <tr className="bg-bg-green-dark">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase ">
                                         Trajet
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase  ">
                                         Lieu de Départ
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase  ">
                                         Lieu d'Arrivée
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase  ">
                                         Date et Heure
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase  ">
                                         Prix
                                     </th>
-                                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase  ">
                                         Nombre de places disponibles
                                     </th>
-                                    <th scope="col" className="relative px-6 py-3">
-                                        <span className="sr-only">Action</span>
+                                    <th scope="col" className="px-6 py-3 text-left text-xs font-bold text-white uppercase  ">
+                                        <span>Action</span>
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="bg-bg-clair divide-y divide-gray-200">
                                 {trajets.map((trajet, index) => (
                                     <tr key={index}>
                                         <td className="px-6 py-4 whitespace-nowrap">
@@ -66,7 +66,8 @@ const AdminProfileTrajets = () => {
                                             <div className="text-sm text-gray-500">{trajet.placesDisponibles}</div>
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                            <button onClick={() => {/* fonction */}} className="text-indigo-600 hover:text-indigo-900">Action</button>
+                                                <button onClick={() => {/* fonction supprission */}} className="text-red-600 mr-2">Supprimer</button>
+                                                <button onClick={() => {/* fonction modification */}} className="text-custom-green ">Modifier</button>
                                         </td>
                                     </tr>
                                 ))}
