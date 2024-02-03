@@ -406,17 +406,17 @@ const deleteTrajet = async (req,res) => {
         })
 
        
-        await prisma.position.delete({
-            where: {
-                id:trajet.position_start.id
-            },
-          });
+        // await prisma.position.delete({
+        //     where: {
+        //         id:trajet.position_start.id
+        //     },
+        //   });
         
-          await prisma.position.delete({
-            where: {
-                id:trajet.position_end.id    
-            },
-          });
+        //   await prisma.position.delete({
+        //     where: {
+        //         id:trajet.position_end.id    
+        //     },
+        //   });
         
         return res.status(200).json({message:'Trajet has been deleted successfully!'})
 
