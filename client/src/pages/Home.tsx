@@ -13,12 +13,14 @@ import { AuthContext } from "../contexts/AuthContext.tsx";
 import {  useNavigate } from "react-router-dom";
 import React from "react";
 import {useFetch} from '../hooks/fetch/useFetch.tsx'
+import ReservationPopup from "../components/ReservationPopup";
 
 const Home = () => {
   const trajets = {
     trajets: [{}],
   };
 
+  
   const navigate = useNavigate();
   const context = useContext(AuthContext);
 
@@ -53,6 +55,7 @@ const Home = () => {
   data = data || []; 
 
   return (
+    <>
     <main className="main-section ">
       <section className="w-full bg-bg-green-dark">
         <div className="presentation-wrapper">
@@ -150,6 +153,7 @@ const Home = () => {
         </div>
       </section>
     </main>
+    </>
   );
 };
 

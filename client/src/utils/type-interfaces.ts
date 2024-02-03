@@ -55,7 +55,7 @@ export interface Car {
 }
 
 export interface GridActionsButtons {
-  onClick: (trajet: Trajet) => void;
+  onClick: (data: any) => void;
   label: string;
   class: string;
 }

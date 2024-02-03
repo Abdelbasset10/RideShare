@@ -13,8 +13,15 @@ const getUserReservations = async (req,res) => {
                 user_id:id,
             },
             include:{
-                trajet:true,
-                user:true
+                trajet: {
+                    include: {
+                        car:true,
+                        position_start:true,
+                        position_end:true,
+                    }
+                },
+                user:true,
+                
             }
         })
         return res.status(200).json(reservations)
@@ -26,9 +33,8 @@ const getUserReservations = async (req,res) => {
 const updateReservations = async (req,res) => {
     try {
         const {id} = req.params
-        const {userId} = req.body
+        let {userId,nb_places} = req.body
 
-        
 
         if(!id){
             return res.status(400).json({message:"reservetion id is required!"})
@@ -71,7 +77,8 @@ const updateReservations = async (req,res) => {
                 id
             },
             data:{
-                ...req.body
+                nb_place: 0,
+                user_id:userId,
             }
         })
 
