@@ -39,12 +39,12 @@ const NearestTrajetsList = ({trajets}) => {
 
 
     return (
+      
         <div className="cards-list">
             <Slider {...settings}>
 
                   {trajets.map((trajet) => {
-                    console.log(trajet.id);
-                    return <TrajetCard trajet={trajet} />
+                    return <TrajetCard key={trajet.id} trajet={trajet} />
                   })}
                  
             </Slider>    

@@ -14,8 +14,10 @@ const SearchRoute = () => {
 
     const [trajets,setTrajets] = useState([])
 
-    const {state} = useLocation();
-    
+    let {state} = useLocation();
+    if (state === null) {
+      state = {};
+    }
 
     const [triChecks,setTriChecks] = useState({
       nearest:false,
@@ -39,7 +41,6 @@ const SearchRoute = () => {
         triChecks[type] = checked;
 
         setTriChecks(triChecks); 
-        console.log("🚀 ~ onTriChange ~ triChecks:", triChecks);
 
     }
 
@@ -81,7 +82,6 @@ const SearchRoute = () => {
             
             } catch(e) {
               errorToast(e);
-              console.log(e);
               
             }
   

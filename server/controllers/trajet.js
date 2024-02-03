@@ -30,7 +30,7 @@ const createTrajet = async (req,res) => {
 
         const user = await prisma.user.findUnique({
             where:{
-                id:chauffeur_id
+                id: chauffeur_id
             },
             include:{
                 car:true

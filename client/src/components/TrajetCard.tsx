@@ -19,8 +19,8 @@ const TrajetCard = ({trajet} : TrajetCardProps) => {
 
     return (
       <>
-      <ReservationPopup isOpen={isOpenPop} trajet={trajet} />  
       <div className="trajet-card h-full">
+      <ReservationPopup setIsOpenPop={setIsOpenPop} isOpen={isOpenPop} trajet={trajet} />  
 
         <div className="trajet-upper">
           <div className="trajet-upper-left">

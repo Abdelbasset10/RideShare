@@ -35,7 +35,6 @@ const ProfileAccount = () => {
   const yearMax = new Date().getFullYear();
 
   const onUserEdit = (data) => {
-    console.log("🚀 ~ onUserEdit ~ data:", data);
   };
 
   return (

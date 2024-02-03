@@ -30,7 +30,6 @@ const Register = () => {
       formData.append(key, data[key]);
     }
 
-    console.log(`type de placeMax`, formData);
 
     try {
       const successMsg = await fetchFnc({

@@ -7,6 +7,7 @@ export const useUser = () => {
   const { user, setUser } = useContext(AuthContext);
   const { setItem, removeItem } = useLocalStorage();
 
+  
   const addUser = (userData) => {
     removeItem("user");
     setUser(userData);

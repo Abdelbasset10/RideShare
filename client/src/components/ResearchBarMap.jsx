@@ -24,7 +24,7 @@ function LocationMarker({ coord, setCoord,defaultLoc,displayDefaultLoc,refreshed
             ...e.latlng,
             name: `${data.address.road} , ${data.address.town}`,
           })
-        ).finally(()=>console.log(coord));
+        ).finally(()=> null);
     },
   });
 
@@ -44,7 +44,7 @@ function LocationMarker({ coord, setCoord,defaultLoc,displayDefaultLoc,refreshed
   }
 }
 
-const ResearchBarMap = ({ displayCancel,defaultLoc, coord, setCoord, setIsMapOpen, displayDefaultLoc = false }) => {
+const ResearchBarMap = ({ setNameCoord = () => {}, displayCancel,defaultLoc, coord, setCoord, setIsMapOpen, displayDefaultLoc = false }) => {
 
   const refreshed = useRef(false);
 
@@ -64,6 +64,7 @@ const ResearchBarMap = ({ displayCancel,defaultLoc, coord, setCoord, setIsMapOpe
   const refresh = () => {
     refreshed.current = true;
     setCoord(null);
+    setNameCoord(null);
   };
 
   return (

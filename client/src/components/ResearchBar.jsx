@@ -57,6 +57,8 @@ const ResearchBar = ({ defaultValues = {}, onSearch }) => {
     val.depart_lat = departCoord?.lat;
     val.dest_long = destCoord?.lng;
     val.dest_lat = destCoord?.lat;
+    val.dest_name = destCoord?.name;
+    val.depart_name = departCoord?.name;
     onSearch(val);
   };
 
@@ -72,9 +74,9 @@ const ResearchBar = ({ defaultValues = {}, onSearch }) => {
 
           <MapInput
             coord={departCoord}
+            name={defaultValues.depart_name || null} 
             setCoord={setDepartCoord}
             displayDefaultLoc={true}
-            
           />
           <hr className="separator" />
         </div>
@@ -84,6 +86,7 @@ const ResearchBar = ({ defaultValues = {}, onSearch }) => {
           <MapInput
             coord={destCoord}
             setCoord={setDestCoord}
+            name={defaultValues.dest_name || null} 
             displayDefaultLoc={true}
             label="Destination"
             

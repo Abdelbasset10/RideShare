@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import ResearchBarMap from "../ResearchBarMap";
 import { AuthContext } from "../../contexts/AuthContext.tsx";
 
-const MapInput = ({  coord, setCoord,displayDefaultLoc = false,label = "Départ",cancelBtn=false }) => {
+const MapInput = ({ name = null, coord, setCoord,displayDefaultLoc = false,label = "Départ",cancelBtn=false }) => {
 
   const [isOpen,setIsOpen] = useState(false);
+  const [nameCoord,setNameCoord] = useState(name);
   const context = useContext(AuthContext);
   const [DefaultLocation,setDefaultLocation] = useState({ lat: 36.75, lng: 3.05 })
 
-
+  
     useEffect(() => {
       if (context.position) {
         setDefaultLocation({
@@ -18,12 +19,24 @@ const MapInput = ({  coord, setCoord,displayDefaultLoc = false,label = "Départ"
       }
     },[])
     
+    const displayName = () => {
+      if (coord && coord.name !== undefined && coord.name !== null) {
+        return coord.name;
+      }
+      
+      if (nameCoord !== null) {
+        return nameCoord;
+      }
   
+      
+  
+      return label;
+    }
 
   return (
     <div className="research-input">
       <p className="cursor-pointer" onClick={() => setIsOpen(true)}>
-        {coord ? `${coord.name}` : label}
+        {displayName()}
       </p>
       {isOpen && (
         <ResearchBarMap
@@ -33,6 +46,7 @@ const MapInput = ({  coord, setCoord,displayDefaultLoc = false,label = "Départ"
           displayDefaultLoc={displayDefaultLoc}
           coord={coord}
           setIsMapOpen={setIsOpen}
+          setNameCoord={setNameCoord}
         />
       )}
     </div>

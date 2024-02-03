@@ -12,7 +12,7 @@ import { errorToast, successToast } from "../../utils/helpers.ts";
 
 const ProfileTrajetsReserved = () => {
   const user = useContext(AuthContext).user;
-
+  
   let { data, loading, error } : {data: Reservation[] | undefined,loading: boolean | undefined, error: any} = useFetch({
     url: `reservation/${user?.id}`,
     method: "GET",
@@ -34,7 +34,6 @@ const ProfileTrajetsReserved = () => {
       
       
       const {nb_place,trajet} = reservation;
-      console.log("nb_place",nb_place);
       
       
       const price = trajet.price * nb_place;

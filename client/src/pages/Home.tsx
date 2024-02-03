@@ -35,7 +35,6 @@ const Home = () => {
   } else {
     url = "trajet"
   }
-    console.log("url", url);
     
     let { data, loading, error } = useFetch({
       url: url,
@@ -50,7 +49,9 @@ const Home = () => {
   const onSearch = async (queryObj) => {
     navigate('/routes/search',{
       state: queryObj
-    })
+    });
+
+    
   };
 
   data = data || []; 

@@ -42,7 +42,6 @@ export const useFetch =  (
       headers: headers,
     });
 
-    console.log("🚀 ~ ret:", ret.data);
     
     setData(ret.data);
   } catch (error) {

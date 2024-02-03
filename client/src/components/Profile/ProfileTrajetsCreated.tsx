@@ -47,7 +47,6 @@ const ProfileTrajetsCreated = ({create = false}) => {
   
 
   data = data || [];
-  console.log("🚀 ~ ProfileTrajetsCreated ~ data:", data)
   
   const displayTitle = () => {
     if (trajetEdit === null && !trajetCreate) {
@@ -64,11 +63,7 @@ const ProfileTrajetsCreated = ({create = false}) => {
 
     return data?.map((trajet) => {
       const { id, position_start, position_end, start_date, hour_start, price, nb_place } = trajet;
-      //TODO : change position_start and position_end to position_start.name and position_end.name + change price to price + "€"
-      console.log(
-        "🚀 ~ ProfileTrajetsCreated ~ position_end ~ trajet",
-        position_end
-      );
+     
 
       return {
         position_start: position_start.name,
