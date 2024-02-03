@@ -33,9 +33,11 @@ import ProfileTrajetsCreated from "./components/Profile/ProfileTrajetsCreated.ts
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 import useGeolocation from "./hooks/localization/useGeolocation.jsx";
+
 import ProfileChauffeurBox from "./components/Profile/ProfileChauffeurBox.tsx";
 import ProfileUserBox from "./components/Profile/ProfileUserBox.tsx";
 import ProfileEdit from "./components/Profile/ProfileEdit.tsx";
+
 
 
 
@@ -93,9 +95,11 @@ const App: FC = () => {
                 />
 
 
+
                 <Route path="routes/search" element={<SearchRoute/>} />
                 {/*<Route path="routes/add" element={<Profile />} />*/}
                
+
                 <Route path="*" element={<NotFound />} />
               </Route>
             )
