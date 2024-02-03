@@ -8,7 +8,7 @@ import { Trajet } from '../utils/type-interfaces';
 
 const Box = ({trajet}: {trajet: Trajet}) => {
   return (
-    <div className="bg-white drop-shadow-lg rounded-lg p-4 w-64">
+    <div className="bg-white drop-shadow-lg rounded-lg p-4 w-2/6">
          <div className="trajet-upper ">
          <img className='h-3/4 w-6 ml-px' src={Vecteur} alt="vecteur" />
         <div className="trajet-upper-left  ">
@@ -19,6 +19,7 @@ const Box = ({trajet}: {trajet: Trajet}) => {
 
                 <div className="trajet-upper-right"> 
                     <p className="trajet-prix text-base font-bold text-gray-800">{trajet.price} DA</p>
+
                 </div>
             </div>
      
