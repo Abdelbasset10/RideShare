@@ -36,7 +36,6 @@ const Home = () => {
     url = "trajet"
   }
     console.log("url", url);
-    console.log("formData", formData);
     
     let { data, loading, error } = useFetch({
       url: url,
