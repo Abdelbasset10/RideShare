@@ -7,9 +7,11 @@ import Route from '../../assets/img/icons/route.png';
 
 const ProfilUserBox = () => {
   return (
-    <div className=" bg-white drop-shadow-lg rounded-lg p-4 w-3/6 h-2/5 ">
-      <div className="absolute top-0 right-4">
-    <div className=" relative col-end-11 ">
+    <div className='md:flex justify-center'>
+    <div className="bg-white  drop-shadow-lg p-4 rounded-lg  h-3/6 sm:w-full md:w-11/12 lg:w-96">
+      
+      <div className="absolute top-0 right-2 ">
+    <div className=" relative col-end-11">
     <img className='h-20 w-20 ' src={AdminPhoto} alt="Admin Photo" />
  
      <div className="text-base text-gray-800 align-bottom"> 
@@ -22,11 +24,11 @@ const ProfilUserBox = () => {
        </div>
        </div>
 
- <div className="ml-4 ">
+ <div className="ml-4">
    <div className="text-gray-700 mb-1 flex items-center ">
       <p className='text-base font-medium'>Email :</p> <p>exemple@gmail.com</p>
    </div>
-   <div className="text-gray-700 mb-1 flex items-center ">
+   <div className="text-gray-700 mb-1 flex items-center  ">
       <p className='text-base font-medium'>Mot de passe : </p> <p>*********</p>
    </div>
    <div className="text-gray-700 mb-1 flex items-center  ">
@@ -52,6 +54,7 @@ const ProfilUserBox = () => {
    </div>
 
  </div>
+</div>
 </div>
   );
 };

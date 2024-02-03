@@ -56,7 +56,8 @@
 }
 
 .profile-account-form {
-    @apply h-full
+    @apply h-full 
+    
 }
 
 .profile-account-form .form-group {
