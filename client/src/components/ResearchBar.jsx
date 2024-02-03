@@ -51,6 +51,7 @@ const ResearchBar = ({ onSearch }) => {
   };
 
   const handleSearch = (formValues) => {
+    console.log("formVaHAndleResearch",formValues);
     let val = {...formValues}
     val.depart_long = departCoord?.lng;
     val.depart_lat = departCoord?.lat;

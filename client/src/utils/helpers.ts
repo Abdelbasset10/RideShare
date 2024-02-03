@@ -34,6 +34,7 @@ export const errorToast = (message) => {
 export const formatGetQueryOptions = (queryOptions = {}) => {
   
   let returnValue = "";
+  if (Object.keys(queryOptions).length > 0) returnValue = "?";
     for (let [key, value] of Object.entries(queryOptions)) {
       if (value !== undefined && value !== "") {
       returnValue = `${returnValue}${key}=${value}&`;

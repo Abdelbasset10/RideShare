@@ -16,7 +16,7 @@ export const fetchFnc = async ({
   headers["Access-Control-Allow-Origin"] = "*";
 
   let queryString = formatGetQueryOptions(getQueryOptions);
-  url = `${url}?${queryString}`
+  url = `${url}${queryString}`
 
   try {
     const res = await axios({
