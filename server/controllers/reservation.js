@@ -72,15 +72,29 @@ const updateReservations = async (req,res) => {
             return res.status(400).json({message:"Your number of places is grater then rest of trajets left!"})
         }
 
+        const newNbPlace = reservation.trajet.nb_place + reservation.nb_place;
+
         await prisma.reservation.update({
             where:{
                 id
             },
             data:{
-                nb_place: 0,
+                nb_place: nb_places,
                 user_id:userId,
             }
         })
+
+
+
+        
+        await prisma.trajet.update({
+            where: {
+                id: reservation.trajet.id
+            },
+            data: {
+                nb_place: newNbPlace
+            }
+        });
 
         return res.status(200).json(reservation)
     } catch (error) {
