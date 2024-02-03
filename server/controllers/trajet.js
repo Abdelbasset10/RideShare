@@ -180,7 +180,7 @@ const getCloseTrajets = async (req,res) => {
         },
         include:{
             reservations:true,
-            chaufeur:true,
+            chauffeur:true,
             car:true,
             position_start:true,
             position_end:true 
@@ -282,7 +282,7 @@ const getTrajet = async (req,res) => {
         },
         include:{
             reservations:true,
-            chaufeur:true,
+            chauffeur:true,
             car:true,
             position_start:true,
             position_end:true 
