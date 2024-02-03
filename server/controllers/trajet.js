@@ -247,10 +247,16 @@ const searchTrajet = async (req,res) => {
 }
 
 const updateTrajet = async (req,res) => {
+
     try {
         const {id} = req.params
 
-        const {userId} = req.body
+        let {userId,price,end_long,end_lat,start_long,start_lat,nb_place,start_date,hour_start} = req.body
+
+        
+
+        price = parseFloat(price);
+        nb_place = parseInt(nb_place);
 
         if(!id){
             return res.status(400).json({message:"Trajet id is required"})
@@ -293,7 +299,14 @@ const updateTrajet = async (req,res) => {
             id
         },
         data : {
-            ...req.body
+            start_date: start_date,
+            hour_start: hour_start,
+            start_lat: start_lat,
+            start_long: start_long,
+            end_lat: end_lat,
+            end_long: end_long,
+            price: price,
+            nb_place: nb_place,
         }
     })
 
