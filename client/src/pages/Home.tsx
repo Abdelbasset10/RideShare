@@ -47,8 +47,10 @@ const Home = () => {
     ? `Trajets récuperes par date d'ajout du a une erreur lors de la localisation`
     : `Trajets récuperes par trajet plus proche de votre position`;
 
-  const onSearch = async (e) => {
-    console.log(e);
+  const onSearch = async (queryObj) => {
+    navigate('/routes/search',{
+      state: queryObj
+    })
   };
 
   data = data || []; 

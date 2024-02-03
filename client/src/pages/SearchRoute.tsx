@@ -6,13 +6,16 @@ import { useFetch } from "../hooks/fetch/useFetch.tsx";
 import React from "react";
 import { fetchFnc } from "../utils/fetch";
 import { errorToast } from "../utils/helpers.ts";
+import { useLocation } from "react-router-dom";
 
 
 
 const SearchRoute = () => {
 
     const [trajets,setTrajets] = useState([])
-  
+
+    const {state} = useLocation();
+    
 
     const [triChecks,setTriChecks] = useState({
       nearest:false,
@@ -21,8 +24,9 @@ const SearchRoute = () => {
       time:false
     })
 
-    const [dataBody,setDataBody] = useState({});
+    const [dataBody,setDataBody] = useState(state);
 
+    
     const filters = [
       {"value":"nearest","label":"Trier par plus proches"},
       {"value":"price","label":"Trier par prix plus bas"},
@@ -59,9 +63,6 @@ const SearchRoute = () => {
       });
     }
 
-    const queryOptionsFromTries = () => {
-      return {};
-    }
 
    
     useEffect( () => {
@@ -76,7 +77,6 @@ const SearchRoute = () => {
               headers: {},
             })
               setTrajets(ret.data);
-              console.log(ret.data);
               
             
             } catch(e) {
@@ -97,8 +97,6 @@ const SearchRoute = () => {
     
     const onSearch = (data) => {
       setDataBody(data);
-      console.log("body",dataBody);
-      
     }
 
     return (
@@ -107,7 +105,7 @@ const SearchRoute = () => {
           <section className="research-header-wrapper">
             <h1>Rechercher un trajet</h1>
 
-            <ResearchBar onSearch={onSearch} />
+            <ResearchBar defaultValues={dataBody} onSearch={onSearch} />
           </section>
 
           <section className="research-body">

@@ -221,7 +221,7 @@ const researchTrajet = async (req, res) => {
         let whereConditions = {};
 
         const { depart_lat, depart_long, dest_lat, dest_long, date, start_hour } = req.query;
-        const limit = 0.03;
+        const limit = 0.025;
 
         // Add location conditions if provided
         if (depart_lat && depart_long) {
@@ -258,7 +258,7 @@ const researchTrajet = async (req, res) => {
         }
 
         if (start_hour) {
-            whereConditions.start_hour = {
+            whereConditions.hour_start = {
                 gt: start_hour // Filter for start dates greater than the provided date
             };
         }
