@@ -92,7 +92,7 @@ const App: FC = () => {
                 />
 
 
-                <Route path="routes/search" element={<AdminProfileUsers />} />
+                <Route path="routes/search" element={<ProfileTrajetsCreated />} />
                 {<Route path="routes/add" element={<SearchRoute />} />}
 
                 <Route path="*" element={<NotFound />} />

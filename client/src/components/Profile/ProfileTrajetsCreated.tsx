@@ -133,7 +133,7 @@ const ProfileTrajetsCreated = ({create = false}) => {
                   setTrajetCreate(false);
                 },
                 label: "Edit",
-                class: "bg-blue-400 text-white",
+                class: " bg-custom-green text-white ",
               },
               {
                 onClick: async (trajet: Trajet) => {
@@ -162,7 +162,7 @@ const ProfileTrajetsCreated = ({create = false}) => {
                   }
                 },
                 label: "Remove",
-                class: "bg-red-700 text-white",
+                class: "bg-custom-green text-white",
               },
             ]}
           />

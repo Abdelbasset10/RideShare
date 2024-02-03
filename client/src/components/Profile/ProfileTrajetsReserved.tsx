@@ -78,7 +78,7 @@ const ProfileTrajetsReserved = () => {
               {
                 onClick: (trajet: Trajet) => console.log("REMOVE", trajet.id),
                 label: "Remove",
-                class: "bg-red-700 text-white",
+                class: "bg-custom-green text-white",
               },
             ]}
           />
