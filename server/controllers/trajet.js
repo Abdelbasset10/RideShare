@@ -383,7 +383,8 @@ const deleteTrajet = async (req,res) => {
             },
             include:{
                 position_start:true,
-                position_end:true
+                position_end:true,
+                reservations:true,
             }
         })
 
@@ -395,8 +396,18 @@ const deleteTrajet = async (req,res) => {
             return res.status(400).json({message:"You can't delete trajet that's you are not the owner!"})
         }
 
+        const deletePromises = trajet.reservations.map(async (reservation) => {
+            await prisma.reservation.delete({
+              where: {
+                id: reservation.id
+              }
+            });
+          });
+      
+          // Wait for all delete operations to complete
+          await Promise.all(deletePromises);
        
-
+        
 
 
         await prisma.trajet.delete({
