@@ -74,6 +74,7 @@ const updateReservations = async (req,res) => {
             return res.status(400).json({message:"Your number of places is grater then rest of trajets left!"})
         }
 
+
         const trajet = await prisma.trajet.findUnique({
             where:{
                 id:reservation.trajet_id
@@ -88,6 +89,7 @@ const updateReservations = async (req,res) => {
         }
 
         const updatedReservation = await prisma.reservation.update({
+
             where:{
                 id
             },
@@ -96,6 +98,7 @@ const updateReservations = async (req,res) => {
                 user_id:userId,
             }
         })
+
 
         await prisma.trajet.update({
             where:{
