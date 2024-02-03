@@ -63,18 +63,33 @@ const updateReservations = async (req,res) => {
         if(!user){
             return res.status(404).json({message:"User does not exists"})
         }
+        
+        
 
         if(reservation.user_id !== userId || reservation.trajet.chauffeur_id !== userId){
             return res.status(401).json({message:"UnAuthorized"})
         }
 
-        if(req.body.nb_places > reservation.trajet.nb_place){
+        if(nb_places > reservation.trajet.nb_place){
             return res.status(400).json({message:"Your number of places is grater then rest of trajets left!"})
         }
 
-        const newNbPlace = reservation.trajet.nb_place + reservation.nb_place;
 
-        await prisma.reservation.update({
+        const trajet = await prisma.trajet.findUnique({
+            where:{
+                id:reservation.trajet_id
+            },
+            include:{
+                reservations:true
+            }
+        })
+
+        if(!trajet){
+            return res.status(404).json({message:"Trajet of this reservation does not exists!"})
+        }
+
+        const updatedReservation = await prisma.reservation.update({
+
             where:{
                 id
             },
@@ -85,16 +100,14 @@ const updateReservations = async (req,res) => {
         })
 
 
-
-        
         await prisma.trajet.update({
-            where: {
-                id: reservation.trajet.id
+            where:{
+                id:trajet.id
             },
-            data: {
-                nb_place: newNbPlace
+            data:{
+                reservations:trajet.reservations.map((item)=>item.id === reservation.id ? updatedReservation : item)
             }
-        });
+        })
 
         return res.status(200).json(reservation)
     } catch (error) {
@@ -143,6 +156,9 @@ const deleteReservation = async (req,res) => {
             where:{
                 id:reservation.trajet_id
             },
+            include:{
+                reservations:true
+            }
         })
 
         if(reservation.user_id !== userId || reservation.user_id !== trajet.chauffeur_id){
@@ -155,6 +171,7 @@ const deleteReservation = async (req,res) => {
             },
             data:{
                 nb_place:+ reservation.nb_place,
+                reservations:trajet.reservations.filter((item)=>item.id !== reservation.id)
             }
         })
 
