@@ -3,10 +3,15 @@ import Box from "../components/Box.tsx";
 import ProfileChauffeurBox from "../components/Profile/ProfileChauffeurBox.tsx";
 import destionationIcon from "../assets/img/icons/icon_destination.png";
 import Map from "../assets/img/icons/map.png";
+import { useLocation } from 'react-router-dom';
 
-import MapInput from "../components/Map/MapInput.tsx"
 
 const DetailsTrajet = () => {
+
+  const location = useLocation();
+  const { trajet } = location.state || {}; // Accessing state with destructuring
+
+
   return (
     <div className="bg-beige pb-96 w-full h-full text-center "> 
 
@@ -20,7 +25,7 @@ const DetailsTrajet = () => {
     </div>
     <div className="mb-20"></div>
     <div className='flex  justify-center'>
-      <Box  />
+      <Box  trajet={trajet}/>
       <div className="mr-60"></div>
       <ProfileChauffeurBox />
     </div>

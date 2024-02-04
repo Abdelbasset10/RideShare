@@ -53,6 +53,7 @@ const [trajetData,setTrajetData] = useState([])
                             </thead>
                             <tbody className="bg-bg-clair divide-y divide-gray-200">
                                 {trajetData.map((ok, index) => (
+                                    
                                     <tr key={index}>
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             <div className="text-sm text-gray-500">{ok?.position_start?.name}</div>

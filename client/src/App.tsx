@@ -97,6 +97,8 @@ const App: FC = () => {
 
 
                 <Route path="routes/search" element={<SearchRoute/>} />
+
+                <Route path="routes/detail" element={<DetailsTrajet /> } />
                 {/*<Route path="routes/add" element={<Profile />} />*/}
                
 
