@@ -7,9 +7,10 @@ const MapInput = ({ name = null, coord, setCoord,displayDefaultLoc = false,label
   const [isOpen,setIsOpen] = useState(false);
   const [nameCoord,setNameCoord] = useState(name);
   const context = useContext(AuthContext);
-  const [DefaultLocation,setDefaultLocation] = useState({ lat: 36.75, lng: 3.05 })
+  const def = coord ? { lat: coord.lat, lng: coord.lng } :  { lat: 48.8566, lng: 2.3522 };
+  const [DefaultLocation,setDefaultLocation] = useState(def)
 
-  
+
     useEffect(() => {
       if (context.position) {
         setDefaultLocation({
@@ -17,6 +18,7 @@ const MapInput = ({ name = null, coord, setCoord,displayDefaultLoc = false,label
           lng: context.position.longitude,
         })
       }
+
     },[])
     
     const displayName = () => {
@@ -27,8 +29,6 @@ const MapInput = ({ name = null, coord, setCoord,displayDefaultLoc = false,label
       if (nameCoord !== null) {
         return nameCoord;
       }
-  
-      
   
       return label;
     }

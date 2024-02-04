@@ -34,7 +34,7 @@ const TrajetEdit = ({ trajet }: TrajetEditProps) => {
   });
 
   const modifyTrajet = async (e) => {
-     e.userId = user.id;
+     e.chauffeur_id = user.id;
      e.start_lat = departCoord.lat;
      e.end_lat = destCoord.lat;
 
@@ -84,6 +84,7 @@ const TrajetEdit = ({ trajet }: TrajetEditProps) => {
                       setCoord={setDepartCoord}
                       displayDefaultLoc={true}
                       cancelBtn={true}
+                      name={trajet.position_start.name}
                     />
                   </div>
                </div>
@@ -93,10 +94,11 @@ const TrajetEdit = ({ trajet }: TrajetEditProps) => {
 
                       <span className=" text-custom-green">Lieu d’Arrivée :</span>
                       <MapInput
-                      coord={destCoord}
-                      setCoord={setDestCoord}
-                      displayDefaultLoc={true}
-                      cancelBtn={true}
+                        coord={destCoord}
+                        setCoord={setDestCoord}
+                        displayDefaultLoc={true}
+                        cancelBtn={true}
+                        name={trajet.position_end.name}
                       />
                   </div>
                 </div>
