@@ -297,7 +297,9 @@ const updateTrajet = async (req,res) => {
 
         let {userId,price,end_long,end_lat,start_long,start_lat,nb_place,start_date,hour_start} = req.body
 
-        
+        if(!userId || !price ||!end_long ||!end_lat || !start_long || !start_lat || !nb_place || !start_date || !hour_start){
+            return res.status(400).json({message:"Make sure to fill ur infos"})
+        }
 
         price = parseFloat(price);
         nb_place = parseInt(nb_place);
