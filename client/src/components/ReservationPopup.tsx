@@ -7,7 +7,7 @@ import { AuthContext } from '../contexts/AuthContext.tsx';
 import { errorToast, successToast } from '../utils/helpers.ts';
 
 
-const ReservationPopup = ({ isOpen,trajet } : {isOpen: boolean,trajet: Trajet}) => {
+const ReservationPopup = ({ setIsOpenPop,isOpen,trajet } : {setIsOpenPop: any,isOpen: boolean,trajet: Trajet}) => {
 
  
     const {register,handleSubmit} = useForm();
@@ -25,21 +25,28 @@ const ReservationPopup = ({ isOpen,trajet } : {isOpen: boolean,trajet: Trajet}) 
                 userId: user?.id,
                 nb_places: data.nb_places
             }
-        }).then((e) => successToast("Reservation crée avec succès")).catch((e) => errorToast(e));
+        }).then((e) => {
+            setIsOpenPop(false);
+            successToast("Reservation crée avec succès")}).catch((e) => errorToast(e));
         
     } 
     return (
     <>
     {isOpen && (
-    <div className='popup-reservation'>
+    <div className='popup-reservation Z-50'>
         <div className="popup-wrapper">
-                <form onSubmit={handleSubmit(onClick)}>
-                    <p>Vous allez reserver des places pour le chemin de {trajet.position_start.name} à {trajet.position_end.name}</p>
+                <button onClick={() => setIsOpenPop(false)}>Fermer</button>
+                <form className='popup-content' onSubmit={handleSubmit(onClick)}>
+                    <h1 className='mb-10 text-3xl font-bold text-orange'>Reservez vos places</h1>
+                    <p className='mb-8'>Vous allez reserver des places pour le chemin de <br/> <span className='underline mx-3'>{trajet.position_start.name}</span> à <span className='underline mx-3'>{trajet.position_end.name}</span></p>
 
-                    <label htmlFor="nb_places">Nombre de places:</label>
-                    <input type="number" id='nb_places' {...register("nb_places")} />
+                    <div className='flex justify-center items-center bg-beige py-3 px-7 rounded-xl w-fit m-auto'>
+                        <label className='mr-4' htmlFor="nb_places">Nombre de places</label>
+                        <input type="number" id='nb_places' {...register("nb_places")} />
+                    </div>
 
-                    <button type='submit' >Submit</button>
+
+                    <button type='submit' className='mt-4 bg-bg-green-dark text-white px-8 py-1 rounded-xl'>Submit</button>
                 </form>
         </div>
     </div>)} 

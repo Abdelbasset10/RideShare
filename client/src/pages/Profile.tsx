@@ -12,7 +12,7 @@ import { UserTypes } from "../utils/type-interfaces.ts";
 import { successToast } from "../utils/helpers.ts";
 
 const Profile = () => {
-  
+    
     let { type,create } = useParams();
     let createTrajet = create === "1";
     const {user,logout} = useAuth();

@@ -5,14 +5,20 @@ import { Trajet } from "../utils/type-interfaces.ts";
 import { useFetch } from "../hooks/fetch/useFetch.tsx";
 import React from "react";
 import { fetchFnc } from "../utils/fetch";
+import { errorToast } from "../utils/helpers.ts";
+import { useLocation } from "react-router-dom";
+import Box from "../components/Box.tsx";
 
 
 
 const SearchRoute = () => {
 
-    const [data,setData] = useState([])
-    const [error,setError] = useState(null)
-    const [loading,setLoading] = useState(true)
+    const [trajets,setTrajets] = useState([])
+
+    let {state} = useLocation();
+    if (state === null) {
+      state = {};
+    }
 
     const [triChecks,setTriChecks] = useState({
       nearest:false,
@@ -21,15 +27,9 @@ const SearchRoute = () => {
       time:false
     })
 
-    const [dataBody,setDataBody] = useState({
-      depart_lat: undefined,
-      depart_long: undefined,
-      dest_lat: undefined,
-      dest_long: undefined,
-      start_hour: undefined,
-      date: undefined
-    });
+    const [dataBody,setDataBody] = useState(state);
 
+    
     const filters = [
       {"value":"nearest","label":"Trier par plus proches"},
       {"value":"price","label":"Trier par prix plus bas"},
@@ -42,15 +42,14 @@ const SearchRoute = () => {
         triChecks[type] = checked;
 
         setTriChecks(triChecks); 
-        console.log("🚀 ~ onTriChange ~ triChecks:", triChecks);
 
     }
 
     const displayTriItems = () => {
       return filters.map((filter) => {
         return (
-          <div className="tri-item-wrapper">
-            <label className="research-tri-label" for={filter.value}>
+          <div key={filter.label} className="tri-item-wrapper">
+            <label className="research-tri-label" htmlFor={filter.value}>
               {filter.label}
             </label>
             <input
@@ -66,20 +65,31 @@ const SearchRoute = () => {
       });
     }
 
-    const queryOptionsFromTries = () => {
-      return {};
-    }
 
    
     useEffect( () => {
 
-      fetchFnc({
-        url: 'trajet/search',
-        getQueryOptions: dataBody,
-        method: "GET",
-        headers: {},
-      }).then((e) => console.log(e)).catch((e) => console.log(e));
-      
+      const fetchData = async () => {
+  
+          try {
+            const ret = await fetchFnc({
+              url: 'trajet/research',
+              method: "GET",
+              getQueryOptions: dataBody,
+              headers: {},
+            })
+              setTrajets(ret.data);
+              
+            
+            } catch(e) {
+              errorToast(e);
+              
+            }
+  
+        }
+  
+        fetchData();
+     
     },[dataBody])
 
     
@@ -88,8 +98,6 @@ const SearchRoute = () => {
     
     const onSearch = (data) => {
       setDataBody(data);
-      console.log("body",dataBody);
-      
     }
 
     return (
@@ -98,7 +106,7 @@ const SearchRoute = () => {
           <section className="research-header-wrapper">
             <h1>Rechercher un trajet</h1>
 
-            <ResearchBar onSearch={onSearch} />
+            <ResearchBar defaultValues={dataBody} onSearch={onSearch} />
           </section>
 
           <section className="research-body">
@@ -111,8 +119,8 @@ const SearchRoute = () => {
               <div className="research-separator"></div>
 
               <div className="research-result">
-                  {data !== undefined && data.map((trajet: Trajet) => (
-                    <TrajetCard trajet={trajet} />
+                  {trajets !== undefined && trajets.map((trajet: Trajet) => (
+                    <Box reserverAction={true} key={trajet.id} trajet={trajet} />
                   ))}
               </div>
             </div>

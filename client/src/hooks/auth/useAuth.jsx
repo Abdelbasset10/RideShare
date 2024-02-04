@@ -1,21 +1,23 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useUser } from "./useUser";
 import { useCookies } from "react-cookie";
 import { BASE_URL } from "../../utils/globals";
 import axios from "axios";
 import { fetchFnc } from "../../utils/fetch";
 import { useLocalStorage } from "./useLocalStorage";
+import { AuthContext } from "../../contexts/AuthContext.tsx";
 
 export const useAuth = () => {
   const { user, addUser, removeUser } = useUser();
   const [cookies] = useCookies(["user"]);
   const { setItem, getItem, removeItem } = useLocalStorage();
+  const { setUser } = useContext(AuthContext);
 
   useEffect(() => {
     const user = getItem("user");
-
+    console.log("user", user);
     if (user) {
-      addUser(user);
+      setUser(user);
     } else {
       removeUser();
     }
@@ -33,7 +35,6 @@ export const useAuth = () => {
         method: "POST",
         data: form,
       });
-      console.log("🚀 ~ file: useAuth.jsx:36 ~ login ~ data:", data);
       let user = data.data.user;
       user.apiKey = data.data.token;
 
@@ -47,6 +48,5 @@ export const useAuth = () => {
   const logout = () => {
     removeUser();
   };
-
   return { user, login, logout };
 };

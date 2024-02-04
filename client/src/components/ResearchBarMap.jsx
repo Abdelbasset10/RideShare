@@ -24,7 +24,7 @@ function LocationMarker({ coord, setCoord,defaultLoc,displayDefaultLoc,refreshed
             ...e.latlng,
             name: `${data.address.road} , ${data.address.town}`,
           })
-        ).finally(()=>console.log(coord));
+        ).finally(()=> null);
     },
   });
 
@@ -44,7 +44,7 @@ function LocationMarker({ coord, setCoord,defaultLoc,displayDefaultLoc,refreshed
   }
 }
 
-const ResearchBarMap = ({ displayCancel,defaultLoc, coord, setCoord, setIsMapOpen, displayDefaultLoc = false }) => {
+const ResearchBarMap = ({ setNameCoord = () => {}, displayCancel,defaultLoc, coord, setCoord, setIsMapOpen, displayDefaultLoc = false }) => {
 
   const refreshed = useRef(false);
 
@@ -64,18 +64,21 @@ const ResearchBarMap = ({ displayCancel,defaultLoc, coord, setCoord, setIsMapOpe
   const refresh = () => {
     refreshed.current = true;
     setCoord(null);
+    setNameCoord(null);
   };
 
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-60 z-10">
       <div className="research-map-container ">
-        <button className="done-btn" onClick={approved}>
+
+        <div className="cursor-pointer done-btn text-center bg-white ring-4 ring-bg-green-dark rounded-2xl animate-bounce z-20 text-bg-green-dark px-5 py-1.5 text-xl absolute left-[35%] right-[50%] top-5" onClick={approved}>
           Confirmer
-        </button>
+        </div>
         {!displayCancel &&
-        <button className="refresh-btn" onClick={refresh}>
-          Refresh
-        </button>}
+            <div className="  text-center cursor-pointer done-btn bg-red-600 ring-4 ring-red-500 rounded-2xl animate-bounce z-20 text-white px-5 py-1.5 text-xl absolute left-[51%] right-[34%] top-5" onClick={refresh}>
+            Refresh
+          </div>
+        }
         <MapContainer
           className="map-container"
           center={coord ? {lat: coord.lat,lng: coord.lng} :  defaultLoc}

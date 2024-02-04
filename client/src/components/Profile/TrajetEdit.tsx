@@ -65,51 +65,75 @@ const TrajetEdit = ({ trajet }: TrajetEditProps) => {
 
 
   return (
-    <div className="flex">
-      <div className="w-1/2">
-        <Box trajet={trajet}/>
+    <div className="grid grid-cols-12 mx-10 gap-8">
+      <div className="col-span-5">
+        <Box reserverAction={false} trajet={trajet}/>
       </div>
-      <div className="w-1/2">
-        <form className="space-y-4" onSubmit={handleSubmit(modifyTrajet)}>
-            <span className="text-custom-green">Lieu de Départ :</span>
-            <MapInput
-            coord={departCoord}
-            setCoord={setDepartCoord}
-            displayDefaultLoc={true}
-            cancelBtn={true}
-          />
-            <span className=" text-custom-green">Lieu d’Arrivée :</span>
-            <MapInput
-            coord={destCoord}
-            setCoord={setDestCoord}
-            displayDefaultLoc={true}
-            cancelBtn={true}
-          />
 
-          <div className="flex space-x-4">
-            <label className="block w-1/2">
-              <span className=" text-custom-green">Date de Départ :</span>
-              <input type="date" {...register("start_date")} className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-            </label>
-            <label className="block w-1/2">
-              <span className=" text-custom-green">l’Heure de Départ :</span>
-              <input type="time"   {...register("hour_start")} className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-            </label>
+      <div className="col-span-7">
+        <form className="profile-edit-trajet-form" onSubmit={handleSubmit(modifyTrajet)}>
+           
+        <div className="profile-edit-trajet-wrapper ">
+          <div className="w-full">
+
+              <div className="form-row grid-cols-1">
+                  <div className="form-group">
+                      <span className="text-custom-green">Lieu de Départ :</span>
+                      <MapInput
+                      coord={departCoord}
+                      setCoord={setDepartCoord}
+                      displayDefaultLoc={true}
+                      cancelBtn={true}
+                    />
+                  </div>
+               </div>
+
+               <div className="form-row grid-cols-1">
+                  <div className="form-group">
+
+                      <span className=" text-custom-green">Lieu d’Arrivée :</span>
+                      <MapInput
+                      coord={destCoord}
+                      setCoord={setDestCoord}
+                      displayDefaultLoc={true}
+                      cancelBtn={true}
+                      />
+                  </div>
+                </div>
+
+                <div className="form-row grid-cols-2">
+                    <div className="form-group">
+                      <span className=" text-custom-green">Date de Départ :</span>
+                      <input type="date" {...register("start_date")} className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                    </div>
+
+                    <div className="form-group">
+                      <span className=" text-custom-green">l’Heure de Départ :</span>
+                      <input type="time"   {...register("hour_start")} className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                    </div>
+                </div>
+
+                <div className="form-row grid-cols-2">
+                    <div className="form-group">
+                      <span className=" text-custom-green">Places Disponibles :</span>
+                      <input type="number"  {...register("nb_place")} min="0" className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                    </div>
+
+                  <div className="form-group">
+                    <span className=" text-custom-green">Prix :</span>
+                    <input type="number" min="0" {...register("price")}  className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
+                  </div>
+                </div>
+
+                <div className="form-row grid-cols-1">
+                    <div className="form-group">
+                      <button  type="submit" className="w-full bg-orange-500 text-white bg-bg-green-dark rounded-full px-2.5 py-1 ">
+                        Modifier
+                      </button>
+                    </div>
+                </div>          
           </div>
-          <div className="flex space-x-4">
-            <label className="block w-1/2">
-              <span className=" text-custom-green">Places Disponibles :</span>
-              <input type="number"  {...register("nb_place")} min="0" className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-            </label>
-            <label className="block w-1/2">
-              <span className=" text-custom-green">Prix :</span>
-              <input type="number" min="0" {...register("price")}  className="mt-1 block w-full rounded-md   focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" />
-            </label>
-          </div>
-          <div className="flex items-center justify-between">
-            <button  type="submit" className="bg-orange-500 text-white bg-bg-green-dark rounded-full px-2.5 py-1 ">
-              Modifier
-            </button>
+
           </div>
         </form>
       </div>

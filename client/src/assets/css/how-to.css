@@ -3,19 +3,19 @@
 }
 
 .explanations-wrapper {
-    @apply w-8/12 m-auto
+    @apply w-7/12 2xl:w-7/12 m-auto
 }
 
 .how-to-header {
-    @apply text-center my-12
+    @apply text-center my-16
 }
 
 .how-to-header p {
-    @apply text-orange text-xs
+    @apply text-orange text-base
 }
 
 .how-to-header h3 {
-    @apply text-center text-4xl text-bg-green-dark
+    @apply text-center text-5xl text-bg-green-dark
 }
 
 .explanations-steps-wrapper {
@@ -23,7 +23,7 @@
 }
 
 .step {
-    @apply grid grid-cols-9 gap-x-5 items-center mb-10
+    @apply grid grid-cols-9 gap-x-5 items-center mb-20
 }
 
 
@@ -36,6 +36,10 @@
 }
 
 .step > div > h3 {
-    @apply font-bold text-lg mb-2.5;
-    line-height: 1.3rem;
+    @apply font-bold text-xl 2xl:text-2xl mb-2.5;
+    line-height: 1.8rem;
+}
+
+.step > div > p {
+    @apply text-base 2xl:text-lg;
 }

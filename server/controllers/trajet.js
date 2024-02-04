@@ -30,7 +30,7 @@ const createTrajet = async (req,res) => {
 
         const user = await prisma.user.findUnique({
             where:{
-                id:chauffeur_id
+                id: chauffeur_id
             },
             include:{
                 car:true
@@ -195,57 +195,101 @@ const getCloseTrajets = async (req,res) => {
     }
 }
 
-const searchTrajet = async (req,res) => {
-    try {
-        const {lat_start,long_start,lat_end,long_end,date,start_hour} = req.query
-        const min_shape_start_lat = lat_start -1
-        const max_shape_start_long = lat_start +1
-
-        const min_shape_start_long = long_start -1
-        const max_shape_end_long = long_start +1
-
-        const min_shape_start_lat_end = lat_end -1
-        const max_shape_start_long_end = lat_end +1
-
-        const min_shape_start_long_end = long_end -1
-        const max_shape_end_long_end = long_end +1
-
-     
-
-        const trajets = await prisma.trajet.findMany({
-            where:{
-                position_start:{
-                    latitude:{
-                        lte:max_shape_start_long,
-                        gte:min_shape_start_lat
-                    } || undefined,
-                    longitude:{
-                        lte:max_shape_end_long,
-                        gte:min_shape_start_long
-                    } || undefined
-                },
-                position_end:{
-                    latitude:{
-                        lte:max_shape_start_long_end,
-                        gte:min_shape_start_lat_end
-                    } || undefined,
-                    longitude:{
-                        lte:max_shape_end_long_end,
-                        gte:min_shape_start_long_end
-                    } || undefined
-                },
-                start_date:date || undefined,
-                hour_start:start_hour || undefined
-            }
-        })
-
-        return res.status(200).json(trajets)
-
-    } catch (error) {
-        return res.status(500).json({messaeg:error.message})
-    }
+function calculateDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radius of the earth in km
+    const dLat = deg2rad(lat2 - lat1);
+    const dLon = deg2rad(lon2 - lon1);
+    const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const d = R * c; // Distance in km
+    return d;
 }
 
+function deg2rad(deg) {
+    return deg * (Math.PI / 180);
+}
+
+
+const researchTrajet = async (req, res) => {
+
+   
+
+    try {
+        let whereConditions = {};
+
+        const { depart_lat, depart_long, dest_lat, dest_long, date, start_hour } = req.query;
+        const limit = 0.02;
+
+        // Add location conditions if provided
+        if (depart_lat && depart_long) {
+            whereConditions.position_start = {
+                latitude: {
+                    lte: parseFloat(depart_lat) + limit,
+                    gte: parseFloat(depart_lat) - limit
+                },
+                longitude: {
+                    lte: parseFloat(depart_long) + limit,
+                    gte: parseFloat(depart_long) - limit
+                }
+            };
+        }
+
+        if (dest_lat && dest_long) {
+            whereConditions.position_end = {
+                latitude: {
+                    lte: parseFloat(dest_lat) + limit,
+                    gte: parseFloat(dest_lat) - limit
+                },
+                longitude: {
+                    lte: parseFloat(dest_long) + limit,
+                    gte: parseFloat(dest_long) - limit
+                }
+            };
+        }
+
+        // Add date and start hour conditions if provided
+        if (date) {
+            whereConditions.start_date = {
+                gt: date // Filter for start dates greater than the provided date
+            };
+        }
+
+        if (start_hour) {
+            whereConditions.hour_start = {
+                gt: start_hour // Filter for start dates greater than the provided date
+            };
+        }
+
+
+        const trajets = await prisma.trajet.findMany({
+            where: whereConditions,
+            include:{
+                reservations:true,
+                chauffeur:true,
+                car:true,
+                position_start:true,
+                position_end:true,
+             }
+        });
+
+
+        const sortedTrajets = trajets.map(trajet => {
+            const distance = calculateDistance(depart_lat, depart_long, trajet.position_start.latitude, trajet.position_start.longitude);
+            return { trajet, distance };
+        }).sort((a, b) => a.distance - b.distance);
+
+        // Extract only the trajets without the distance property
+        const resultTrajets = sortedTrajets.map(item => item.trajet);
+
+        return res.status(200).json(trajets);
+
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
 const updateTrajet = async (req,res) => {
 
     try {
@@ -334,25 +378,14 @@ const getAllTrajets = async (req,res) => {
 }
 
 const getTrajet = async (req,res) => {
+    
     try {
         const {id} = req.params
 
     if(!id){
         return res.status(400).json({message:"Trajet id is required"})
     }
-
-    const trajet = await prisma.trajet.findUnique({
-        where:{
-            id
-        },
-        include:{
-            reservations:true,
-            chauffeur:true,
-            car:true,
-            position_start:true,
-            position_end:true 
-         }
-    })
+    const trajet = []
 
     if(!trajet){
         return res.status(404).json({message:"Trajet does not exists!"})
@@ -482,5 +515,5 @@ module.exports = {
     deleteTrajet,
     reserverTrajet,
     getUserTrajets,
-    searchTrajet
+    researchTrajet
 }

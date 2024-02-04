@@ -3,7 +3,6 @@ const prisma = require('../utils/prisma')
 const getUserReservations = async (req,res) => {
     try {
         const {id} = req.params
-
         if(!id){
             return res.status(400).json({message:"User id is required!"})
         }
@@ -88,6 +87,9 @@ const updateReservations = async (req,res) => {
             return res.status(404).json({message:"Trajet of this reservation does not exists!"})
         }
 
+        const diff = reservation.nb_place - nb_places
+         
+
         const updatedReservation = await prisma.reservation.update({
 
             where:{
@@ -99,15 +101,47 @@ const updateReservations = async (req,res) => {
             }
         })
 
+        if(diff > 0){
+            await prisma.trajet.update({
+                where:{
+                    id:trajet.id
+                },
+                data:{
+                    nb_place:trajet.nb_place + diff
+                }
+            })
+        }else{
+            await prisma.trajet.update({
+                where:{
+                    id:trajet.id
+                },
+                data:{
+                    nb_place:trajet.nb_place - diff
+                }
+            })
+        }
 
         await prisma.trajet.update({
-            where:{
-                id:trajet.id
+            where: {
+              id: trajet.id
             },
-            data:{
-                reservations:trajet.reservations.map((item)=>item.id === reservation.id ? updatedReservation : item)
+            data: {
+              reservations: {
+                updateMany: [
+                  {
+                    where: {
+                      id: reservation.id
+                    },
+                    data: {
+                      nb_place: nb_places
+                    }
+                  }
+                ]
+              }
             }
-        })
+          });
+
+          
 
         return res.status(200).json(reservation)
     } catch (error) {

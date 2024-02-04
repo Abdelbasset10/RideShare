@@ -12,19 +12,33 @@ import MapInput from "./Map/MapInput.tsx";
 import useGeolocation from "../hooks/localization/useGeolocation";
 import { AuthContext } from "../contexts/AuthContext.tsx";
 
-const ResearchBar = ({ onSearch }) => {
+const ResearchBar = ({ defaultValues = {}, onSearch }) => {
   const [userData, setUserData] = useState({});
   const [errors, setErrors] = useState({});
 
-  const { register, control, handleSubmit } = useForm();
+  const { register, control, handleSubmit } = useForm({
+    defaultValues: {
+      date: defaultValues.date,
+      start_hour: defaultValues.start_hour
+    }
+  });
   const context = useContext(AuthContext);
 
   
   const formRef = useRef(null);
-  /////////////////////////////////////////////////////////
+  let defaultDepart = null
+  let defaultDest = null
   
-  const [departCoord, setDepartCoord] = useState(null);
-  const [destCoord, setDestCoord] = useState(null);
+  if (defaultValues.dest_long && defaultValues.dest_lat) {
+     defaultDest = {lat: defaultValues.dest_lat,lng: defaultValues.dest_long}
+  }
+
+  if (defaultValues.depart_long && defaultValues.depart_lat) {
+    defaultDepart = {lat: defaultValues.depart_lat,lng: defaultValues.depart_long}
+ }
+
+  const [departCoord, setDepartCoord] = useState(defaultDepart);
+  const [destCoord, setDestCoord] = useState(defaultDest);
 
   /////////////////////////////////////////////////
   //              onChange Functions
@@ -37,25 +51,14 @@ const ResearchBar = ({ onSearch }) => {
     setUserData(userData);
   };
 
-  const onDateChange = (options) => {
-    userData.date = {
-      day: options["$D"],
-      month: options["$M"],
-      year: options["$Y"],
-    };
-    setUserData(userData);
-  };
-
-  const validateData = () => {
-    return {};
-  };
-
   const handleSearch = (formValues) => {
     let val = {...formValues}
     val.depart_long = departCoord?.lng;
     val.depart_lat = departCoord?.lat;
     val.dest_long = destCoord?.lng;
     val.dest_lat = destCoord?.lat;
+    val.dest_name = destCoord?.name;
+    val.depart_name = departCoord?.name;
     onSearch(val);
   };
 
@@ -71,9 +74,9 @@ const ResearchBar = ({ onSearch }) => {
 
           <MapInput
             coord={departCoord}
+            name={defaultValues.depart_name || null} 
             setCoord={setDepartCoord}
             displayDefaultLoc={true}
-            
           />
           <hr className="separator" />
         </div>
@@ -83,6 +86,7 @@ const ResearchBar = ({ onSearch }) => {
           <MapInput
             coord={destCoord}
             setCoord={setDestCoord}
+            name={defaultValues.dest_name || null} 
             displayDefaultLoc={true}
             label="Destination"
             
@@ -115,10 +119,10 @@ const ResearchBar = ({ onSearch }) => {
           />
         </div>
 
-        <div className="cursor-pointer category research-submit col-span-2">
+        <button className="cursor-pointer category research-submit col-span-2">
           <img src={researchIcon} alt="Submit button" />
-          <button type="submit">Rechercher</button>
-        </div>
+          <div type="submit">Rechercher</div>
+        </button>
       </form>
     </>
   );

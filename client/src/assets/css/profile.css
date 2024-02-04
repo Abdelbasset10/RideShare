@@ -1,5 +1,5 @@
 .profile-section {
-    @apply w-8/12 m-auto flex justify-center items-center;
+    @apply w-10/12 2xl:w-8/12 m-auto flex justify-center items-center;
     height: calc(100vh - 80px - 60px);
     
 }
