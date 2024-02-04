@@ -65,6 +65,12 @@ const deleteUser = async (req,res) => {
             }
         })
 
+        await prisma.car.delete({
+            where:{
+                owner_id:user.id
+            }
+        })
+
         await prisma.user.delete({
             where:{
                 id
