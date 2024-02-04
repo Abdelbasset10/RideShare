@@ -53,7 +53,7 @@ model Trajet {
   id   String  @id @default(auto()) @map("_id") @db.ObjectId
   start_date  String
   hour_start  String
-  hour_end    String
+  hour_end    String?
   nb_place  Int
   price Float?
 

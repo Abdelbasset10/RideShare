@@ -320,14 +320,14 @@ const updateTrajet = async (req,res) => {
         return res.status(400).json({message:"You can't update trajet that's not yours!!"})
     }
 
-    if(req.body.start_date){
+    if(start_date){
         const currentDate = new Date();
         const year = currentDate.getFullYear();
         const month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-based
         const day = currentDate.getDate().toString().padStart(2, '0');
         const formattedDate = year + "-" + month + "-" + day;
 
-        if(formattedDate>req.body.start_date){
+        if(formattedDate>start_date){
             return res.status(400).json({message:"You can't pick day that is gone!"})
         }
     }
@@ -338,17 +338,72 @@ const updateTrajet = async (req,res) => {
         }
     }
 
+    const getPositionStart = await prisma.position.findFirst({
+        where:{
+            longitude:start_long,
+            latitude:start_lat
+        }
+    })
+
+    let newPositionStart
+
+    if(!getPositionStart){
+        newPositionStart = await prisma.position.create({
+            data:{
+                longitude:start_long,
+                latitude:start_lat
+            }
+        })
+    }else{
+        newPositionStart = await prisma.position.update({
+            where:{
+                longitude:start_long,
+                latitude:start_lat
+            },data:{
+                longitude:start_long,
+                latitude:start_lat
+            }
+        })
+    }
+
+    const getPositionEnd = await prisma.position.findFirst({
+        where:{
+            longitude:end_long,
+            latitude:end_lat
+        }
+    })
+
+    let newPositionEnd
+
+    if(!getPositionEnd){
+        newPositionEnd = await prisma.position.create({
+            data:{
+                longitude:end_long,
+                latitude:end_lat
+            }
+        })
+    }else{
+        newPositionEnd = await prisma.position.update({
+            where:{
+                longitude:end_long,
+                latitude:end_lat
+            },data:{
+                longitude:end_long,
+                latitude:end_lat
+            }
+        })
+    }
+
     const updatedTrajet = await prisma.trajet.update({
         where:{
             id
         },
         data : {
+            ...req.body,
             start_date: start_date,
             hour_start: hour_start,
-            start_lat: start_lat,
-            start_long: start_long,
-            end_lat: end_lat,
-            end_long: end_long,
+            position_startId:newPositionStart.id,
+            position_endId:newPositionEnd.id,
             price: price,
             nb_place: nb_place,
         }
