@@ -12,6 +12,7 @@ const authRoute = require('./routes/auth')
 const userRoute = require('./routes/user')
 const trajetRoute = require('./routes/trajet')
 const reservationRoute = require('./routes/reservation')
+const refreshRoute = require('./routes/refresh')
 
 const app = express()
 var upload = multer();
@@ -28,7 +29,7 @@ app.use('/auth',authRoute)
 app.use('/trajet',trajetRoute)
 app.use('/user',userRoute)
 app.use('/reservation',reservationRoute)
-
+app.use('refresh',refreshRoute)
 
 const PORT = process.env.PORT || 5000
 

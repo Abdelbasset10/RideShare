@@ -295,9 +295,9 @@ const updateTrajet = async (req,res) => {
     try {
         const {id} = req.params
 
-        let {userId,price,end_long,end_lat,start_long,start_lat,nb_place,start_date,hour_start} = req.body
+        let {userId,start_name,end_name,price,end_long,end_lat,start_long,start_lat,nb_place,start_date,hour_start} = req.body
 
-        if(!userId || !price ||!end_long ||!end_lat || !start_long || !start_lat || !nb_place || !start_date || !hour_start){
+        if(!userId || !price || !start_name || !end_name || !end_long ||!end_lat || !start_long || !start_lat || !nb_place || !start_date || !hour_start){
             return res.status(400).json({message:"Make sure to fill ur infos"})
         }
 
@@ -308,17 +308,6 @@ const updateTrajet = async (req,res) => {
         start_lat = parseFloat(start_date)
         start_long = parseFloat(start_long)
 
-        const theBody = {
-            chauffeur_id:userId,
-            price,
-            end_long,
-            end_lat,
-            start_long,
-            start_lat,
-            nb_place,
-            start_date,
-            hour_start
-        }
         
         if(!id){
             return res.status(400).json({message:"Trajet id is required"})
@@ -382,7 +371,8 @@ const updateTrajet = async (req,res) => {
         newPositionStart = await prisma.position.create({
             data:{
                 longitude:start_long,
-                latitude:start_lat
+                latitude:start_lat,
+                name:start_name
             }
         })
     }else{
@@ -393,7 +383,8 @@ const updateTrajet = async (req,res) => {
                 latitude:start_lat
             },data:{
                 longitude:start_long,
-                latitude:start_lat
+                latitude:start_lat,
+                name:start_name,
             }
         })
     }
@@ -411,7 +402,8 @@ const updateTrajet = async (req,res) => {
         newPositionEnd = await prisma.position.create({
             data:{
                 longitude:end_long,
-                latitude:end_lat
+                latitude:end_lat,
+                name:end_name
             }
         })
     }else{
@@ -422,7 +414,8 @@ const updateTrajet = async (req,res) => {
                 latitude:end_lat
             },data:{
                 longitude:end_long,
-                latitude:end_lat
+                latitude:end_lat,
+                name:end_name
             }
         })
     }
@@ -432,7 +425,6 @@ const updateTrajet = async (req,res) => {
             id
         },
         data : {
-            
             chauffeur_id:userId,
             start_date: start_date,
             hour_start: hour_start,

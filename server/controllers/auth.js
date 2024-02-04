@@ -120,6 +120,8 @@ const signIn = async (req, res) => {
       return res.status(400).json({ message: "Incorrect password!" });
     }
 
+    console.log(isExistsUser)
+
     const token = jwt.sign(
       { user: { 
         id: isExistsUser.id,
@@ -132,11 +134,15 @@ const signIn = async (req, res) => {
       { expiresIn: "1d" }
     );
 
+    const accessToken = jwt.sign(
+      { user: isExistsUser },
+      process.env.JWT_SECRET,
+      { expiresIn: "15m" }
+    );
+
 
     isExistsUser.password = undefined
 
-    req.user = isExistsUser.id
-    console.log(isExistsUser.id)
     res.status(201).json({user:isExistsUser,token});
   } catch (error) {
     console.log(error);
