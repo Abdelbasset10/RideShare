@@ -295,9 +295,9 @@ const updateTrajet = async (req,res) => {
     try {
         const {id} = req.params
 
-        let {userId,price,end_long,end_lat,start_long,start_lat,nb_place,start_date,hour_start} = req.body
+        let {chauffeur_id,price,end_long,end_lat,start_long,start_lat,nb_place,start_date,hour_start} = req.body
 
-        if(!userId || !price ||!end_long ||!end_lat || !start_long || !start_lat || !nb_place || !start_date || !hour_start){
+        if(!chauffeur_id || !price ||!end_long ||!end_lat || !start_long || !start_lat || !nb_place || !start_date || !hour_start){
             return res.status(400).json({message:"Make sure to fill ur infos"})
         }
 
@@ -322,7 +322,7 @@ const updateTrajet = async (req,res) => {
         return res.status(404).json({message:"Trajet does not exists!"})
     }
 
-    if(trajet.chauffeur_id !== userId){
+    if(trajet.chauffeur_id !== chauffeur_id){
         return res.status(400).json({message:"You can't update trajet that's not yours!!"})
     }
 
