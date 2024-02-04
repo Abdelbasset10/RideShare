@@ -306,7 +306,8 @@ const updateTrajet = async (req,res) => {
         end_long = parseFloat(end_long)
         end_lat = parseFloat(end_lat)
         start_lat = parseFloat(start_date)
-
+        start_long = parseFloat(start_long)
+        
         if(!id){
             return res.status(400).json({message:"Trajet id is required"})
         }
@@ -362,6 +363,7 @@ const updateTrajet = async (req,res) => {
     }else{
         newPositionStart = await prisma.position.update({
             where:{
+                id:getPositionStart.id,
                 longitude:start_long,
                 latitude:start_lat
             },data:{
@@ -390,6 +392,7 @@ const updateTrajet = async (req,res) => {
     }else{
         newPositionEnd = await prisma.position.update({
             where:{
+                id:getPositionEnd.id,
                 longitude:end_long,
                 latitude:end_lat
             },data:{
@@ -416,6 +419,7 @@ const updateTrajet = async (req,res) => {
 
     return res.status(200).json(updatedTrajet)
     } catch (error) {
+        console.log(error.message)
         return res.status(500).json({message:error.message})
     }
 }
