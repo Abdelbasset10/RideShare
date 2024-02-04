@@ -26,10 +26,10 @@ model User {
   first_name String
   last_name String
   email String
-  n_tlph String
+  n_tlph String?
   password String
   type USERTYPE
-  matricule String
+  matricule String?
   picture   String? 
   gender  GENDER
 
@@ -59,8 +59,8 @@ model Trajet {
 
   reservations Reservation[] @relation("reservation for trajet")
 
-  chauffeur User? @relation("chauffeur",fields: [chauffeur_id],references: [id])
-  chauffeur_id  String? @db.ObjectId
+  chauffeur User @relation("chauffeur",fields: [chauffeur_id],references: [id])
+  chauffeur_id  String @db.ObjectId
 
   car Car @relation("car of trajet",fields: [car_id],references: [id])
   car_id String @db.ObjectId
