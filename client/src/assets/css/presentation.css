@@ -12,7 +12,7 @@
 }
 
 .presentation-part-upper {
-    @apply grid grid-cols-8 ;
+    @apply grid grid-cols-8 items-center mb-10;
 }
 
 .presentation-left {
@@ -21,19 +21,19 @@
 }
 
 .presentation-left > h1 {
-    @apply text-4xl
+    @apply text-3xl 2xl:text-4xl
     font-bold 
     pr-10
-    mb-4
+    mb-3
 }
 
 .presentation-left > p {
-    @apply text-[0.9rem]
+    @apply text-base 2xl:text-lg
     
 }
 
 
 .presentation-right {
-    @apply col-span-4 justify-center items-center
+    @apply col-span-4 justify-center items-center text-center m-auto w-11/12
 }
 

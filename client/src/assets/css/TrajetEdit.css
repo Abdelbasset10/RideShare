@@ -1,0 +1,21 @@
+.profile-edit-trajet-form {
+    @apply w-full text-bg-green-dark
+  }
+  
+  .profile-edit-trajet-form .form-row {
+    @apply w-full
+  }
+  
+  .profile-edit-trajet-form .form-group {
+    @apply w-full flex text-bg-green-dark mb-4
+  }
+  
+  .profile-edit-trajet-form .research-input {
+    @apply w-full border-2 border-bg-green-dark rounded px-1.5 py-1
+  }
+  
+  .profile-edit-trajet-form input[type="text"],.profile-edit-trajet-form input[type="number"],.profile-edit-trajet-form input[type="date"],.profile-edit-trajet-form input[type="time"] {
+    @apply bg-transparent w-full border-2
+     border-bg-green-dark rounded px-1.5 py-1
+       focus:outline-none
+    }

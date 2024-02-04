@@ -116,7 +116,7 @@
 .trajet-lower {
     @apply grid grid-cols-7 
      
-    text-[0.6rem]
+    text-[0.7rem]
      bg-bg-green-dark
      rounded-b-2xl
      font-bold
@@ -129,7 +129,7 @@
 }
 
 .trajet-lower .informations-vehicle {
-    @apply col-span-3
+    @apply col-span-3 text-[0.6rem]
 }
 
  .informations img {

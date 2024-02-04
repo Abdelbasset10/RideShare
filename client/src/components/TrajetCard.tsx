@@ -14,13 +14,12 @@ interface TrajetCardProps {
 
 const TrajetCard = ({trajet} : TrajetCardProps) => {
 
-  const [isOpenPop,setIsOpenPop] = useState(false);
+   
 
 
     return (
       <>
       <div className="trajet-card h-full">
-      <ReservationPopup setIsOpenPop={setIsOpenPop} isOpen={isOpenPop} trajet={trajet} />  
 
         <div className="trajet-upper">
           <div className="trajet-upper-left">

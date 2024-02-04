@@ -7,6 +7,7 @@ import React from "react";
 import { fetchFnc } from "../utils/fetch";
 import { errorToast } from "../utils/helpers.ts";
 import { useLocation } from "react-router-dom";
+import Box from "../components/Box.tsx";
 
 
 
@@ -119,7 +120,7 @@ const SearchRoute = () => {
 
               <div className="research-result">
                   {trajets !== undefined && trajets.map((trajet: Trajet) => (
-                    <TrajetCard key={trajet.id} trajet={trajet} />
+                    <Box reserverAction={true} key={trajet.id} trajet={trajet} />
                   ))}
               </div>
             </div>

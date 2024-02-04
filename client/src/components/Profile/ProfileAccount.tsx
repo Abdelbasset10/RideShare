@@ -15,7 +15,11 @@ const ProfileAccount = () => {
 
   const [activePanel, setActivePanel] = useState(1);
 
-  const { register, handleSubmit, control, formState } = useForm({});
+  const { register, handleSubmit, control, formState } = useForm({
+    defaultValues: {
+      ...user
+    }
+  });
 
   const { field: userTypeField } = useController({ name: "type", control });
 
@@ -55,6 +59,7 @@ const ProfileAccount = () => {
           </li>
         </ul>
       </nav>
+      
       {(activePanel === 1 || activePanel === 2) && (
         <form
           className="profile-account-form"

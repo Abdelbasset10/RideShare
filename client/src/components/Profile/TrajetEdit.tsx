@@ -65,11 +65,12 @@ const TrajetEdit = ({ trajet }: TrajetEditProps) => {
 
 
   return (
-    <div className="flex">
-      <div className="w-1/2">
-        <Box trajet={trajet}/>
+    <div className="grid grid-cols-12 mx-10 gap-8">
+      <div className="col-span-5">
+        <Box reserverAction={false} trajet={trajet}/>
       </div>
-      <div className="w-1/2">
+
+      <div className="col-span-7">
         <form className="space-y-4" onSubmit={handleSubmit(modifyTrajet)}>
             <span className="text-custom-green">Lieu de Départ :</span>
             <MapInput
