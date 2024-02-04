@@ -303,6 +303,9 @@ const updateTrajet = async (req,res) => {
 
         price = parseFloat(price);
         nb_place = parseInt(nb_place);
+        end_long = parseFloat(end_long)
+        end_lat = parseFloat(end_lat)
+        start_lat = parseFloat(start_date)
 
         if(!id){
             return res.status(400).json({message:"Trajet id is required"})
