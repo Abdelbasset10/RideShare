@@ -5,11 +5,13 @@ import car from '../assets/img/icons/car.png';
 import Vecteur from '../assets/img/icons/vecteur.png';
 import { Trajet } from '../utils/type-interfaces';
 import ReservationPopup from './ReservationPopup.tsx';
+import { useNavigate } from 'react-router-dom';
 
 
-const Box = ({trajet, reserverAction = false}: {trajet: Trajet,reserverAction: any}) => {
+const Box = ({trajet, reserverAction = false, detailAction = true}: {trajet: Trajet,reserverAction: any,detailAction : boolean}) => {
 
   const [isOpenPop,setIsOpenPop] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -53,6 +55,14 @@ const Box = ({trajet, reserverAction = false}: {trajet: Trajet,reserverAction: a
         {reserverAction  && (
          <button onClick={() => setIsOpenPop(true)} className='bg-orange text-white h-fit text-xl rounded-lg py-2  px-4'>
           Reserver
+        </button>
+        )}
+
+        {detailAction  && (
+         <button onClick={() => navigate('/routes/detail',{
+            state: {trajet: trajet}
+         })} className='bg-orange text-white h-fit text-xl rounded-lg py-2  px-4'>
+           Details
         </button>
         )}
         
