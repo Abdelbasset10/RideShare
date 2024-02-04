@@ -15,6 +15,7 @@ const ReservationPopup = ({ setIsOpenPop,isOpen,trajet } : {setIsOpenPop: any,is
 
 
     const onClick = (data) => {
+        successToast("Traitement en cours...");
         fetchFnc({
             url: `trajet/reserver/${trajet.id}`,
             method: "PATCH",

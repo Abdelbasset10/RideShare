@@ -84,6 +84,7 @@ const ProfileTrajetsReserved = () => {
             actions={[
               {
                 onClick: (reservation: Reservation) => {
+                  successToast("Traitement en cours...");
                   fetchFnc({
                     url: `reservation/${reservation.id}`,
                     method: "PATCH",

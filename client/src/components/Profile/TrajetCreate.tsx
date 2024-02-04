@@ -83,6 +83,7 @@ const TrajetCreate = ({ setUpdate, update }) => {
     formData.append("chauffeur_id", trajet.chauffeur_id);
 
     try {
+      successToast("Traitement en cours...");
       const successMsg = await fetchFnc({
         url: "trajet/create",
         method: "post",

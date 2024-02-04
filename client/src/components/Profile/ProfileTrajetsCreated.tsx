@@ -142,6 +142,7 @@ const ProfileTrajetsCreated = ({create = false}) => {
                     formData.append("userId", trajet.chauffeur.id);
 
                     try {
+                      successToast("Traitement en cours...");
                       await fetchFnc({
                         url: `trajet/delete/${trajet?.id}`,
                         data: formData,

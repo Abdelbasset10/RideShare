@@ -40,7 +40,6 @@ function LocationMarker({ coord, setCoord,defaultLoc,displayDefaultLoc,refreshed
     return (<Marker position={coord}>
       <Popup>You are here</Popup>
     </Marker>)
-
   }
 }
 
@@ -81,7 +80,7 @@ const ResearchBarMap = ({ setNameCoord = () => {}, displayCancel,defaultLoc, coo
         }
         <MapContainer
           className="map-container"
-          center={coord ? {lat: coord.lat,lng: coord.lng} :  defaultLoc}
+          center={coord ? {lat: coord.lat, name: coord.name, lng: coord.lng} :  defaultLoc}
           zoom={13}
           scrollWheelZoom={false}
         >
