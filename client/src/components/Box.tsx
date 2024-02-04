@@ -14,17 +14,22 @@ const Box = ({trajet, reserverAction = false}: {trajet: Trajet,reserverAction: a
   return (
     <>
     <div className="bg-white drop-shadow-lg rounded-xl  p-4 w-full flex flex-col items-start justify-center">
-         <div className="trajet-upper ">
-              <img className='h-full w-4 ' src={Vecteur} alt="vecteur" />
-              <div className="trajet-upper-left text-sm my-4  ">
-                <div className=" font-bold text-gray-800  "> {trajet.position_start.name}</div>
-                      
-                <div className=" self-end font-bold text-gray-800 ">{trajet.position_end.name}</div>
+         <div className="trajet-upper  w-full grid grid-cols-12">
+              <div className='w-full col-span-1 flex justify-start'>
+                <img className='h-full  w-4 ' src={Vecteur} alt="vecteur" />
               </div>
 
-                      <div className="trajet-upper-right my-4"> 
+              <div className='col-span-11 flex justify-between'>
+                <div className="trajet-upper-left text-sm  flex flex-col justify-between items-start text-left">
+                  <div className=" font-bold text-gray-800  "> {trajet.position_start.name}</div>
+                        
+                  <div className="font-bold text-gray-800 ">{trajet.position_end.name}</div>
+                </div>
+
+                      <div className="trajet-upper-right my-4 flex items-end"> 
                           <p className="trajet-prix text-xl font-bold text-gray-800">{trajet.price} DA</p>
                       </div>
+              </div>
           </div>
      
       <div className="mb-2 w-full flex justify-between px-2 items-center">

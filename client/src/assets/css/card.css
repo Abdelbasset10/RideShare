@@ -46,7 +46,7 @@
 .trajet-upper {
     @apply 
      grid grid-cols-7   
-     px-4 pt-2 mb-10
+     px-4 pt-2  w-11/12 m-auto mt-0 mb-10
 }
 
 .trajet-upper-left {

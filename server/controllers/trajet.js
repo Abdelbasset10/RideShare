@@ -221,7 +221,7 @@ const researchTrajet = async (req, res) => {
         let whereConditions = {};
 
         const { depart_lat, depart_long, dest_lat, dest_long, date, start_hour } = req.query;
-        const limit = 0.025;
+        const limit = 0.02;
 
         // Add location conditions if provided
         if (depart_lat && depart_long) {
