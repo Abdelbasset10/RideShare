@@ -26,10 +26,10 @@ model User {
   first_name String
   last_name String
   email String
-  n_tlph String
+  n_tlph String?
   password String
   type USERTYPE
-  matricule String
+  matricule String?
   picture   String? 
   gender  GENDER
 
