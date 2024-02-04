@@ -295,9 +295,9 @@ const updateTrajet = async (req,res) => {
     try {
         const {id} = req.params
 
-        let {chauffeur_id,price,end_long,end_lat,start_long,start_lat,nb_place,start_date,hour_start} = req.body
+        let {userId,price,end_long,end_lat,start_long,start_lat,nb_place,start_date,hour_start} = req.body
 
-        if(!chauffeur_id || !price ||!end_long ||!end_lat || !start_long || !start_lat || !nb_place || !start_date || !hour_start){
+        if(!userId || !price ||!end_long ||!end_lat || !start_long || !start_lat || !nb_place || !start_date || !hour_start){
             return res.status(400).json({message:"Make sure to fill ur infos"})
         }
 
@@ -307,6 +307,18 @@ const updateTrajet = async (req,res) => {
         end_lat = parseFloat(end_lat)
         start_lat = parseFloat(start_date)
         start_long = parseFloat(start_long)
+
+        const theBody = {
+            chauffeur_id:userId,
+            price,
+            end_long,
+            end_lat,
+            start_long,
+            start_lat,
+            nb_place,
+            start_date,
+            hour_start
+        }
         
         if(!id){
             return res.status(400).json({message:"Trajet id is required"})
@@ -318,11 +330,24 @@ const updateTrajet = async (req,res) => {
         }
     })
 
+    const user = await prisma.user.findUnique({
+        where:{
+            id:userId
+        },
+        include:{
+            car:true
+        }
+    })
+
+    if(!user){
+        return res.status(404).json({message:"User does not exists!"})
+    }
+
     if(!trajet){
         return res.status(404).json({message:"Trajet does not exists!"})
     }
 
-    if(trajet.chauffeur_id !== chauffeur_id){
+    if(trajet.chauffeur_id !== userId){
         return res.status(400).json({message:"You can't update trajet that's not yours!!"})
     }
 
@@ -407,13 +432,15 @@ const updateTrajet = async (req,res) => {
             id
         },
         data : {
-            ...req.body,
+            
+            chauffeur_id:userId,
             start_date: start_date,
             hour_start: hour_start,
             position_startId:newPositionStart.id,
             position_endId:newPositionEnd.id,
             price: price,
             nb_place: nb_place,
+            car_id:user.car.id
         }
     })
 
