@@ -26,27 +26,37 @@ const TrajetEdit = ({ trajet }: TrajetEditProps) => {
 
   const [departCoord,setDepartCoord] = useState({
     lat: trajet.position_start.latitude,
-    lng: trajet.position_start.longitude
+    lng: trajet.position_start.longitude,
+    name: trajet.position_start.name
   });
+
   const [destCoord,setDestCoord] = useState({
     lat: trajet.position_end.latitude,
-    lng: trajet.position_end.longitude
+    lng: trajet.position_end.longitude,
+    name: trajet.position_end.name
   });
 
   const modifyTrajet = async (e) => {
-     e.chauffeur_id = user.id;
+
+     e.userId = user.id;
      e.start_lat = departCoord.lat;
      e.end_lat = destCoord.lat;
+     e.start_name = departCoord.name;
 
      e.start_long = departCoord.lng;
      e.end_long = destCoord.lng;
-     
+     e.end_name = destCoord.name;
+
      const formData = new FormData();
      for (let [key,value] of Object.entries(e)) {
           formData.append(key,value);
      }
-
+     
+     console.log(destCoord);
+     
+     
      try {
+      successToast("Traitement en cours...");
      await fetchFnc({
       url: `trajet/update/${trajet.id}`,
       method: "PATCH",
@@ -80,11 +90,11 @@ const TrajetEdit = ({ trajet }: TrajetEditProps) => {
                   <div className="form-group">
                       <span className="text-custom-green">Lieu de Départ :</span>
                       <MapInput
-                      coord={departCoord}
-                      setCoord={setDepartCoord}
-                      displayDefaultLoc={true}
-                      cancelBtn={true}
-                      name={trajet.position_start.name}
+                        coord={departCoord}
+                        setCoord={setDepartCoord}
+                        displayDefaultLoc={true}
+                        cancelBtn={true}
+                        name={trajet.position_start.name}
                     />
                   </div>
                </div>

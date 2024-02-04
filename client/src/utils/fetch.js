@@ -1,6 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "./globals";
-import { formatGetQueryOptions } from "./helpers.ts";
+import { formatGetQueryOptions, successToast } from "./helpers.ts";
 
 export const fetchFnc = async ({
   url,
@@ -13,6 +13,8 @@ export const fetchFnc = async ({
   if (relative) {
     url = `${BASE_URL}/${url}`;
   }
+
+
   headers["Access-Control-Allow-Origin"] = "*";
 
   let queryString = formatGetQueryOptions(getQueryOptions);

@@ -7,7 +7,7 @@ const MapInput = ({ name = null, coord, setCoord,displayDefaultLoc = false,label
   const [isOpen,setIsOpen] = useState(false);
   const [nameCoord,setNameCoord] = useState(name);
   const context = useContext(AuthContext);
-  const def = coord ? { lat: coord.lat, lng: coord.lng } :  { lat: 48.8566, lng: 2.3522 };
+  const def = coord ? { lat: coord.lat, name:coord.name, lng: coord.lng } :  { lat: 48.8566,  lng: 2.3522 };
   const [DefaultLocation,setDefaultLocation] = useState(def)
 
 
@@ -16,6 +16,7 @@ const MapInput = ({ name = null, coord, setCoord,displayDefaultLoc = false,label
         setDefaultLocation({
           lat: context.position.latitude,
           lng: context.position.longitude,
+          name: context.position.name
         })
       }
 
