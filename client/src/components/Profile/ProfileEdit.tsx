@@ -1,11 +1,21 @@
 import React from 'react'
 import ProfileUserBox from "./ProfileUserBox.tsx";
+import { useForm } from 'react-hook-form';
 
 const ProfileEdit = () => {
+  
+  
+
+    
+  
+  
   return (
     <div className='flex justify-center sm:flex-col lg:flex-row'>
     <ProfileUserBox/>
      <div className="mr-5"></div>
+
+
+
     
     <form
           className="profile-account-form"

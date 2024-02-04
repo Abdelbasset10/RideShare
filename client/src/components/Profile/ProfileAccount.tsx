@@ -9,15 +9,66 @@ import { z, string, optional } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuth } from "../../hooks/auth/useAuth";
 import { UserTypes } from "../../utils/type-interfaces.ts";
+import { fetchFnc } from "../../utils/fetch";
+import { errorToast, successToast } from "../../utils/helpers.ts";
 
 const ProfileAccount = () => {
   const { user } = useAuth();
 
+
+  const onUserEdit = async (data) => {
+
+    const formData = new FormData();
+
+    for (const key in data) {
+        if (
+          data["type"] === "VOYAGEUR" &&
+          (key === "vehicleBrand" ||
+            key === "vehicleMatricule" ||
+            key === "vehicleMaxPlace" ||
+            key === "vehicleModel" ||
+            key === "vehicleYear")
+        ) {
+          continue;
+        }
+        formData.append(key, data[key]);
+      }
+
+
+      try {
+
+        await fetchFnc({
+          url: `user/update/${user?.id}`,
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${user?.apiKey}`,
+          },
+          data: data,
+        });
+        
+        successToast("Utilisateur crée avec succes");
+      } catch (errMsg) {
+        errorToast(errMsg);
+      }
+    }
+    
   const [activePanel, setActivePanel] = useState(1);
+
 
   const { register, handleSubmit, control, formState } = useForm({
     defaultValues: {
-      ...user
+      first_name: user?.first_name,
+      last_name: user?.last_name,
+      email: user?.email,
+      n_tlph: user?.n_tlph,
+      type: user?.type,
+      gender: user?.gender,
+      matricule: user?.matricule,
+      vehicleBrand: user?.car?.marque,
+      vehicleMatricule: user?.car?.matricule,
+      vehicleMaxPlace: user?.car?.max_places,
+      vehicleModel: user?.car?.model,
+      vehicleYear: user?.car?.year,
     }
   });
 
@@ -35,11 +86,11 @@ const ProfileAccount = () => {
     name: "vehicleMaxPlace",
     control,
   });
+
   const { errors } = formState;
   const yearMax = new Date().getFullYear();
 
-  const onUserEdit = (data) => {
-  };
+  
 
   return (
     <div className="profile-account-wrapper">
@@ -65,6 +116,7 @@ const ProfileAccount = () => {
           className="profile-account-form"
           onSubmit={handleSubmit(onUserEdit)}
         >
+
           {activePanel === 1 && (
             <div className="account-profile-informations-wrapper ">
               <div className="w-full">
